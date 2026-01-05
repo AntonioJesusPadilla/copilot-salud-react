@@ -152,7 +152,10 @@ function DashboardPage() {
                 📈 Ver KPIs
               </button>
               {roleConfig.permissions.canViewMaps && (
-                <button className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium">
+                <button
+                  onClick={() => navigate('/maps')}
+                  className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium"
+                >
                   🗺️ Ver Mapas
                 </button>
               )}

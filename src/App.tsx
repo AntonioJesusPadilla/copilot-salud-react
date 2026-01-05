@@ -4,6 +4,7 @@ import useAuthStore from './store/authStore';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import SettingsPage from './pages/SettingsPage';
+import MapPage from './pages/MapPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import './App.css';
 
@@ -44,6 +45,15 @@ function App() {
           element={
             <ProtectedRoute>
               <SettingsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/maps"
+          element={
+            <ProtectedRoute>
+              <MapPage />
             </ProtectedRoute>
           }
         />

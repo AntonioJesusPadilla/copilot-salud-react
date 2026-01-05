@@ -1,0 +1,388 @@
+{
+  "centers": [
+    {
+      "id": "hc_001",
+      "name": "Hospital Regional Universitario de Málaga",
+      "type": "hospital",
+      "address": "Av. Carlos Haya, s/n",
+      "city": "Málaga",
+      "postalCode": "29010",
+      "phone": "951 29 00 00",
+      "coordinates": {
+        "lat": 36.7350,
+        "lng": -4.4480
+      },
+      "description": "Hospital de referencia regional con todos los servicios especializados",
+      "services": ["Urgencias 24h", "UCI", "Cirugía", "Oncología", "Cardiología", "Pediatría"],
+      "schedule": "24 horas",
+      "emergencyService": true,
+      "beds": 850,
+      "zone": "Málaga Capital",
+      "district": "Cruz de Humilladero",
+      "website": "https://www.hospitalregionaldemalaga.es"
+    },
+    {
+      "id": "hc_002",
+      "name": "Hospital Clínico Universitario Virgen de la Victoria",
+      "type": "hospital",
+      "address": "Campus Universitario de Teatinos, s/n",
+      "city": "Málaga",
+      "postalCode": "29010",
+      "phone": "951 03 20 00",
+      "coordinates": {
+        "lat": 36.7180,
+        "lng": -4.4820
+      },
+      "description": "Hospital universitario con servicios especializados y docencia",
+      "services": ["Urgencias 24h", "UCI", "Traumatología", "Neurología", "Ginecología"],
+      "schedule": "24 horas",
+      "emergencyService": true,
+      "beds": 720,
+      "zone": "Málaga Capital",
+      "district": "Teatinos"
+    },
+    {
+      "id": "hc_003",
+      "name": "Hospital Civil de Málaga",
+      "type": "hospital",
+      "address": "Plaza del Hospital Civil, s/n",
+      "city": "Málaga",
+      "postalCode": "29009",
+      "phone": "951 03 26 00",
+      "coordinates": {
+        "lat": 36.7213,
+        "lng": -4.4214
+      },
+      "description": "Hospital materno-infantil de referencia",
+      "services": ["Maternidad", "Pediatría", "Neonatología", "Urgencias Pediátricas"],
+      "schedule": "24 horas",
+      "emergencyService": true,
+      "beds": 320,
+      "zone": "Málaga Capital",
+      "district": "Centro"
+    },
+    {
+      "id": "hc_004",
+      "name": "Centro de Salud La Palma",
+      "type": "centro_salud",
+      "address": "C/ Emilio Thuillier, 2",
+      "city": "Málaga",
+      "postalCode": "29009",
+      "phone": "951 28 59 00",
+      "coordinates": {
+        "lat": 36.7195,
+        "lng": -4.4180
+      },
+      "description": "Centro de atención primaria en el centro de Málaga",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Extracciones"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Centro"
+    },
+    {
+      "id": "hc_005",
+      "name": "Centro de Salud El Palo",
+      "type": "centro_salud",
+      "address": "C/ Almería, 26",
+      "city": "Málaga",
+      "postalCode": "29017",
+      "phone": "951 28 60 50",
+      "coordinates": {
+        "lat": 36.7125,
+        "lng": -4.3580
+      },
+      "description": "Centro de salud en zona este de Málaga",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Matrona"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Málaga Este",
+      "district": "El Palo"
+    },
+    {
+      "id": "hc_006",
+      "name": "Centro de Salud Carranque",
+      "type": "centro_salud",
+      "address": "Av. del Arroyo de los Ángeles, s/n",
+      "city": "Málaga",
+      "postalCode": "29010",
+      "phone": "951 28 57 50",
+      "coordinates": {
+        "lat": 36.7425,
+        "lng": -4.4560
+      },
+      "description": "Centro de atención primaria en Carranque",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Trabajador Social"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Carranque"
+    },
+    {
+      "id": "hc_007",
+      "name": "Centro de Salud Teatinos",
+      "type": "centro_salud",
+      "address": "C/ Virgen de la Candelaria, 9",
+      "city": "Málaga",
+      "postalCode": "29010",
+      "phone": "951 28 61 00",
+      "coordinates": {
+        "lat": 36.7248,
+        "lng": -4.4895
+      },
+      "description": "Centro de salud en zona universitaria",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Fisioterapia"],
+      "schedule": "L-V 8:00-21:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Teatinos"
+    },
+    {
+      "id": "hc_008",
+      "name": "Centro de Salud Vélez-Málaga Norte",
+      "type": "centro_salud",
+      "address": "C/ Canalejas, 58",
+      "city": "Vélez-Málaga",
+      "postalCode": "29700",
+      "phone": "951 06 99 00",
+      "coordinates": {
+        "lat": 36.7850,
+        "lng": -4.1020
+      },
+      "description": "Centro de atención primaria en Vélez-Málaga",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Odontología"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Axarquía",
+      "district": "Vélez-Málaga"
+    },
+    {
+      "id": "hc_009",
+      "name": "Consultorio Local Pedregalejo",
+      "type": "consultorio",
+      "address": "C/ Fenicios, 45",
+      "city": "Málaga",
+      "postalCode": "29017",
+      "phone": "951 28 59 75",
+      "coordinates": {
+        "lat": 36.7165,
+        "lng": -4.3750
+      },
+      "description": "Consultorio local en Pedregalejo",
+      "services": ["Medicina Familiar", "Enfermería"],
+      "schedule": "L-V 8:00-15:00",
+      "emergencyService": false,
+      "zone": "Málaga Este",
+      "district": "Pedregalejo"
+    },
+    {
+      "id": "hc_010",
+      "name": "Consultorio Local Huelin",
+      "type": "consultorio",
+      "address": "C/ Héroe de Sostoa, 167",
+      "city": "Málaga",
+      "postalCode": "29002",
+      "phone": "951 28 58 25",
+      "coordinates": {
+        "lat": 36.7090,
+        "lng": -4.4510
+      },
+      "description": "Consultorio en el barrio de Huelin",
+      "services": ["Medicina Familiar", "Enfermería"],
+      "schedule": "L-V 9:00-14:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Huelin"
+    },
+    {
+      "id": "hc_011",
+      "name": "Punto de Urgencias Costa del Sol",
+      "type": "urgencias",
+      "address": "Ctra. Nacional 340, Km 187",
+      "city": "Marbella",
+      "postalCode": "29603",
+      "phone": "951 97 66 69",
+      "coordinates": {
+        "lat": 36.5150,
+        "lng": -4.8820
+      },
+      "description": "Punto de atención de urgencias en la Costa del Sol",
+      "services": ["Urgencias", "Atención Continuada"],
+      "schedule": "24 horas",
+      "emergencyService": true,
+      "zone": "Costa del Sol",
+      "district": "Marbella"
+    },
+    {
+      "id": "hc_012",
+      "name": "Servicio de Urgencias Ciudad Jardín",
+      "type": "urgencias",
+      "address": "C/ Severo Ochoa, 40",
+      "city": "Málaga",
+      "postalCode": "29014",
+      "phone": "951 28 60 20",
+      "coordinates": {
+        "lat": 36.7320,
+        "lng": -4.4090
+      },
+      "description": "Punto de urgencias en Ciudad Jardín",
+      "services": ["Urgencias", "Atención Continuada"],
+      "schedule": "24 horas",
+      "emergencyService": true,
+      "zone": "Málaga Capital",
+      "district": "Ciudad Jardín"
+    },
+    {
+      "id": "hc_013",
+      "name": "Farmacia Central Málaga",
+      "type": "farmacia",
+      "address": "Alameda Principal, 14",
+      "city": "Málaga",
+      "postalCode": "29001",
+      "phone": "952 21 28 58",
+      "coordinates": {
+        "lat": 36.7205,
+        "lng": -4.4198
+      },
+      "description": "Farmacia en el centro de Málaga",
+      "services": ["Dispensación", "Farmacia de Guardia", "Consultas Farmacéuticas"],
+      "schedule": "L-S 9:30-21:30",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Centro"
+    },
+    {
+      "id": "hc_014",
+      "name": "Farmacia El Palo",
+      "type": "farmacia",
+      "address": "Av. Salvador Allende, 89",
+      "city": "Málaga",
+      "postalCode": "29017",
+      "phone": "952 29 44 72",
+      "coordinates": {
+        "lat": 36.7110,
+        "lng": -4.3595
+      },
+      "description": "Farmacia en El Palo",
+      "services": ["Dispensación", "Farmacia de Guardia", "Ortopedia"],
+      "schedule": "L-V 9:00-21:00, S 10:00-14:00",
+      "emergencyService": false,
+      "zone": "Málaga Este",
+      "district": "El Palo"
+    },
+    {
+      "id": "hc_015",
+      "name": "Farmacia Teatinos",
+      "type": "farmacia",
+      "address": "C/ Héroe de Sostoa, 145",
+      "city": "Málaga",
+      "postalCode": "29010",
+      "phone": "952 31 23 45",
+      "coordinates": {
+        "lat": 36.7265,
+        "lng": -4.4910
+      },
+      "description": "Farmacia en Teatinos",
+      "services": ["Dispensación", "Farmacia de Guardia", "Análisis"],
+      "schedule": "L-V 9:00-21:30, S 10:00-14:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Teatinos"
+    },
+    {
+      "id": "hc_016",
+      "name": "Laboratorio Clínico Málaga Centro",
+      "type": "laboratorio",
+      "address": "C/ Cortina del Muelle, 23",
+      "city": "Málaga",
+      "postalCode": "29015",
+      "phone": "952 22 67 89",
+      "coordinates": {
+        "lat": 36.7185,
+        "lng": -4.4165
+      },
+      "description": "Laboratorio de análisis clínicos en el centro",
+      "services": ["Análisis Clínicos", "Bioquímica", "Microbiología", "Anatomía Patológica"],
+      "schedule": "L-V 7:30-19:00, S 8:00-13:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Centro"
+    },
+    {
+      "id": "hc_017",
+      "name": "Laboratorio Axarquía",
+      "type": "laboratorio",
+      "address": "Av. de Andalucía, 76",
+      "city": "Vélez-Málaga",
+      "postalCode": "29700",
+      "phone": "952 54 32 10",
+      "coordinates": {
+        "lat": 36.7875,
+        "lng": -4.1035
+      },
+      "description": "Laboratorio de análisis en Vélez-Málaga",
+      "services": ["Análisis Clínicos", "Bioquímica", "Hematología"],
+      "schedule": "L-V 7:30-18:00",
+      "emergencyService": false,
+      "zone": "Axarquía",
+      "district": "Vélez-Málaga"
+    },
+    {
+      "id": "hc_018",
+      "name": "Centro de Salud Rincón de la Victoria",
+      "type": "centro_salud",
+      "address": "C/ Mar Menor, 2",
+      "city": "Rincón de la Victoria",
+      "postalCode": "29730",
+      "phone": "951 26 96 00",
+      "coordinates": {
+        "lat": 36.7135,
+        "lng": -4.2750
+      },
+      "description": "Centro de atención primaria en Rincón de la Victoria",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Fisioterapia"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Axarquía",
+      "district": "Rincón de la Victoria"
+    },
+    {
+      "id": "hc_019",
+      "name": "Centro de Salud Miraflores",
+      "type": "centro_salud",
+      "address": "C/ Ulises, 1",
+      "city": "Málaga",
+      "postalCode": "29011",
+      "phone": "951 28 59 50",
+      "coordinates": {
+        "lat": 36.7480,
+        "lng": -4.4220
+      },
+      "description": "Centro de salud en Miraflores de los Ángeles",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Matrona"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Málaga Capital",
+      "district": "Miraflores"
+    },
+    {
+      "id": "hc_020",
+      "name": "Centro de Salud Torremolinos",
+      "type": "centro_salud",
+      "address": "C/ Hoyo, 16",
+      "city": "Torremolinos",
+      "postalCode": "29620",
+      "phone": "951 06 98 00",
+      "coordinates": {
+        "lat": 36.6205,
+        "lng": -4.4995
+      },
+      "description": "Centro de atención primaria en Torremolinos",
+      "services": ["Medicina Familiar", "Enfermería", "Pediatría", "Trabajador Social"],
+      "schedule": "L-V 8:00-20:00",
+      "emergencyService": false,
+      "zone": "Costa del Sol Occidental",
+      "district": "Torremolinos"
+    }
+  ]
+}
