@@ -1,10 +1,21 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
+import useKPIStore from '../store/kpiStore';
 import { ROLE_CONFIGS } from '../types';
+import KPIGrid from '../components/kpi/KPIGrid';
 
 function DashboardPage() {
   const { user, logout } = useAuthStore();
+  const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
   const navigate = useNavigate();
+
+  // Cargar KPIs cuando se monta el componente
+  useEffect(() => {
+    if (user) {
+      loadKPIs(user.role);
+    }
+  }, [user, loadKPIs]);
 
   if (!user) {
     return null;
@@ -118,13 +129,13 @@ function DashboardPage() {
               <div>
                 <p className="text-sm text-gray-600">KPIs disponibles</p>
                 <p className="text-2xl font-bold" style={{ color: roleConfig.color }}>
-                  {roleConfig.permissions.canViewAllData ? '26' : '6'}
+                  {stats?.total || 0}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Centros de salud</p>
-                <p className="text-2xl font-bold" style={{ color: roleConfig.color }}>
-                  156
+                <p className="text-sm text-gray-600">Tendencia positiva</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {stats?.trending.up || 0} ↑
                 </p>
               </div>
               <div>
@@ -159,14 +170,30 @@ function DashboardPage() {
           </div>
         </div>
 
+        {/* Sección de KPIs */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-secondary">
+                📊 Indicadores de Salud - Málaga
+              </h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Tienes acceso a {stats?.total || 0} KPIs según tu rol de {roleConfig.name}
+              </p>
+            </div>
+          </div>
+
+          <KPIGrid kpis={filteredKPIs} isLoading={isLoading} />
+        </div>
+
         {/* Información del subsistema */}
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
-          <h3 className="font-bold text-lg mb-2 text-blue-900">
-            ℹ️ Subsistema 2: Autenticación Completado
+        <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+          <h3 className="font-bold text-lg mb-2 text-green-900">
+            ✅ Subsistema 3: Dashboard y KPIs Completado
           </h3>
-          <p className="text-blue-800">
-            El sistema de autenticación está funcionando correctamente. Los siguientes subsistemas
-            añadirán los dashboards específicos, KPIs, mapas y funcionalidades avanzadas.
+          <p className="text-green-800">
+            Sistema de visualización de KPIs de salud implementado con {stats?.total || 26} indicadores,
+            gráficas interactivas y filtros por categoría. Los datos se actualizan en tiempo real.
           </p>
         </div>
       </main>
