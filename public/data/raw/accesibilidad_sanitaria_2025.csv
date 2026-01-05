@@ -1,0 +1,16 @@
+municipio_origen,hospital_destino,distancia_km,tiempo_coche_minutos,tiempo_transporte_publico_minutos,coste_transporte_euros,accesibilidad_score,fecha_actualizacion
+Málaga,Hospital Regional Málaga,8,20,35,2.1,9,2025-09-03
+Málaga,Hospital Costa del Sol,65,75,120,8.5,4,2025-09-03
+Málaga,Hospital Axarquía,50,60,90,6.2,6,2025-09-03
+Marbella,Hospital Regional Málaga,62,70,110,8.2,4,2025-09-03
+Marbella,Hospital Costa del Sol,8,15,25,1.8,10,2025-09-03
+Marbella,Hospital Axarquía,95,110,180,12.5,2,2025-09-03
+Vélez-Málaga,Hospital Regional Málaga,45,55,85,5.8,6,2025-09-03
+Vélez-Málaga,Hospital Costa del Sol,85,95,150,11.2,3,2025-09-03
+Vélez-Málaga,Hospital Axarquía,5,12,20,1.5,10,2025-09-03
+Antequera,Hospital Regional Málaga,70,75,130,9.5,4,2025-09-03
+Antequera,Hospital Costa del Sol,125,135,210,16.2,2,2025-09-03
+Antequera,Hospital Antequera,3,8,15,1.2,10,2025-09-03
+Ronda,Hospital Regional Málaga,105,120,190,14.5,2,2025-09-03
+Ronda,Hospital Costa del Sol,85,95,150,11.8,3,2025-09-03
+Ronda,Hospital Ronda,5,10,18,1.8,9,2025-09-03

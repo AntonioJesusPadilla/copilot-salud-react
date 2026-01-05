@@ -1,0 +1,11 @@
+nombre,codigo_sas,tipo_centro,municipio,distrito_sanitario,latitud,longitud,camas_funcionamiento_2025,poblacion_referencia_2025,urgencias_24h,uci_camas,quirofanos_activos,personal_sanitario_2025,fecha_actualizacion
+Hospital Regional Universitario de Málaga,H.R.U.M.,Hospital Regional,Málaga,Málaga,36.7213,-4.4192,1850,620000,True,45,20,920,2025-09-03
+Hospital Clínico Universitario Virgen de la Victoria,H.C.U.V.V.,Hospital Universitario,Málaga,Málaga,36.7051,-4.4203,870,310000,True,22,14,445,2025-09-03
+Hospital Universitario Costa del Sol,H.U.C.S.,Hospital Comarcal,Marbella,Costa del Sol,36.5108,-4.8856,465,185000,True,12,9,295,2025-09-03
+Hospital de la Axarquía (Vélez-Málaga),H.A.V.M.,Hospital Comarcal,Vélez-Málaga,Axarquía,36.7875,-4.1017,210,82000,True,8,5,125,2025-09-03
+Hospital de Antequera,H.A.A.,Hospital Comarcal,Antequera,Norte de Málaga,37.0179,-4.5613,185,62000,False,4,3,85,2025-09-03
+Hospital de Ronda (Serranía de Ronda),H.R.R.,Hospital Comarcal,Ronda,Serranía,36.7427,-5.1658,125,42000,False,2,2,65,2025-09-03
+Centro de Alta Resolución de Estepona,C.A.R.E.,Centro Alta Resolución,Estepona,Costa del Sol,36.427,-5.1448,85,36000,True,0,4,50,2025-09-03
+Centro de Alta Resolución de Benalmádena,C.A.R.B.,Centro Alta Resolución,Benalmádena,Costa del Sol,36.5988,-4.6219,65,27000,False,0,2,28,2025-09-03
+Centro de Alta Resolución de Coín,C.A.R.C.,Centro Alta Resolución,Coín,Valle del Guadalhorce,36.6598,-4.7539,50,22000,False,0,1,20,2025-09-03
+Centro de Alta Resolución de Vélez-Málaga,C.A.R.V.M.,Centro Alta Resolución,Vélez-Málaga,Axarquía,36.7875,-4.1017,40,25000,False,0,1,18,2025-09-03

@@ -1,0 +1,26 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Identidad corporativa
+        primary: '#1FB6C3',
+        secondary: '#1E3A5F',
+        accent: '#20B2AA',
+        // Roles
+        medico: '#4A90E2',
+        enfermero: '#7B68EE',
+        admin: '#FF6B6B',
+        paciente: '#4ECDC4'
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      }
+    },
+  },
+  plugins: [],
+}

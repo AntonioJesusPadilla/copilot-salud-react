@@ -1,0 +1,10 @@
+centro_sanitario,cardiologia,neurologia,oncologia_medica,pediatria,ginecologia,traumatologia,medicina_interna,dermatologia,urgencias_generales,uci_adultos,hemodialisis,radiodiagnostico,laboratorio_clinico,consultas_externas_anuales_2024,ingresos_anuales_2024,intervenciones_quirurgicas_2024,profesionales_medicos_2025,profesionales_enfermeria_2025,fecha_actualizacion
+Hospital Regional Málaga,True,True,True,True,True,True,True,True,True,True,True,True,True,285000,38500,15200,485,435,2025-09-03
+Hospital Virgen Victoria,True,True,True,True,True,True,True,True,True,True,True,True,True,156000,22800,8900,245,200,2025-09-03
+Hospital Costa del Sol,True,False,True,True,True,True,True,True,True,True,True,True,True,98000,14200,5600,165,130,2025-09-03
+Hospital Axarquía,False,False,False,True,True,True,True,False,True,False,True,True,True,42000,6800,2100,68,57,2025-09-03
+Hospital Antequera,False,False,False,True,False,True,True,False,False,False,False,True,True,28000,4200,1400,48,37,2025-09-03
+Hospital Ronda,False,False,False,True,False,True,False,False,False,False,False,True,True,18000,2800,850,35,30,2025-09-03
+CAR Estepona,True,False,False,True,True,True,False,True,True,False,False,True,True,15000,1500,1200,28,22,2025-09-03
+CAR Benalmádena,False,False,False,True,True,True,False,False,False,False,False,True,True,8500,850,380,15,13,2025-09-03
+CAR Coín,False,False,False,True,False,True,False,False,False,False,False,True,True,5200,420,180,12,8,2025-09-03

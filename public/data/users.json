@@ -1,0 +1,42 @@
+{
+  "admin": {
+    "name": "Administrador Sistema",
+    "email": "admin@salud-malaga.es",
+    "password": "$2b$12$M/TxtmZV/AD0zq.SBp1Xj.qCivjA67PwyuFLyLAdkxzzNhQBkW4gS",
+    "role": "admin",
+    "organization": "Consejería de Salud",
+    "created_date": "2025-09-03T13:13:02.989810",
+    "last_login": "2025-10-09T17:30:19.666312",
+    "active": true
+  },
+  "gestor.malaga": {
+    "name": "Gestor Sanitario Málaga",
+    "email": "gestor@sas-malaga.es",
+    "password": "$2b$12$iTmqyA6qw5IM4E9KY51e2elCbyZGY2.rVkxA6SPokT3KV3cyG9/Hm",
+    "role": "gestor",
+    "organization": "SAS Málaga",
+    "created_date": "2025-09-03T13:13:03.253460",
+    "last_login": "2025-10-09T17:28:47.238754",
+    "active": true
+  },
+  "analista.datos": {
+    "name": "Analista de Datos",
+    "email": "analista@salud-andalucia.es",
+    "password": "$2b$12$Dd1A5nSiIGcEEZTEt.NICucAeIS6FCzgerR1CDeSQEspG2Nwa6zm6",
+    "role": "analista",
+    "organization": "IECA - Instituto de Estadística",
+    "created_date": "2025-09-03T13:13:03.516964",
+    "last_login": "2025-10-09T17:27:21.225255",
+    "active": true
+  },
+  "demo": {
+    "name": "Usuario Demo",
+    "email": "demo@demo.com",
+    "password": "$2b$12$QcM9kqN9.NrRw1wVFWHqf./UF7kigZXZ9JCpd9Fn5dMncORYK.0te",
+    "role": "invitado",
+    "organization": "Demostración",
+    "created_date": "2025-09-03T13:13:03.780244",
+    "last_login": "2025-10-09T17:29:47.044201",
+    "active": true
+  }
+}
