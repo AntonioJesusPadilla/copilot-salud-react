@@ -7,9 +7,16 @@ export interface User {
   role: UserRole;
   name: string;
   email?: string;
+  organization?: string; // Organización del usuario
+  active?: boolean; // Si el usuario está activo
   canChangePassword?: boolean; // Si el usuario puede cambiar su contraseña
   lastPasswordChange?: string; // Fecha del último cambio de contraseña
+  created_date?: string; // Fecha de creación
+  last_login?: string; // Último login
 }
+
+// User sin contraseña (para uso en el store)
+export type UserWithoutPassword = Omit<User, 'password'>;
 
 // Configuración de roles con permisos y colores
 export interface RoleConfig {

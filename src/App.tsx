@@ -1,36 +1,63 @@
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import useAuthStore from './store/authStore';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import SettingsPage from './pages/SettingsPage';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import './App.css';
 
 function App() {
+  const { checkAuth, isAuthenticated } = useAuthStore();
+
+  // Verificar autenticación al cargar la aplicación
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-primary mb-4">
-          Copilot Salud Andalucía
-        </h1>
-        <p className="text-secondary text-lg">
-          Migración a React + TypeScript en progreso...
-        </p>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-admin text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold text-xl mb-2">👨‍💼 Administrador</h3>
-            <p className="text-sm opacity-90">admin / admin123</p>
-          </div>
-          <div className="bg-gestor text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold text-xl mb-2">📊 Gestor</h3>
-            <p className="text-sm opacity-90">gestor.malaga / gestor123</p>
-          </div>
-          <div className="bg-analista text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold text-xl mb-2">📈 Analista</h3>
-            <p className="text-sm opacity-90">analista.datos / analista123</p>
-          </div>
-          <div className="bg-invitado text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold text-xl mb-2">👤 Invitado</h3>
-            <p className="text-sm opacity-90">demo / demo123</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        {/* Ruta raíz - redirige según autenticación */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+          }
+        />
+
+        {/* Ruta de login */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ruta 404 - redirigir a dashboard o login */}
+        <Route
+          path="*"
+          element={
+            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
