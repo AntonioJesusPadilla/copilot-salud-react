@@ -11,17 +11,21 @@ function App() {
           Migración a React + TypeScript en progreso...
         </p>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-medico text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold">Médico</h3>
-          </div>
-          <div className="bg-enfermero text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold">Enfermero</h3>
-          </div>
           <div className="bg-admin text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold">Administrador</h3>
+            <h3 className="font-bold text-xl mb-2">👨‍💼 Administrador</h3>
+            <p className="text-sm opacity-90">admin / admin123</p>
           </div>
-          <div className="bg-paciente text-white p-6 rounded-lg shadow">
-            <h3 className="font-bold">Paciente</h3>
+          <div className="bg-gestor text-white p-6 rounded-lg shadow">
+            <h3 className="font-bold text-xl mb-2">📊 Gestor</h3>
+            <p className="text-sm opacity-90">gestor.malaga / gestor123</p>
+          </div>
+          <div className="bg-analista text-white p-6 rounded-lg shadow">
+            <h3 className="font-bold text-xl mb-2">📈 Analista</h3>
+            <p className="text-sm opacity-90">analista.datos / analista123</p>
+          </div>
+          <div className="bg-invitado text-white p-6 rounded-lg shadow">
+            <h3 className="font-bold text-xl mb-2">👤 Invitado</h3>
+            <p className="text-sm opacity-90">demo / demo123</p>
           </div>
         </div>
       </div>

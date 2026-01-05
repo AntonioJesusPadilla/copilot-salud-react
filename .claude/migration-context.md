@@ -10,11 +10,12 @@
 - **Descripción**: Dashboard de análisis de datos de salud con 26 KPIs
 - **Stack actual**: Python + Streamlit
 - **Características**:
-  - Sistema de autenticación con 4 roles (médico, enfermero, administrador, paciente)
+  - Sistema de autenticación con 4 roles: admin, gestor, analista, invitado
   - 26 KPIs de salud de Andalucía
   - Mapas interactivos con Folium
   - Chat AI con Claude (Anthropic API)
   - Datos reales de centros de salud de Andalucía
+  - Sistema de cambio de contraseñas (admin puede cambiar todas, usuarios pueden cambiar la suya)
 
 ## STACK OBJETIVO
 - **Frontend**: Vite + React 18 + TypeScript 5
@@ -37,12 +38,34 @@ colors: {
   accent: '#20B2AA',         // Turquesa salud
 
   // Roles (para dashboards)
-  medico: '#4A90E2',         // Azul médico
-  enfermero: '#7B68EE',      // Púrpura enfermería
-  admin: '#FF6B6B',          // Rojo administración
-  paciente: '#4ECDC4'        // Verde azulado paciente
+  admin: '#FF6B6B',          // Rojo - Administrador
+  gestor: '#4A90E2',         // Azul - Gestor
+  analista: '#7B68EE',       // Púrpura - Analista
+  invitado: '#9CA3AF'        // Gris - Invitado
 }
 ```
+
+## ROLES Y CREDENCIALES DE PRUEBA
+**Usuarios predeterminados para testing:**
+1. **Administrador**: `admin` / `admin123`
+   - Acceso completo
+   - Puede gestionar usuarios y cambiar contraseñas
+   - Puede ver todos los dashboards y exportar datos
+
+2. **Gestor**: `gestor.malaga` / `gestor123`
+   - Gestión sanitaria
+   - Acceso a dashboards operativos
+   - Puede exportar datos
+
+3. **Analista**: `analista.datos` / `analista123`
+   - Análisis de datos
+   - Acceso a KPIs y estadísticas
+   - No acceso a mapas
+
+4. **Invitado**: `demo` / `demo123`
+   - Vista pública limitada
+   - Solo puede ver información básica
+   - Acceso a mapas pero no a datos sensibles
 
 ## REGLAS DE CÓDIGO
 1. **TypeScript estricto**: No usar `any`, todos los tipos explícitos

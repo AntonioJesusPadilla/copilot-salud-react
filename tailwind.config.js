@@ -12,10 +12,10 @@ export default {
         secondary: '#1E3A5F',
         accent: '#20B2AA',
         // Roles
-        medico: '#4A90E2',
-        enfermero: '#7B68EE',
-        admin: '#FF6B6B',
-        paciente: '#4ECDC4'
+        admin: '#FF6B6B',      // Rojo - Administrador
+        gestor: '#4A90E2',     // Azul - Gestor
+        analista: '#7B68EE',   // Púrpura - Analista
+        invitado: '#9CA3AF'    // Gris - Invitado
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']
