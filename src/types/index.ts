@@ -70,7 +70,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     role: 'invitado',
     name: 'Invitado',
     icon: '👤',
-    color: '#9CA3AF', // Gris invitado
+    color: '#4ECDC4', // Verde azulado invitado
     permissions: {
       canViewAllData: false,
       canExport: false,
