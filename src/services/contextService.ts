@@ -33,7 +33,7 @@ export const getChatContext = (): ChatContext => {
       name: center.name,
       city: center.city,
       type: center.type,
-      hasEmergency: center.hasEmergency || false,
+      hasEmergency: center.emergencyService || false,
     }));
 
   const context: ChatContext = {

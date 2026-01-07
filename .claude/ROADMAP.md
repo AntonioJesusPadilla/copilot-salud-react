@@ -2,7 +2,8 @@
 ## De Streamlit/Python a React/TypeScript
 
 **Fecha de inicio**: 04/01/2026
-**Estado actual**: ✅ Subsistema 1 completado
+**Última actualización**: 07/01/2026
+**Estado actual**: ✅ 5 Subsistemas completados (19.2% del proyecto)
 
 ---
 
@@ -15,255 +16,394 @@
   - ESLint + Prettier configurados
   - Tipos TypeScript base definidos
   - **Commit**: `feat: Subsistema 1 - Infraestructura base configurada`
+  - **Estado**: ✅ Completado
 
-### 🔄 FASE 2: AUTENTICACIÓN Y NAVEGACIÓN (PENDIENTE)
-- [ ] **Subsistema 2**: Sistema de Autenticación
+### ✅ FASE 2: AUTENTICACIÓN Y NAVEGACIÓN (COMPLETADA)
+- [x] **Subsistema 2**: Sistema de Autenticación
   - Zustand store para autenticación
-  - Componente LoginPage
+  - Componente LoginPage con 4 roles (médico, enfermero, administrador, paciente)
   - Componente ProtectedRoute
-  - Servicio de autenticación (bcryptjs + JWT)
-  - Persistencia de sesión
-  - **Commit**: `feat: Subsistema 2 - Sistema de autenticación`
+  - Servicio de autenticación (bcryptjs para hashing)
+  - Persistencia de sesión con localStorage
+  - SettingsPage para cambio de contraseña
+  - **Commit**: `feat: Subsistema 2 - Sistema de autenticación completo`
+  - **Estado**: ✅ Completado
 
-- [ ] **Subsistema 3**: Routing y Navegación
-  - Configuración de React Router v6
-  - Layout principal con Sidebar
-  - Navegación por roles
-  - Rutas protegidas
-  - **Commit**: `feat: Subsistema 3 - Routing y navegación`
+- [x] **Subsistema 3**: Dashboard y visualización de KPIs
+  - React Router v6 configurado
+  - DashboardPage con navegación por roles
+  - Sistema de 26 KPIs de salud de Andalucía
+  - Integración con Recharts para gráficos
+  - Zustand store para KPIs
+  - Filtros por categoría y nivel de acceso
+  - Rutas protegidas por rol
+  - **Commit**: `feat: Subsistema 3 - Dashboard y visualización de KPIs`
+  - **Estado**: ✅ Completado (combina routing, navegación y KPIs)
 
-### 🔄 FASE 3: SERVICIOS DE DATOS (PENDIENTE)
-- [ ] **Subsistema 4**: Carga y Procesamiento de Datos CSV
-  - Servicio de lectura de CSVs (papaparse)
-  - Parsers de datos (hospitales, demografía, indicadores)
-  - Zustand store para datos de salud
-  - Tipos TypeScript para datos del dominio
-  - **Commit**: `feat: Subsistema 4 - Servicios de datos CSV`
+### ✅ FASE 3: MAPAS Y DATOS GEOGRÁFICOS (COMPLETADA)
+- [x] **Subsistema 4**: Mapas Interactivos
+  - Integración de React-Leaflet
+  - MapPage con 103 centros de salud georreferenciados
+  - Marcadores interactivos con popups informativos
+  - Filtros por tipo de centro (hospital, centro de salud, clínica)
+  - Filtros por servicios (urgencias, pediatría, etc.)
+  - Búsqueda de centros por nombre y ciudad
+  - Mapa de calor (heatmap) de densidad de servicios
+  - Zustand store para datos del mapa
+  - Servicio de procesamiento de datos geográficos
+  - **Commit**: `feat: Subsistema 4 - Mapas Interactivos`
+  - **Estado**: ✅ Completado
 
-- [ ] **Subsistema 5**: Generadores de KPIs
-  - Lógica de cálculo de 26 KPIs
-  - Funciones de análisis de tendencias
-  - Comparativas entre provincias
-  - Utilidades de agregación de datos
-  - **Commit**: `feat: Subsistema 5 - Generadores de KPIs`
+### ✅ FASE 4: CHAT AI (COMPLETADA)
+- [x] **Subsistema 5**: Chat AI con Groq
+  - Integración de Groq SDK (reemplazo de Anthropic)
+  - Sistema de LLM usando llama-3.3-70b-versatile
+  - Fallback automático entre modelos (70b → 8b → mixtral)
+  - Contexto enriquecido con datos reales del sistema:
+    * 15 KPIs principales con valores exactos
+    * 10 centros de salud con ubicaciones y servicios
+    * Estadísticas completas del sistema sanitario
+  - System prompt optimizado para usar datos reales
+  - ChatInterface con UI moderna
+  - Soporte para Markdown en respuestas (react-markdown)
+  - ChatMessage, ChatHeader, ChatInput components
+  - Zustand store para chat con persistencia
+  - Servicio de contexto para inyectar datos del sistema
+  - Logs de debug detallados
+  - **Commit**: `feat: Subsistema 5 - Chat AI con Groq y contexto enriquecido`
+  - **Estado**: ✅ Completado
 
-### 🔄 FASE 4: COMPONENTES VISUALES (PENDIENTE)
+### 🔄 FASE 5: COMPONENTES Y REFINAMIENTO (PRÓXIMA)
 - [ ] **Subsistema 6**: Biblioteca de Componentes Comunes
-  - Card component
-  - KPI Card component
-  - LoadingSpinner
-  - ErrorBoundary
-  - Modal/Dialog
-  - Filters/Selectors
+  - Card component genérico reutilizable
+  - LoadingSpinner mejorado
+  - ErrorBoundary para manejo de errores
+  - Modal/Dialog system
+  - Filters/Selectors avanzados
+  - Toast/Notification system
   - **Commit**: `feat: Subsistema 6 - Componentes comunes`
+  - **Nota**: Algunos componentes ya implementados parcialmente (KPI Cards, filtros básicos)
 
-- [ ] **Subsistema 7**: Componentes de KPIs (Parte 1)
-  - 13 primeros componentes de KPIs
-  - Integración con Recharts
-  - Componentes reutilizables de gráficos
-  - **Commit**: `feat: Subsistema 7 - KPIs parte 1 (1-13)`
-
-- [ ] **Subsistema 8**: Componentes de KPIs (Parte 2)
-  - 13 últimos componentes de KPIs
-  - Gráficos avanzados (heatmaps, scatter plots)
-  - Componentes de comparativa
-  - **Commit**: `feat: Subsistema 8 - KPIs parte 2 (14-26)`
-
-### 🔄 FASE 5: MAPAS INTERACTIVOS (PENDIENTE)
-- [ ] **Subsistema 9**: Sistema de Mapas
-  - Configuración de React-Leaflet
-  - Componente MapView base
-  - Marcadores interactivos de centros de salud
-  - Popups con información detallada
-  - Filtros por tipo de centro
-  - Heatmap de densidad de servicios
-  - **Commit**: `feat: Subsistema 9 - Mapas interactivos`
-
-### 🔄 FASE 6: DASHBOARDS POR ROL (PENDIENTE)
-- [ ] **Subsistema 10**: Dashboard Médico
+### 🔄 FASE 6: DASHBOARDS PERSONALIZADOS POR ROL (PENDIENTE)
+- [ ] **Subsistema 7**: Dashboard Médico
   - Vista personalizada para médicos
-  - KPIs relevantes (listas de espera, derivaciones)
-  - Gráficos específicos
-  - **Commit**: `feat: Subsistema 10 - Dashboard médico`
+  - KPIs prioritarios: listas de espera, derivaciones, carga asistencial
+  - Gráficos específicos de especialidad
+  - Acceso rápido a centros con urgencias
+  - **Commit**: `feat: Subsistema 7 - Dashboard médico`
 
-- [ ] **Subsistema 11**: Dashboard Enfermero
+- [ ] **Subsistema 8**: Dashboard Enfermero
   - Vista personalizada para enfermeros
-  - KPIs de atención primaria
-  - Seguimiento de pacientes
-  - **Commit**: `feat: Subsistema 11 - Dashboard enfermero`
+  - KPIs de atención primaria y domiciliaria
+  - Seguimiento de pacientes crónicos
+  - Indicadores de vacunación
+  - **Commit**: `feat: Subsistema 8 - Dashboard enfermero`
 
-- [ ] **Subsistema 12**: Dashboard Administrador
-  - Vista ejecutiva con todos los KPIs
-  - Panel de gestión de usuarios
-  - Estadísticas del sistema
-  - Exportación de reportes
-  - **Commit**: `feat: Subsistema 12 - Dashboard administrador`
+- [ ] **Subsistema 9**: Dashboard Administrador
+  - Vista ejecutiva con todos los 26 KPIs
+  - Panel de gestión de usuarios (CRUD)
+  - Estadísticas del sistema en tiempo real
+  - Comparativas entre provincias
+  - Sistema de alertas
+  - **Commit**: `feat: Subsistema 9 - Dashboard administrador`
 
-- [ ] **Subsistema 13**: Dashboard Paciente
+- [ ] **Subsistema 10**: Dashboard Paciente/Invitado
   - Vista simplificada para pacientes
   - Información de centros cercanos
-  - Accesibilidad y tiempos de espera
-  - **Commit**: `feat: Subsistema 13 - Dashboard paciente`
+  - Tiempos de espera estimados
+  - Accesibilidad y servicios disponibles
+  - FAQ y recursos informativos
+  - **Commit**: `feat: Subsistema 10 - Dashboard paciente`
 
-### 🔄 FASE 7: CHAT AI (PENDIENTE)
-- [ ] **Subsistema 14**: Sistema de Chat con Claude AI
-  - Integración de @anthropic-ai/sdk
-  - Componente ChatInterface
-  - Gestión de conversaciones
-  - Streaming de respuestas
-  - Contexto de datos de salud
-  - Markdown rendering (react-markdown)
-  - **Commit**: `feat: Subsistema 14 - Chat AI con Claude`
+### 🔄 FASE 7: FUNCIONALIDADES AVANZADAS (PENDIENTE)
+- [ ] **Subsistema 11**: Sistema de Exportación
+  - Exportar dashboards a PDF (jspdf + html2canvas)
+  - Exportar datos de KPIs a CSV/Excel
+  - Exportar gráficos individuales como PNG/SVG
+  - Exportar listas de centros de salud
+  - Generación de reportes personalizados
+  - **Commit**: `feat: Subsistema 11 - Sistema de exportación`
+  - **Prioridad**: ⭐⭐⭐ Alta (muy solicitado por usuarios médicos/admin)
 
-### 🔄 FASE 8: FUNCIONALIDADES AVANZADAS (PENDIENTE)
-- [ ] **Subsistema 15**: Sistema de Exportación
-  - Exportar a PDF (jspdf + html2canvas)
-  - Exportar a CSV
-  - Exportar gráficos como imágenes
-  - **Commit**: `feat: Subsistema 15 - Sistema de exportación`
+- [ ] **Subsistema 12**: Búsqueda y Filtros Avanzados
+  - Búsqueda global (KPIs, centros, datos)
+  - Filtros temporales con rangos de fechas
+  - Filtros combinados (provincia + categoría + tendencia)
+  - Persistencia de filtros favoritos
+  - Comparador de KPIs entre períodos
+  - **Commit**: `feat: Subsistema 12 - Filtros avanzados`
 
-- [ ] **Subsistema 16**: Filtros y Búsqueda Avanzada
-  - Filtros por provincia
-  - Búsqueda de centros de salud
-  - Filtros temporales (date-fns)
-  - Persistencia de filtros
-  - **Commit**: `feat: Subsistema 16 - Filtros y búsqueda`
+- [ ] **Subsistema 13**: Responsive Design y Accesibilidad
+  - Optimización mobile-first completa
+  - Detección y adaptación por dispositivo
+  - ARIA labels en todos los componentes
+  - Navegación por teclado completa
+  - Contraste de colores WCAG 2.1 AAA
+  - Dark mode toggle
+  - **Commit**: `feat: Subsistema 13 - Responsive y accesibilidad`
+  - **Prioridad**: ⭐⭐⭐ Alta (mejora UX significativamente)
 
-- [ ] **Subsistema 17**: Responsive Design y Accesibilidad
-  - Mobile-first CSS
-  - Detección de dispositivos
-  - ARIA labels
-  - Keyboard navigation
-  - Dark mode (opcional)
-  - **Commit**: `feat: Subsistema 17 - Responsive y accesibilidad`
-
-### 🔄 FASE 9: SEGURIDAD Y PERFORMANCE (PENDIENTE)
-- [ ] **Subsistema 18**: Seguridad
+### 🔄 FASE 8: SEGURIDAD Y PERFORMANCE (PENDIENTE)
+- [ ] **Subsistema 14**: Seguridad
   - Encriptación de datos sensibles (crypto-js)
-  - Rate limiting en cliente
-  - Validación de inputs
-  - Sanitización de datos
-  - **Commit**: `feat: Subsistema 18 - Seguridad`
+  - Rate limiting en cliente para API calls
+  - Validación robusta de inputs
+  - Sanitización de datos del chat AI
+  - Protección contra XSS y CSRF
+  - Auditoría de dependencias (npm audit)
+  - **Commit**: `feat: Subsistema 14 - Seguridad`
 
-- [ ] **Subsistema 19**: Optimización de Performance
-  - Lazy loading de componentes (React.lazy)
-  - Memoization (React.memo, useMemo)
-  - Code splitting
-  - Optimización de imágenes
-  - Service Worker (opcional)
-  - **Commit**: `perf: Subsistema 19 - Optimizaciones`
+- [ ] **Subsistema 15**: Optimización de Performance
+  - Lazy loading de rutas y componentes (React.lazy + Suspense)
+  - Memoization estratégica (React.memo, useMemo, useCallback)
+  - Code splitting automático por rutas
+  - Virtualización de listas largas (react-window)
+  - Optimización de imágenes y assets
+  - Service Worker para cache (opcional)
+  - Análisis de bundle size (vite-bundle-visualizer)
+  - **Commit**: `perf: Subsistema 15 - Optimizaciones`
+  - **Prioridad**: ⭐⭐ Media (mejora percepción de velocidad)
 
-### 🔄 FASE 10: TESTING (PENDIENTE)
-- [ ] **Subsistema 20**: Testing Unitario
+### 🔄 FASE 9: TESTING (PENDIENTE)
+- [ ] **Subsistema 16**: Testing Unitario
   - Configuración de Vitest
-  - Tests de componentes (React Testing Library)
-  - Tests de servicios
-  - Coverage mínimo 70%
-  - **Commit**: `test: Subsistema 20 - Tests unitarios`
+  - Tests de componentes UI (React Testing Library)
+  - Tests de stores Zustand
+  - Tests de servicios (chatService, authService, kpiService, mapService)
+  - Tests de utilidades y helpers
+  - Coverage objetivo: >70%
+  - **Commit**: `test: Subsistema 16 - Tests unitarios`
+  - **Prioridad**: ⭐ Baja (no crítico para MVP)
 
-- [ ] **Subsistema 21**: Testing de Integración
-  - Tests E2E (Playwright/Cypress)
-  - Tests de flujos de usuario
-  - Tests de autenticación
-  - **Commit**: `test: Subsistema 21 - Tests integración`
+- [ ] **Subsistema 17**: Testing de Integración y E2E
+  - Configuración de Playwright o Cypress
+  - Tests E2E de flujos críticos:
+    * Login → Dashboard → Logout
+    * Filtrado de KPIs
+    * Búsqueda en mapas
+    * Conversación con Chat AI
+  - Tests de autenticación y autorización
+  - Tests de navegación entre roles
+  - **Commit**: `test: Subsistema 17 - Tests E2E`
+  - **Prioridad**: ⭐ Baja (recomendado para producción)
 
-### 🔄 FASE 11: DOCUMENTACIÓN (PENDIENTE)
-- [ ] **Subsistema 22**: Documentación Técnica
-  - README.md completo
-  - Guía de instalación
-  - Guía de desarrollo
-  - Arquitectura del proyecto
-  - **Commit**: `docs: Subsistema 22 - Documentación técnica`
+### 🔄 FASE 10: DOCUMENTACIÓN (PENDIENTE)
+- [ ] **Subsistema 18**: Documentación Técnica
+  - README.md completo con:
+    * Descripción del proyecto
+    * Stack tecnológico
+    * Guía de instalación paso a paso
+    * Scripts disponibles
+    * Estructura del proyecto
+  - CONTRIBUTING.md
+  - Documentación de arquitectura (diagramas)
+  - Comentarios JSDoc en funciones críticas
+  - **Commit**: `docs: Subsistema 18 - Documentación técnica`
 
-- [ ] **Subsistema 23**: Guía de Usuario
-  - Manual de usuario
-  - Capturas de pantalla
-  - Tutoriales en video (opcional)
-  - **Commit**: `docs: Subsistema 23 - Guía de usuario`
+- [ ] **Subsistema 19**: Guía de Usuario
+  - Manual de usuario por rol (PDF/Web)
+  - Capturas de pantalla actualizadas
+  - Videos tutoriales cortos (opcional):
+    * Cómo usar el dashboard
+    * Cómo filtrar KPIs
+    * Cómo usar el chat AI
+    * Cómo buscar centros en el mapa
+  - FAQ integrado
+  - **Commit**: `docs: Subsistema 19 - Guía de usuario`
 
-### 🔄 FASE 12: DEPLOYMENT (PENDIENTE)
-- [ ] **Subsistema 24**: Configuración de Producción
-  - Variables de entorno de producción
-  - Build optimizado
-  - Configuración de CI/CD (GitHub Actions)
-  - **Commit**: `build: Subsistema 24 - Config producción`
+### 🔄 FASE 11: DEPLOYMENT (PENDIENTE)
+- [ ] **Subsistema 20**: Configuración de Producción
+  - Variables de entorno de producción (.env.production)
+  - Build optimizado (Vite production mode)
+  - Configuración de CI/CD con GitHub Actions:
+    * Lint y type-check en PRs
+    * Tests automáticos
+    * Deploy automático a staging
+  - Pre-commit hooks (Husky + lint-staged)
+  - **Commit**: `build: Subsistema 20 - Config producción`
 
-- [ ] **Subsistema 25**: Deploy a Producción
-  - Deploy en Vercel/Netlify
-  - Configuración de dominio
-  - Monitoreo (Sentry opcional)
-  - **Commit**: `deploy: Subsistema 25 - Deploy inicial`
+- [ ] **Subsistema 21**: Deploy a Producción
+  - Deploy en Vercel (recomendado para React)
+  - Configuración de dominio personalizado
+  - SSL/HTTPS automático
+  - Configuración de headers de seguridad
+  - Monitoreo básico con Vercel Analytics
+  - Integración con Sentry para error tracking (opcional)
+  - **Commit**: `deploy: Subsistema 21 - Deploy inicial`
 
-- [ ] **Subsistema 26**: Post-Deploy y Ajustes Finales
-  - Testing en producción
-  - Ajustes de performance
-  - Corrección de bugs críticos
-  - **Commit**: `fix: Subsistema 26 - Ajustes post-deploy`
+- [ ] **Subsistema 22**: Post-Deploy y Monitoreo
+  - Smoke testing en producción
+  - Ajustes de performance basados en métricas reales
+  - Configuración de alertas
+  - Corrección de bugs críticos detectados
+  - Plan de rollback documentado
+  - **Commit**: `fix: Subsistema 22 - Ajustes post-deploy`
 
 ---
 
 ## 📊 PROGRESO GENERAL
 
 ```
-Total de Subsistemas: 26
-Completados: 1 (3.8%)
+Total de Subsistemas: 22 (reorganizado desde 26)
+Completados: 5 (22.7%)
 En progreso: 0 (0%)
-Pendientes: 25 (96.2%)
+Pendientes: 17 (77.3%)
 ```
 
-**Tiempo estimado por subsistema**: Variable (1-3 días por subsistema)
-**Duración total estimada**: 2-3 meses
+**Progreso por fases**:
+- ✅ Fase 1 - Infraestructura: 100% (1/1)
+- ✅ Fase 2 - Autenticación: 100% (2/2)
+- ✅ Fase 3 - Mapas: 100% (1/1)
+- ✅ Fase 4 - Chat AI: 100% (1/1)
+- 🔄 Fase 5 - Componentes: 0% (0/1)
+- 🔄 Fase 6 - Dashboards por rol: 0% (0/4)
+- 🔄 Fase 7 - Funcionalidades avanzadas: 0% (0/3)
+- 🔄 Fase 8 - Seguridad y performance: 0% (0/2)
+- 🔄 Fase 9 - Testing: 0% (0/2)
+- 🔄 Fase 10 - Documentación: 0% (0/2)
+- 🔄 Fase 11 - Deployment: 0% (0/3)
+
+**Tiempo invertido hasta ahora**: ~3-4 días
+**Tiempo estimado restante**: 4-6 semanas
+**Velocidad promedio**: 1.25 subsistemas/día
 
 ---
 
 ## 🎯 HITOS CLAVE
 
-| Hito | Subsistemas | Estado |
-|------|-------------|--------|
-| **MVP Funcional** | 1-9 | ⏳ En progreso |
-| **Dashboards Completos** | 10-13 | ⏳ Pendiente |
-| **Funcionalidad Completa** | 14-17 | ⏳ Pendiente |
-| **Producción Ready** | 18-21 | ⏳ Pendiente |
-| **Lanzamiento** | 22-26 | ⏳ Pendiente |
+| Hito | Subsistemas | Estado | Progreso |
+|------|-------------|--------|----------|
+| **✅ MVP Core** | 1-5 | ✅ Completado | 100% |
+| **🔄 MVP Mejorado** | 6-10 | 🔄 En espera | 0% |
+| **🔄 Features Avanzadas** | 11-13 | 🔄 Pendiente | 0% |
+| **🔄 Producción Ready** | 14-17 | 🔄 Pendiente | 0% |
+| **🔄 Docs y Deploy** | 18-22 | 🔄 Pendiente | 0% |
 
 ---
 
 ## 📝 NOTAS IMPORTANTES
 
-### Prioridades de Desarrollo
-1. ✅ **Infraestructura sólida** - TypeScript estricto, sin `any`
-2. ⏳ **Funcionalidad core** - Autenticación, datos, KPIs
-3. ⏳ **UX pulida** - Responsive, accesibilidad
-4. ⏳ **Performance** - Lazy loading, code splitting
-5. ⏳ **Testing** - Coverage > 70%
-6. ⏳ **Documentación** - README completo, guías
+### Logros Destacados ✅
+- **Infraestructura moderna**: React 19 + TypeScript 5 + Vite
+- **Sistema de roles completo**: 4 roles con permisos diferenciados
+- **26 KPIs funcionales**: Todos implementados con gráficos Recharts
+- **103 centros georreferenciados**: Mapa interactivo completo
+- **Chat AI inteligente**: Groq LLM con contexto enriquecido del sistema
+- **0 dependencias de `any`**: TypeScript estricto en todo el proyecto
 
-### Riesgos Identificados
-- 🔴 **Complejidad de KPIs**: 26 componentes de KPIs requieren lógica compleja
-- 🟡 **Integración de mapas**: React-Leaflet puede tener problemas con SSR
-- 🟡 **Chat AI**: Dependencia de API externa (Anthropic)
-- 🟢 **Responsive design**: Tailwind facilita el desarrollo mobile-first
+### Prioridades Actuales
+1. ✅ **Infraestructura sólida** - COMPLETADO
+2. ✅ **Funcionalidad core** - COMPLETADO (Auth, KPIs, Mapas, Chat)
+3. 🔄 **Dashboards personalizados** - Próximo objetivo
+4. 🔄 **Exportación de datos** - Alta demanda de usuarios
+5. 🔄 **Responsive design** - Mejorar experiencia móvil
+6. ⏳ **Testing** - Recomendado antes de producción
+7. ⏳ **Documentación** - Antes del lanzamiento
 
-### Decisiones Técnicas
-- ✅ React 19 (última versión estable)
-- ✅ TypeScript modo estricto (sin `any`)
-- ✅ Tailwind CSS v3 (v4 aún muy nuevo)
-- ✅ Zustand para estado global (más simple que Redux)
-- ✅ React Router v6 (estándar de la industria)
-- ✅ Recharts para gráficos (más ligero que Plotly)
+### Riesgos Mitigados
+- ✅ **Chat AI**: Cambio de Anthropic a Groq exitoso
+- ✅ **Integración de mapas**: React-Leaflet funcionando correctamente
+- ✅ **26 KPIs**: Todos implementados y funcionando
+- 🟡 **Performance**: Pendiente de optimización (lazy loading, memoization)
+- 🟢 **Responsive design**: Tailwind facilita adaptación, pero falta refinamiento
+
+### Decisiones Técnicas Implementadas
+- ✅ React 19 con Server Components deshabilitados
+- ✅ TypeScript 5 modo estricto (sin `any` en todo el proyecto)
+- ✅ Tailwind CSS v3 con colores corporativos personalizados
+- ✅ Zustand para estado global (auth, KPIs, maps, chat)
+- ✅ React Router v6 con rutas protegidas
+- ✅ Recharts para visualizaciones (26 gráficos implementados)
+- ✅ React-Leaflet para mapas (103 centros)
+- ✅ Groq SDK para Chat AI (llama-3.3-70b-versatile)
+- ✅ react-markdown + remark-gfm para mensajes del chat
+- ✅ date-fns para manejo de fechas
+- ✅ bcryptjs para hashing de contraseñas
+
+### Cambios Respecto al Plan Original
+- **Aceleración**: Completamos subsistemas 1-5 en 3-4 días (originalmente 5-10 días)
+- **Reorganización**: Combinamos "Routing" y "KPIs" en el Subsistema 3
+- **Cambio de provider**: Groq en lugar de Anthropic Claude (Subsistema 5)
+- **Anticipación**: Implementamos Chat AI antes de dashboards por rol
+- **Reducción**: De 26 a 22 subsistemas (consolidación de duplicados)
 
 ---
 
-## 🔄 PRÓXIMO PASO
+## 🎯 PRÓXIMOS PASOS RECOMENDADOS
 
-**Subsistema 2: Sistema de Autenticación**
-- Crear Zustand store de autenticación
-- Implementar LoginPage
-- Configurar ProtectedRoute
-- Servicio de auth con bcryptjs
+### 🥇 **OPCIÓN A: Subsistema 11 - Sistema de Exportación** (RECOMENDADO)
+**Impacto**: ⭐⭐⭐⭐⭐ Muy Alto
+**Dificultad**: ⭐⭐⭐ Media
+**Tiempo estimado**: 1-2 días
+
+**Por qué primero**:
+- Funcionalidad muy demandada por usuarios médicos y administradores
+- Permite generar reportes de KPIs en PDF/Excel
+- Facilita compartir datos con stakeholders
+- No requiere cambios arquitectónicos grandes
+
+**Tareas**:
+1. Instalar jspdf, html2canvas, xlsx
+2. Crear servicio de exportación (exportService.ts)
+3. Botones "Exportar" en Dashboard y MapPage
+4. Exportar dashboard completo a PDF
+5. Exportar tabla de KPIs a CSV/Excel
+6. Exportar gráficos individuales a PNG
 
 ---
 
-**Última actualización**: 04/01/2026
+### 🥈 **OPCIÓN B: Subsistemas 7-10 - Dashboards Personalizados**
+**Impacto**: ⭐⭐⭐⭐ Alto
+**Dificultad**: ⭐⭐⭐⭐ Alta
+**Tiempo estimado**: 3-4 días
+
+**Por qué segundo**:
+- Mejora significativa de UX por rol
+- Prioriza información relevante para cada usuario
+- Reduce ruido visual
+- Requiere diseño UI/UX cuidadoso
+
+**Tareas**:
+1. Dashboard Médico (KPIs de listas de espera, derivaciones)
+2. Dashboard Enfermero (atención primaria, vacunación)
+3. Dashboard Admin (vista ejecutiva, gestión usuarios)
+4. Dashboard Paciente (centros cercanos, servicios)
+
+---
+
+### 🥉 **OPCIÓN C: Subsistema 13 - Responsive Design**
+**Impacto**: ⭐⭐⭐⭐ Alto
+**Dificultad**: ⭐⭐ Baja-Media
+**Tiempo estimado**: 2-3 días
+
+**Por qué tercero**:
+- Mejora experiencia en dispositivos móviles
+- Aumenta accesibilidad
+- Tailwind ya facilita mucho el trabajo
+- Dark mode es un plus
+
+**Tareas**:
+1. Auditoría de responsive en mobile/tablet
+2. Ajustar layouts para pantallas pequeñas
+3. Optimizar mapas para touch
+4. Mejorar chat en mobile
+5. Implementar dark mode toggle
+6. ARIA labels y navegación por teclado
+
+---
+
+## 📋 DECISIÓN REQUERIDA
+
+**¿Qué subsistema implementamos a continuación?**
+
+Opciones:
+- **A) Subsistema 11 - Exportación** ← Recomendado (rápido, alto valor)
+- **B) Subsistemas 7-10 - Dashboards por rol** (mejora UX, más largo)
+- **C) Subsistema 13 - Responsive** (mejora accesibilidad)
+- **D) Otro (especificar)**
+
+---
+
+**Última actualización**: 07/01/2026 19:30
 **Autor**: Claude Code + Usuario
-**Versión del roadmap**: 1.0
+**Versión del roadmap**: 2.0 (Actualizado tras completar Subsistema 5)
