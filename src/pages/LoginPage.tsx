@@ -93,7 +93,7 @@ function LoginPage() {
             <div className="text-sm text-gray-500">
               <p>✅ 26 KPIs de salud de Andalucía</p>
               <p>✅ Mapas interactivos de centros sanitarios</p>
-              <p>✅ Chat AI con Claude</p>
+              <p>✅ Asistente AI Inteligente (Groq)</p>
               <p>✅ Análisis de datos en tiempo real</p>
             </div>
           </div>

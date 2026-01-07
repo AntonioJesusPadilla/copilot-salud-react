@@ -160,7 +160,10 @@ function DashboardPage() {
                 </button>
               )}
               {roleConfig.permissions.canAccessChat && (
-                <button className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium">
+                <button
+                  onClick={() => navigate('/chat')}
+                  className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium"
+                >
                   💬 Chat AI
                 </button>
               )}
