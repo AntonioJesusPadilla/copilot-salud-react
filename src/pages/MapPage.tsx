@@ -5,6 +5,7 @@ import useMapStore from '../store/mapStore';
 import { ROLE_CONFIGS } from '../types';
 import InteractiveMap from '../components/map/InteractiveMap';
 import MapFilters from '../components/map/MapFilters';
+import SearchBar from '../components/filters/SearchBar';
 import { HEALTH_CENTER_TYPE_CONFIGS } from '../types/map';
 import ExportMenu, { ExportOption } from '../components/common/ExportMenu';
 import {
@@ -125,6 +126,14 @@ function MapPage() {
             <p className="text-sm text-gray-600">Zonas</p>
             <p className="text-2xl font-bold text-purple-500">{stats?.zones.length || 0}</p>
           </div>
+        </div>
+
+        {/* Búsqueda Global */}
+        <div className="mb-6">
+          <SearchBar
+            placeholder="Buscar centros de salud, direcciones, ciudades..."
+            defaultScope="centers"
+          />
         </div>
 
         {/* Layout con mapa y filtros */}

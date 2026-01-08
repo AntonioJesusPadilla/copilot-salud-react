@@ -2,8 +2,8 @@
 ## De Streamlit/Python a React/TypeScript
 
 **Fecha de inicio**: 04/01/2026
-**Última actualización**: 07/01/2026
-**Estado actual**: ✅ 5 Subsistemas completados (19.2% del proyecto)
+**Última actualización**: 08/01/2026
+**Estado actual**: ✅ 6 Subsistemas completados (27.3% del proyecto)
 
 ---
 
@@ -115,15 +115,21 @@
   - FAQ y recursos informativos
   - **Commit**: `feat: Subsistema 10 - Dashboard paciente`
 
-### 🔄 FASE 7: FUNCIONALIDADES AVANZADAS (PENDIENTE)
-- [ ] **Subsistema 11**: Sistema de Exportación
-  - Exportar dashboards a PDF (jspdf + html2canvas)
-  - Exportar datos de KPIs a CSV/Excel
-  - Exportar gráficos individuales como PNG/SVG
-  - Exportar listas de centros de salud
-  - Generación de reportes personalizados
+### ✅ FASE 7: FUNCIONALIDADES AVANZADAS (EN PROGRESO)
+- [x] **Subsistema 11**: Sistema de Exportación
+  - Servicio de exportación completo (exportService.ts)
+  - Exportación de dashboard completo a PDF (jspdf + html2canvas)
+  - Exportación de KPIs a CSV/Excel (xlsx)
+  - Exportación de centros de salud a CSV/Excel con múltiples hojas
+  - Exportación de reportes completos con portada y metadatos
+  - Componente ExportMenu reutilizable con menú desplegable
+  - Integración en DashboardPage con 4 opciones de exportación
+  - Integración en MapPage con 3 opciones de exportación
+  - Validación de permisos por rol (canExport)
+  - Indicadores de carga durante exportación
+  - Generación de nombres de archivo con timestamp
   - **Commit**: `feat: Subsistema 11 - Sistema de exportación`
-  - **Prioridad**: ⭐⭐⭐ Alta (muy solicitado por usuarios médicos/admin)
+  - **Estado**: ✅ Completado
 
 - [ ] **Subsistema 12**: Búsqueda y Filtros Avanzados
   - Búsqueda global (KPIs, centros, datos)
@@ -245,9 +251,9 @@
 
 ```
 Total de Subsistemas: 22 (reorganizado desde 26)
-Completados: 5 (22.7%)
+Completados: 6 (27.3%)
 En progreso: 0 (0%)
-Pendientes: 17 (77.3%)
+Pendientes: 16 (72.7%)
 ```
 
 **Progreso por fases**:
@@ -257,15 +263,15 @@ Pendientes: 17 (77.3%)
 - ✅ Fase 4 - Chat AI: 100% (1/1)
 - 🔄 Fase 5 - Componentes: 0% (0/1)
 - 🔄 Fase 6 - Dashboards por rol: 0% (0/4)
-- 🔄 Fase 7 - Funcionalidades avanzadas: 0% (0/3)
+- 🔄 Fase 7 - Funcionalidades avanzadas: 33.3% (1/3) ⭐ NUEVO
 - 🔄 Fase 8 - Seguridad y performance: 0% (0/2)
 - 🔄 Fase 9 - Testing: 0% (0/2)
 - 🔄 Fase 10 - Documentación: 0% (0/2)
 - 🔄 Fase 11 - Deployment: 0% (0/3)
 
-**Tiempo invertido hasta ahora**: ~3-4 días
-**Tiempo estimado restante**: 4-6 semanas
-**Velocidad promedio**: 1.25 subsistemas/día
+**Tiempo invertido hasta ahora**: ~4-5 días
+**Tiempo estimado restante**: 3-5 semanas
+**Velocidad promedio**: 1.2 subsistemas/día
 
 ---
 
@@ -275,7 +281,7 @@ Pendientes: 17 (77.3%)
 |------|-------------|--------|----------|
 | **✅ MVP Core** | 1-5 | ✅ Completado | 100% |
 | **🔄 MVP Mejorado** | 6-10 | 🔄 En espera | 0% |
-| **🔄 Features Avanzadas** | 11-13 | 🔄 Pendiente | 0% |
+| **🔄 Features Avanzadas** | 11-13 | 🔄 En progreso | 33.3% (1/3) ⭐ |
 | **🔄 Producción Ready** | 14-17 | 🔄 Pendiente | 0% |
 | **🔄 Docs y Deploy** | 18-22 | 🔄 Pendiente | 0% |
 
@@ -289,16 +295,18 @@ Pendientes: 17 (77.3%)
 - **26 KPIs funcionales**: Todos implementados con gráficos Recharts
 - **103 centros georreferenciados**: Mapa interactivo completo
 - **Chat AI inteligente**: Groq LLM con contexto enriquecido del sistema
+- **Sistema de exportación completo**: PDF, CSV, Excel con reportes multipágina ⭐ NUEVO
 - **0 dependencias de `any`**: TypeScript estricto en todo el proyecto
 
 ### Prioridades Actuales
 1. ✅ **Infraestructura sólida** - COMPLETADO
 2. ✅ **Funcionalidad core** - COMPLETADO (Auth, KPIs, Mapas, Chat)
-3. 🔄 **Dashboards personalizados** - Próximo objetivo
-4. 🔄 **Exportación de datos** - Alta demanda de usuarios
+3. ✅ **Exportación de datos** - COMPLETADO ⭐ NUEVO
+4. 🔄 **Dashboards personalizados** - Próximo objetivo
 5. 🔄 **Responsive design** - Mejorar experiencia móvil
-6. ⏳ **Testing** - Recomendado antes de producción
-7. ⏳ **Documentación** - Antes del lanzamiento
+6. 🔄 **Filtros avanzados** - Búsqueda global y comparación de KPIs
+7. ⏳ **Testing** - Recomendado antes de producción
+8. ⏳ **Documentación** - Antes del lanzamiento
 
 ### Riesgos Mitigados
 - ✅ **Chat AI**: Cambio de Anthropic a Groq exitoso
@@ -319,36 +327,55 @@ Pendientes: 17 (77.3%)
 - ✅ react-markdown + remark-gfm para mensajes del chat
 - ✅ date-fns para manejo de fechas
 - ✅ bcryptjs para hashing de contraseñas
+- ✅ jspdf + html2canvas para exportación a PDF ⭐ NUEVO
+- ✅ xlsx para exportación a Excel/CSV ⭐ NUEVO
 
 ### Cambios Respecto al Plan Original
 - **Aceleración**: Completamos subsistemas 1-5 en 3-4 días (originalmente 5-10 días)
 - **Reorganización**: Combinamos "Routing" y "KPIs" en el Subsistema 3
 - **Cambio de provider**: Groq en lugar de Anthropic Claude (Subsistema 5)
-- **Anticipación**: Implementamos Chat AI antes de dashboards por rol
+- **Priorización**: Implementamos exportación (Subsistema 11) antes de dashboards personalizados
+- **Anticipación**: Implementamos Chat AI y Exportación antes de lo planeado
 - **Reducción**: De 26 a 22 subsistemas (consolidación de duplicados)
 
 ---
 
 ## 🎯 PRÓXIMOS PASOS RECOMENDADOS
 
-### 🥇 **OPCIÓN A: Subsistema 11 - Sistema de Exportación** (RECOMENDADO)
+### ✅ **COMPLETADO: Subsistema 11 - Sistema de Exportación**
+**Estado**: ✅ Completado el 08/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Muy Alto
-**Dificultad**: ⭐⭐⭐ Media
-**Tiempo estimado**: 1-2 días
 
-**Por qué primero**:
-- Funcionalidad muy demandada por usuarios médicos y administradores
-- Permite generar reportes de KPIs en PDF/Excel
-- Facilita compartir datos con stakeholders
-- No requiere cambios arquitectónicos grandes
+**Lo que se implementó**:
+- ✅ Servicio de exportación completo (exportService.ts)
+- ✅ Exportación de dashboard a PDF con jspdf + html2canvas
+- ✅ Exportación de KPIs a Excel/CSV con xlsx
+- ✅ Exportación de centros de salud a Excel/CSV
+- ✅ Componente ExportMenu reutilizable
+- ✅ Integración en DashboardPage (4 opciones)
+- ✅ Integración en MapPage (3 opciones)
+- ✅ Validación de permisos por rol
+
+---
+
+### 🥇 **OPCIÓN A: Subsistema 12 - Búsqueda y Filtros Avanzados** (RECOMENDADO)
+**Impacto**: ⭐⭐⭐⭐ Alto
+**Dificultad**: ⭐⭐⭐ Media
+**Tiempo estimado**: 2-3 días
+
+**Por qué ahora**:
+- Complementa perfectamente el sistema de exportación
+- Permite a usuarios encontrar datos específicos antes de exportar
+- Mejora significativamente la UX
+- Reutiliza componentes ya existentes
 
 **Tareas**:
-1. Instalar jspdf, html2canvas, xlsx
-2. Crear servicio de exportación (exportService.ts)
-3. Botones "Exportar" en Dashboard y MapPage
-4. Exportar dashboard completo a PDF
-5. Exportar tabla de KPIs a CSV/Excel
-6. Exportar gráficos individuales a PNG
+1. Crear componente de búsqueda global
+2. Implementar filtros temporales con date-picker
+3. Filtros combinados (categoría + provincia + tendencia)
+4. Sistema de persistencia de filtros favoritos
+5. Comparador de KPIs entre períodos
+6. Integrar en Dashboard y MapPage
 
 ---
 
@@ -397,13 +424,14 @@ Pendientes: 17 (77.3%)
 **¿Qué subsistema implementamos a continuación?**
 
 Opciones:
-- **A) Subsistema 11 - Exportación** ← Recomendado (rápido, alto valor)
+- **A) Subsistema 12 - Filtros Avanzados** ← Recomendado (complementa exportación)
 - **B) Subsistemas 7-10 - Dashboards por rol** (mejora UX, más largo)
 - **C) Subsistema 13 - Responsive** (mejora accesibilidad)
-- **D) Otro (especificar)**
+- **D) Subsistema 6 - Componentes comunes** (refactorización)
+- **E) Otro (especificar)**
 
 ---
 
-**Última actualización**: 07/01/2026 19:30
-**Autor**: Claude Code + Usuario
-**Versión del roadmap**: 2.0 (Actualizado tras completar Subsistema 5)
+**Última actualización**: 08/01/2026 20:45
+**Autor**: Antonio Jesús Padilla + Claude Code
+**Versión del roadmap**: 3.0 (Actualizado tras completar Subsistema 11)

@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import useKPIStore from '../store/kpiStore';
+import useFilterStore from '../store/filterStore';
 import { ROLE_CONFIGS } from '../types';
 import KPIGrid from '../components/kpi/KPIGrid';
 import ExportMenu, { ExportOption } from '../components/common/ExportMenu';
+import SearchBar from '../components/filters/SearchBar';
+import AdvancedFilters from '../components/filters/AdvancedFilters';
+import SavedFilters from '../components/filters/SavedFilters';
+import KPIComparator from '../components/filters/KPIComparator';
 import {
   exportDashboardToPDF,
   exportKPIsToCSV,
@@ -12,13 +17,20 @@ import {
   exportFullReport,
   validateExportPermission
 } from '../services/exportService';
+import { filterService } from '../services/filterService';
 import useMapStore from '../store/mapStore';
 
 function DashboardPage() {
   const { user, logout } = useAuthStore();
   const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
   const { centers } = useMapStore();
+  const { activeFilters, setActiveFilters, clearActiveFilters } = useFilterStore();
   const navigate = useNavigate();
+
+  // Estados locales
+  const [displayedKPIs, setDisplayedKPIs] = useState(filteredKPIs);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [showComparator, setShowComparator] = useState(false);
 
   // Cargar KPIs cuando se monta el componente
   useEffect(() => {
@@ -26,6 +38,25 @@ function DashboardPage() {
       loadKPIs(user.role);
     }
   }, [user, loadKPIs]);
+
+  // Actualizar KPIs mostrados cuando cambian los filtrados
+  useEffect(() => {
+    setDisplayedKPIs(filteredKPIs);
+  }, [filteredKPIs]);
+
+  // Aplicar filtros avanzados
+  const handleApplyFilters = async () => {
+    if (user) {
+      const filtered = await filterService.applyAdvancedFilters(activeFilters, user.role);
+      setDisplayedKPIs(filtered);
+    }
+  };
+
+  // Limpiar filtros
+  const handleClearFilters = () => {
+    clearActiveFilters();
+    setDisplayedKPIs(filteredKPIs);
+  };
 
   if (!user) {
     return null;
@@ -235,6 +266,56 @@ function DashboardPage() {
           </div>
         </div>
 
+        {/* Búsqueda Global */}
+        <div className="mb-6">
+          <SearchBar
+            placeholder="Buscar KPIs, centros de salud, datos..."
+            defaultScope="kpis"
+          />
+        </div>
+
+        {/* Controles de filtros y comparación */}
+        <div className="grid lg:grid-cols-3 gap-4 mb-6">
+          <button
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className="px-6 py-3 bg-white border-2 border-gray-300 rounded-lg hover:border-primary hover:shadow-md transition-all font-bold text-gray-700"
+          >
+            ⚙️ Filtros Avanzados {showAdvancedFilters ? '▲' : '▼'}
+          </button>
+          <button
+            onClick={() => setShowComparator(!showComparator)}
+            className="px-6 py-3 bg-white border-2 border-gray-300 rounded-lg hover:border-primary hover:shadow-md transition-all font-bold text-gray-700"
+          >
+            📊 Comparar KPIs {showComparator ? '▲' : '▼'}
+          </button>
+          <div className="text-center py-3 bg-blue-50 border-2 border-blue-200 rounded-lg">
+            <span className="text-sm font-bold text-blue-800">
+              {displayedKPIs.length} de {stats?.total || 0} KPIs mostrados
+            </span>
+          </div>
+        </div>
+
+        {/* Panel de filtros avanzados */}
+        {showAdvancedFilters && (
+          <div className="grid lg:grid-cols-2 gap-6 mb-6">
+            <AdvancedFilters
+              filters={activeFilters}
+              onFiltersChange={setActiveFilters}
+              onApply={handleApplyFilters}
+              onClear={handleClearFilters}
+              mode="kpi"
+            />
+            <SavedFilters onFilterLoad={handleApplyFilters} />
+          </div>
+        )}
+
+        {/* Panel de comparación */}
+        {showComparator && (
+          <div className="mb-6">
+            <KPIComparator />
+          </div>
+        )}
+
         {/* Sección de KPIs */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
@@ -248,17 +329,17 @@ function DashboardPage() {
             </div>
           </div>
 
-          <KPIGrid kpis={filteredKPIs} isLoading={isLoading} />
+          <KPIGrid kpis={displayedKPIs} isLoading={isLoading} />
         </div>
 
         {/* Información del subsistema */}
         <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
           <h3 className="font-bold text-lg mb-2 text-green-900">
-            ✅ Subsistema 3: Dashboard y KPIs Completado
+            ✅ Subsistema 12: Búsqueda y Filtros Avanzados Integrado
           </h3>
           <p className="text-green-800">
-            Sistema de visualización de KPIs de salud implementado con {stats?.total || 26} indicadores,
-            gráficas interactivas y filtros por categoría. Los datos se actualizan en tiempo real.
+            Sistema completo de búsqueda global, filtros avanzados combinados, filtros guardados con persistencia
+            y comparador de KPIs entre períodos. Mejora significativa en la experiencia de usuario para análisis de datos.
           </p>
         </div>
       </main>
