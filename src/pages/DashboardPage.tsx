@@ -4,10 +4,20 @@ import useAuthStore from '../store/authStore';
 import useKPIStore from '../store/kpiStore';
 import { ROLE_CONFIGS } from '../types';
 import KPIGrid from '../components/kpi/KPIGrid';
+import ExportMenu, { ExportOption } from '../components/common/ExportMenu';
+import {
+  exportDashboardToPDF,
+  exportKPIsToCSV,
+  exportKPIsToExcel,
+  exportFullReport,
+  validateExportPermission
+} from '../services/exportService';
+import useMapStore from '../store/mapStore';
 
 function DashboardPage() {
   const { user, logout } = useAuthStore();
   const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
+  const { centers } = useMapStore();
   const navigate = useNavigate();
 
   // Cargar KPIs cuando se monta el componente
@@ -31,6 +41,50 @@ function DashboardPage() {
   const handleSettings = () => {
     navigate('/settings');
   };
+
+  // Opciones de exportación
+  const exportOptions: ExportOption[] = [
+    {
+      id: 'dashboard-pdf',
+      label: 'Dashboard completo (PDF)',
+      icon: '📄',
+      onClick: async () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        await exportDashboardToPDF(user.name);
+      },
+      disabled: !roleConfig.permissions.canExport
+    },
+    {
+      id: 'kpis-excel',
+      label: 'KPIs a Excel',
+      icon: '📊',
+      onClick: () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        exportKPIsToExcel(filteredKPIs);
+      },
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+    },
+    {
+      id: 'kpis-csv',
+      label: 'KPIs a CSV',
+      icon: '📋',
+      onClick: () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        exportKPIsToCSV(filteredKPIs);
+      },
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+    },
+    {
+      id: 'full-report',
+      label: 'Reporte completo (Excel)',
+      icon: '📦',
+      onClick: () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        exportFullReport(filteredKPIs, centers, user.name);
+      },
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -81,7 +135,7 @@ function DashboardPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main id="dashboard-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Banner de bienvenida */}
         <div
           className="rounded-xl p-8 mb-8 text-white"
@@ -168,9 +222,14 @@ function DashboardPage() {
                 </button>
               )}
               {roleConfig.permissions.canExport && (
-                <button className="w-full text-left px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium">
-                  📥 Exportar Datos
-                </button>
+                <div className="w-full">
+                  <ExportMenu
+                    options={exportOptions}
+                    buttonLabel="Exportar Datos"
+                    buttonIcon="📥"
+                    className="w-full"
+                  />
+                </div>
               )}
             </div>
           </div>

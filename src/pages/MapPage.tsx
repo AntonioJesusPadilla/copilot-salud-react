@@ -6,6 +6,13 @@ import { ROLE_CONFIGS } from '../types';
 import InteractiveMap from '../components/map/InteractiveMap';
 import MapFilters from '../components/map/MapFilters';
 import { HEALTH_CENTER_TYPE_CONFIGS } from '../types/map';
+import ExportMenu, { ExportOption } from '../components/common/ExportMenu';
+import {
+  exportCentrosToCSV,
+  exportCentrosToExcel,
+  exportElementToPNG,
+  validateExportPermission
+} from '../services/exportService';
 
 function MapPage() {
   const { user } = useAuthStore();
@@ -36,6 +43,40 @@ function MapPage() {
   }
 
   const roleConfig = ROLE_CONFIGS[user.role];
+
+  // Opciones de exportación para mapas
+  const exportOptions: ExportOption[] = [
+    {
+      id: 'centros-excel',
+      label: 'Centros a Excel',
+      icon: '📊',
+      onClick: () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        exportCentrosToExcel(filteredCenters);
+      },
+      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0
+    },
+    {
+      id: 'centros-csv',
+      label: 'Centros a CSV',
+      icon: '📋',
+      onClick: () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        exportCentrosToCSV(filteredCenters);
+      },
+      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0
+    },
+    {
+      id: 'map-png',
+      label: 'Mapa como imagen (PNG)',
+      icon: '🖼️',
+      onClick: async () => {
+        validateExportPermission(roleConfig.permissions.canExport);
+        await exportElementToPNG('map-container', `Mapa_Centros_Salud_${new Date().toISOString().split('T')[0]}`);
+      },
+      disabled: !roleConfig.permissions.canExport
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -126,6 +167,18 @@ function MapPage() {
             >
               🔄 Restablecer Vista
             </button>
+
+            {/* Botón exportar */}
+            {roleConfig.permissions.canExport && (
+              <div className="mt-4">
+                <ExportMenu
+                  options={exportOptions}
+                  buttonLabel="Exportar"
+                  buttonIcon="📥"
+                  className="w-full"
+                />
+              </div>
+            )}
           </div>
 
           {/* Mapa */}
@@ -139,7 +192,7 @@ function MapPage() {
             </button>
 
             {/* Componente del mapa */}
-            <div className="bg-white rounded-lg shadow-lg p-2">
+            <div id="map-container" className="bg-white rounded-lg shadow-lg p-2">
               {isLoading ? (
                 <div className="flex items-center justify-center h-[600px]">
                   <div className="text-center">
