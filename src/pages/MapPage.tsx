@@ -6,6 +6,7 @@ import { ROLE_CONFIGS } from '../types';
 import InteractiveMap from '../components/map/InteractiveMap';
 import MapFilters from '../components/map/MapFilters';
 import SearchBar from '../components/filters/SearchBar';
+import ThemeToggle from '../components/common/ThemeToggle';
 import { HEALTH_CENTER_TYPE_CONFIGS } from '../types/map';
 import ExportMenu, { ExportOption } from '../components/common/ExportMenu';
 import {
@@ -80,28 +81,30 @@ function MapPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b-4" style={{ borderColor: roleConfig.color }}>
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors" style={{ borderColor: roleConfig.color }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink min-w-0">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="p-2 text-gray-600 hover:text-primary hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
                 title="Volver al Dashboard"
+                aria-label="Volver al Dashboard"
               >
-                ← Volver
+                ← <span className="hidden sm:inline">Volver</span>
               </button>
-              <div>
-                <h1 className="text-2xl font-bold text-secondary">
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary dark:text-gray-100 truncate">
                   🗺️ Mapa de Centros de Salud
                 </h1>
-                <p className="text-sm text-gray-600">
-                  Provincia de Málaga - {stats?.total || 0} centros disponibles
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  Málaga - {stats?.total || 0} centros
                 </p>
               </div>
             </div>
+            <ThemeToggle className="flex-shrink-0" />
           </div>
         </div>
       </header>
@@ -109,22 +112,22 @@ function MapPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow p-4">
-            <p className="text-sm text-gray-600">Total Centros</p>
-            <p className="text-2xl font-bold text-primary">{stats?.total || 0}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Centros</p>
+            <p className="text-xl sm:text-2xl font-bold text-primary">{stats?.total || 0}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <p className="text-sm text-gray-600">Con Urgencias</p>
-            <p className="text-2xl font-bold text-red-500">{stats?.withEmergency || 0}</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Con Urgencias</p>
+            <p className="text-xl sm:text-2xl font-bold text-red-500 dark:text-red-400">{stats?.withEmergency || 0}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <p className="text-sm text-gray-600">Mostrados</p>
-            <p className="text-2xl font-bold text-green-500">{filteredCenters.length}</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Mostrados</p>
+            <p className="text-xl sm:text-2xl font-bold text-green-500 dark:text-green-400">{filteredCenters.length}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-4">
-            <p className="text-sm text-gray-600">Zonas</p>
-            <p className="text-2xl font-bold text-purple-500">{stats?.zones.length || 0}</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Zonas</p>
+            <p className="text-xl sm:text-2xl font-bold text-purple-500 dark:text-purple-400">{stats?.zones.length || 0}</p>
           </div>
         </div>
 
@@ -149,14 +152,14 @@ function MapPage() {
             />
 
             {/* Leyenda del mapa */}
-            <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
-              <h4 className="font-bold text-gray-800 mb-4">📍 Leyenda</h4>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mt-4 sm:mt-6 transition-colors">
+              <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">📍 Leyenda</h4>
               <div className="space-y-2">
                 {Object.values(HEALTH_CENTER_TYPE_CONFIGS).map((config) => (
                   <div key={config.type} className="flex items-center space-x-2">
-                    <span className="text-xl">{config.icon}</span>
+                    <span className="text-lg sm:text-xl">{config.icon}</span>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-700">
+                      <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                         {config.name}
                       </p>
                     </div>
@@ -172,7 +175,8 @@ function MapPage() {
             {/* Botón reset vista */}
             <button
               onClick={resetMapView}
-              className="w-full mt-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+              className="w-full mt-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
+              aria-label="Restablecer vista del mapa"
             >
               🔄 Restablecer Vista
             </button>
@@ -222,14 +226,14 @@ function MapPage() {
 
             {/* Info del centro seleccionado */}
             {selectedCenter && (
-              <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mt-4 sm:mt-6 transition-colors">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-3">
-                    <span className="text-3xl">
+                    <span className="text-2xl sm:text-3xl">
                       {HEALTH_CENTER_TYPE_CONFIGS[selectedCenter.type].icon}
                     </span>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-800">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100">
                         {selectedCenter.name}
                       </h3>
                       <p
@@ -244,17 +248,17 @@ function MapPage() {
                   </div>
                   <button
                     onClick={() => selectCenter(null)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   >
                     ✕
                   </button>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Dirección</p>
-                      <p className="text-sm text-gray-700">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Dirección</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
                         {selectedCenter.address}
                         <br />
                         {selectedCenter.city}, {selectedCenter.postalCode}
@@ -263,15 +267,15 @@ function MapPage() {
 
                     {selectedCenter.phone && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Teléfono</p>
-                        <p className="text-sm text-gray-700">{selectedCenter.phone}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Teléfono</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{selectedCenter.phone}</p>
                       </div>
                     )}
 
                     {selectedCenter.schedule && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Horario</p>
-                        <p className="text-sm text-gray-700">{selectedCenter.schedule}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Horario</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{selectedCenter.schedule}</p>
                       </div>
                     )}
                   </div>
@@ -279,8 +283,8 @@ function MapPage() {
                   <div className="space-y-3">
                     {selectedCenter.description && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Descripción</p>
-                        <p className="text-sm text-gray-700">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Descripción</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
                           {selectedCenter.description}
                         </p>
                       </div>
@@ -288,12 +292,12 @@ function MapPage() {
 
                     {selectedCenter.services && (
                       <div>
-                        <p className="text-xs text-gray-500 mb-1">Servicios</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Servicios</p>
                         <div className="flex flex-wrap gap-2">
                           {selectedCenter.services.map((service, idx) => (
                             <span
                               key={idx}
-                              className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700"
+                              className="text-xs px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300"
                             >
                               {service}
                             </span>

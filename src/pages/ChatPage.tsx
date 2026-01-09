@@ -9,6 +9,7 @@ import useKPIStore from '../store/kpiStore';
 import useMapStore from '../store/mapStore';
 import { ROLE_CONFIGS } from '../types';
 import ChatInterface from '../components/chat/ChatInterface';
+import ThemeToggle from '../components/common/ThemeToggle';
 import { validateAPIKeys } from '../services/chatService';
 
 function ChatPage() {
@@ -43,34 +44,36 @@ function ChatPage() {
   const roleConfig = ROLE_CONFIGS[user.role];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors">
       {/* Top Bar */}
-      <header className="bg-white border-b-4 shadow-sm" style={{ borderColor: roleConfig.color }}>
+      <header className="bg-white dark:bg-gray-800 border-b-4 shadow-sm transition-colors" style={{ borderColor: roleConfig.color }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="p-2 text-gray-600 hover:text-primary hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 title="Volver al Dashboard"
+                aria-label="Volver al Dashboard"
               >
-                ← Volver
+                ← <span className="hidden sm:inline">Volver</span>
               </button>
               <div>
-                <h1 className="text-xl font-bold text-secondary">Chat AI</h1>
-                <p className="text-xs text-gray-500">
+                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100">Chat AI</h1>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Asistente inteligente de salud
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
-              <div className="text-right hidden sm:block">
-                <p className="font-medium text-gray-900 text-sm">{user.name}</p>
-                <p className="text-xs text-gray-500">{roleConfig.name}</p>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="text-right hidden md:block">
+                <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">{user.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{roleConfig.name}</p>
               </div>
+              <ThemeToggle />
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-lg sm:text-xl"
                 style={{ backgroundColor: `${roleConfig.color}20` }}
               >
                 {roleConfig.icon}
@@ -81,21 +84,21 @@ function ChatPage() {
       </header>
 
       {/* Chat Container - Ocupa todo el espacio disponible */}
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col p-2 sm:p-4">
         <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col">
-          <div className="flex-1 bg-white shadow-lg rounded-t-xl overflow-hidden flex flex-col">
+          <div className="flex-1 bg-white dark:bg-gray-800 shadow-lg rounded-t-xl overflow-hidden flex flex-col transition-colors">
             <ChatInterface />
           </div>
 
           {/* Info del subsistema */}
-          <div className="bg-green-50 border-2 border-green-200 rounded-b-xl p-4 mx-4 mb-4">
+          <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-b-xl p-3 sm:p-4 transition-colors">
             <div className="flex items-start space-x-2">
-              <span className="text-2xl">✅</span>
+              <span className="text-xl sm:text-2xl">✅</span>
               <div className="flex-1">
-                <h3 className="font-bold text-sm text-green-900 mb-1">
+                <h3 className="font-bold text-sm text-green-900 dark:text-green-300 mb-1">
                   Subsistema 5: Chat AI con Groq
                 </h3>
-                <p className="text-xs text-green-800">
+                <p className="text-xs text-green-800 dark:text-green-200">
                   Sistema de chat inteligente impulsado por Groq LLM.
                   Contexto del sistema sanitario andaluz integrado con fallback automático de modelos.
                   Soporta markdown, respuestas rápidas y persistencia de conversaciones.

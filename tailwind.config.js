@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Habilitar dark mode con clase
   theme: {
     extend: {
       colors: {
@@ -19,6 +20,15 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      // Breakpoints personalizados para mobile
+      screens: {
+        'xs': '375px',  // iPhone SE, pequeños móviles
+        'sm': '640px',  // móviles grandes
+        'md': '768px',  // tablets
+        'lg': '1024px', // laptops pequeñas
+        'xl': '1280px', // desktops
+        '2xl': '1536px' // pantallas grandes
       }
     },
   },
