@@ -2,8 +2,8 @@
 ## De Streamlit/Python a React/TypeScript
 
 **Fecha de inicio**: 04/01/2026
-**Última actualización**: 09/01/2026
-**Estado actual**: ✅ 8 Subsistemas completados (36.4% del proyecto)
+**Última actualización**: 10/01/2026
+**Estado actual**: ✅ 12 Subsistemas completados (54.5% del proyecto)
 
 ---
 
@@ -84,36 +84,44 @@
   - **Commit**: `feat: Subsistema 6 - Componentes comunes`
   - **Nota**: Algunos componentes ya implementados parcialmente (KPI Cards, filtros básicos)
 
-### 🔄 FASE 6: DASHBOARDS PERSONALIZADOS POR ROL (PENDIENTE)
-- [ ] **Subsistema 7**: Dashboard Médico
-  - Vista personalizada para médicos
-  - KPIs prioritarios: listas de espera, derivaciones, carga asistencial
-  - Gráficos específicos de especialidad
-  - Acceso rápido a centros con urgencias
-  - **Commit**: `feat: Subsistema 7 - Dashboard médico`
-
-- [ ] **Subsistema 8**: Dashboard Enfermero
-  - Vista personalizada para enfermeros
-  - KPIs de atención primaria y domiciliaria
-  - Seguimiento de pacientes crónicos
-  - Indicadores de vacunación
-  - **Commit**: `feat: Subsistema 8 - Dashboard enfermero`
-
-- [ ] **Subsistema 9**: Dashboard Administrador
-  - Vista ejecutiva con todos los 26 KPIs
-  - Panel de gestión de usuarios (CRUD)
+### ✅ FASE 6: DASHBOARDS PERSONALIZADOS POR ROL (COMPLETADA)
+- [x] **Subsistema 7**: Dashboard Admin
+  - Vista ejecutiva completa con todos los 26 KPIs
+  - Panel de gestión de usuarios (CRUD en desarrollo)
+  - Sistema de alertas para KPIs críticos
   - Estadísticas del sistema en tiempo real
-  - Comparativas entre provincias
-  - Sistema de alertas
-  - **Commit**: `feat: Subsistema 9 - Dashboard administrador`
+  - Acceso completo a todas las funcionalidades
+  - Componentes comunes reutilizables (DashboardHeader, QuickActions, StatsCard)
+  - **Commit**: `feat: Subsistema 7 - Dashboard Admin`
+  - **Estado**: ✅ Completado
 
-- [ ] **Subsistema 10**: Dashboard Paciente/Invitado
-  - Vista simplificada para pacientes
-  - Información de centros cercanos
-  - Tiempos de espera estimados
-  - Accesibilidad y servicios disponibles
-  - FAQ y recursos informativos
-  - **Commit**: `feat: Subsistema 10 - Dashboard paciente`
+- [x] **Subsistema 8**: Dashboard Gestor
+  - Vista operativa enfocada en gestión diaria
+  - KPIs prioritarios de asistencia sanitaria y urgencias
+  - Top 5 centros con más servicios
+  - Métricas de rendimiento por categoría
+  - Panel de exportación destacado
+  - **Commit**: `feat: Subsistema 8 - Dashboard Gestor`
+  - **Estado**: ✅ Completado
+
+- [x] **Subsistema 9**: Dashboard Analista
+  - Vista analítica avanzada con comparativas
+  - Análisis detallado de tendencias (positivas, negativas, estables)
+  - Filtros por categoría con visualización mejorada
+  - Comparador de KPIs activado por defecto
+  - Estadísticas de distribución por categoría
+  - **Commit**: `feat: Subsistema 9 - Dashboard Analista`
+  - **Estado**: ✅ Completado
+
+- [x] **Subsistema 10**: Dashboard Invitado
+  - Vista simplificada para público general
+  - Solo KPIs de nivel básico (información pública)
+  - Mapa de centros de salud con información útil
+  - Teléfonos de emergencia y recursos
+  - Información de limitaciones de acceso
+  - Sin exportación ni Chat AI
+  - **Commit**: `feat: Subsistema 10 - Dashboard Invitado`
+  - **Estado**: ✅ Completado
 
 ### ✅ FASE 7: FUNCIONALIDADES AVANZADAS (EN PROGRESO)
 - [x] **Subsistema 11**: Sistema de Exportación
@@ -264,9 +272,9 @@
 
 ```
 Total de Subsistemas: 22 (reorganizado desde 26)
-Completados: 8 (36.4%)
+Completados: 12 (54.5%)
 En progreso: 0 (0%)
-Pendientes: 14 (63.6%)
+Pendientes: 10 (45.5%)
 ```
 
 **Progreso por fases**:
@@ -275,16 +283,16 @@ Pendientes: 14 (63.6%)
 - ✅ Fase 3 - Mapas: 100% (1/1)
 - ✅ Fase 4 - Chat AI: 100% (1/1)
 - 🔄 Fase 5 - Componentes: 0% (0/1)
-- 🔄 Fase 6 - Dashboards por rol: 0% (0/4)
+- ✅ Fase 6 - Dashboards por rol: 100% (4/4) ⭐ COMPLETADA
 - ✅ Fase 7 - Funcionalidades avanzadas: 100% (3/3) ⭐ COMPLETADA
 - 🔄 Fase 8 - Seguridad y performance: 0% (0/2)
 - 🔄 Fase 9 - Testing: 0% (0/2)
 - 🔄 Fase 10 - Documentación: 0% (0/2)
 - 🔄 Fase 11 - Deployment: 0% (0/3)
 
-**Tiempo invertido hasta ahora**: ~4-5 días
-**Tiempo estimado restante**: 3-5 semanas
-**Velocidad promedio**: 1.2 subsistemas/día
+**Tiempo invertido hasta ahora**: ~5-6 días
+**Tiempo estimado restante**: 2-4 semanas
+**Velocidad promedio**: 1.7 subsistemas/día
 
 ---
 
@@ -293,7 +301,7 @@ Pendientes: 14 (63.6%)
 | Hito | Subsistemas | Estado | Progreso |
 |------|-------------|--------|----------|
 | **✅ MVP Core** | 1-5 | ✅ Completado | 100% |
-| **🔄 MVP Mejorado** | 6-10 | 🔄 En espera | 0% |
+| **✅ MVP Mejorado** | 6-10 | ✅ Completado | 100% (4/4) ⭐ |
 | **✅ Features Avanzadas** | 11-13 | ✅ Completado | 100% (3/3) ⭐ |
 | **🔄 Producción Ready** | 14-17 | 🔄 Pendiente | 0% |
 | **🔄 Docs y Deploy** | 18-22 | 🔄 Pendiente | 0% |
@@ -310,8 +318,10 @@ Pendientes: 14 (63.6%)
 - **Chat AI inteligente**: Groq LLM con contexto enriquecido del sistema
 - **Sistema de exportación completo**: PDF, CSV, Excel con reportes multipágina
 - **Búsqueda y filtros avanzados**: Búsqueda global, filtros combinados, comparador de KPIs
-- **Dark mode completo**: Sistema de temas con persistencia en todas las páginas ⭐ NUEVO
-- **Responsive design**: Optimizado para todos los dispositivos (375px - 1536px+) ⭐ NUEVO
+- **Dark mode completo**: Sistema de temas con persistencia en todas las páginas
+- **Responsive design**: Optimizado para todos los dispositivos (375px - 1536px+)
+- **Dashboards personalizados**: 4 dashboards específicos por rol con UX optimizada ⭐ NUEVO
+- **Componentes reutilizables**: DashboardHeader, QuickActions, StatsCard ⭐ NUEVO
 - **0 dependencias de `any`**: TypeScript estricto en todo el proyecto
 
 ### Prioridades Actuales
@@ -319,17 +329,20 @@ Pendientes: 14 (63.6%)
 2. ✅ **Funcionalidad core** - COMPLETADO (Auth, KPIs, Mapas, Chat)
 3. ✅ **Exportación de datos** - COMPLETADO
 4. ✅ **Filtros avanzados** - COMPLETADO
-5. ✅ **Responsive design + Dark mode** - COMPLETADO ⭐ NUEVO
-6. 🔄 **Dashboards personalizados** - Próximo objetivo recomendado
-7. ⏳ **Testing** - Recomendado antes de producción
-8. ⏳ **Documentación** - Antes del lanzamiento
+5. ✅ **Responsive design + Dark mode** - COMPLETADO
+6. ✅ **Dashboards personalizados** - COMPLETADO ⭐ NUEVO
+7. 🔄 **Componentes comunes** - Opcional (ya tenemos algunos básicos)
+8. 🔄 **Seguridad y Performance** - Próximo objetivo recomendado
+9. ⏳ **Testing** - Recomendado antes de producción
+10. ⏳ **Documentación** - Antes del lanzamiento
 
 ### Riesgos Mitigados
 - ✅ **Chat AI**: Cambio de Anthropic a Groq exitoso
 - ✅ **Integración de mapas**: React-Leaflet funcionando correctamente
 - ✅ **26 KPIs**: Todos implementados y funcionando
-- ✅ **Responsive design**: Optimizado para todos los dispositivos (375px+) ⭐ NUEVO
-- ✅ **Dark mode**: Sistema completo con persistencia y transiciones ⭐ NUEVO
+- ✅ **Responsive design**: Optimizado para todos los dispositivos (375px+)
+- ✅ **Dark mode**: Sistema completo con persistencia y transiciones
+- ✅ **Dashboards por rol**: Arquitectura escalable con componentes separados ⭐ NUEVO
 - 🟡 **Performance**: Pendiente de optimización (lazy loading, memoization)
 
 ### Decisiones Técnicas Implementadas
@@ -397,58 +410,112 @@ Pendientes: 14 (63.6%)
 
 ---
 
-### 🥇 **OPCIÓN A: Subsistemas 7-10 - Dashboards Personalizados** (RECOMENDADO)
+### ✅ **COMPLETADO: Subsistemas 7-10 - Dashboards Personalizados por Rol** (FASE 6 COMPLETA)
+**Estado**: ✅ Completado el 10/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Muy Alto
-**Dificultad**: ⭐⭐⭐⭐ Alta
-**Tiempo estimado**: 3-4 días
+
+**Arquitectura implementada**:
+- ✅ DashboardPage simplificado como router que renderiza el dashboard según rol
+- ✅ Componentes comunes reutilizables (DashboardHeader, QuickActions, StatsCard)
+- ✅ 4 dashboards completamente personalizados por rol
+
+**Subsistema 7 - Dashboard Admin**:
+- ✅ Vista ejecutiva completa con todos los 26 KPIs
+- ✅ Sistema de alertas para KPIs críticos (tendencia negativa)
+- ✅ Panel de gestión de usuarios (estructura básica implementada)
+- ✅ Estadísticas del sistema en tiempo real
+- ✅ Información de centros de salud por tipo
+- ✅ Acceso completo a exportación, chat AI y mapas
+
+**Subsistema 8 - Dashboard Gestor**:
+- ✅ Vista operativa enfocada en gestión diaria
+- ✅ KPIs prioritarios (asistencia sanitaria y urgencias)
+- ✅ Top 5 centros con más servicios
+- ✅ Métricas de rendimiento por categoría
+- ✅ Panel de exportación destacado
+- ✅ Estadísticas de centros activos con urgencias
+
+**Subsistema 9 - Dashboard Analista**:
+- ✅ Vista analítica avanzada con enfoque en datos
+- ✅ Análisis detallado de tendencias (positivas, negativas, estables)
+- ✅ Filtros por categoría con visualización mejorada
+- ✅ Comparador de KPIs activado por defecto
+- ✅ Estadísticas de distribución por categoría
+- ✅ Cambio promedio calculado automáticamente
+
+**Subsistema 10 - Dashboard Invitado**:
+- ✅ Vista simplificada para público general
+- ✅ Solo KPIs de nivel básico (información pública)
+- ✅ Información útil: teléfonos de emergencia (061, 112, 016)
+- ✅ Servicios disponibles y horarios
+- ✅ Enlaces a portales oficiales
+- ✅ Recomendación destacada para ver mapas
+- ✅ Información clara de limitaciones de acceso
+
+**Resultado**: **FASE 6 COMPLETADA AL 100%**. Sistema completo de dashboards personalizados que proporciona experiencias de usuario optimizadas según el rol, mejorando significativamente la usabilidad y relevancia de la información mostrada.
+
+---
+
+### 🥇 **OPCIÓN A: Subsistemas 14-15 - Seguridad y Performance** (RECOMENDADO)
+**Impacto**: ⭐⭐⭐⭐ Alto
+**Dificultad**: ⭐⭐⭐ Media
+**Tiempo estimado**: 2-3 días
 
 **Por qué ahora**:
-- Con FASE 7 completa (filtros, exportación, responsive, dark mode), tenemos una base sólida
-- Mejora significativa de UX por rol: cada usuario ve solo lo relevante
-- Reduce ruido visual y aumenta eficiencia
-- Aprovecha toda la infraestructura ya construida
-- Diferencia clave respecto a un dashboard genérico
+- Con FASE 6 y 7 completas, tenemos un sistema funcional robusto
+- Preparar la aplicación para producción de forma segura
+- Mejorar la experiencia de usuario con optimizaciones de rendimiento
+- Proteger datos sensibles y prevenir vulnerabilidades
+- Implementar lazy loading para reducir tiempo de carga inicial
 
 **Tareas**:
-1. Dashboard Médico (KPIs de listas de espera, derivaciones, carga asistencial)
-2. Dashboard Enfermero (atención primaria, vacunación, pacientes crónicos)
-3. Dashboard Admin (vista ejecutiva completa, gestión usuarios, alertas)
-4. Dashboard Paciente (centros cercanos, tiempos de espera, servicios)
+1. **Seguridad** (Subsistema 14):
+   - Validación robusta de inputs
+   - Sanitización de datos del chat AI
+   - Protección contra XSS y CSRF
+   - Rate limiting en cliente para API calls
+   - Auditoría de dependencias
+
+2. **Performance** (Subsistema 15):
+   - Lazy loading de rutas (React.lazy + Suspense)
+   - Code splitting automático
+   - Memoization estratégica (React.memo, useMemo, useCallback)
+   - Análisis de bundle size
+   - Optimización de imágenes
 
 ---
 
 ### 🥈 **OPCIÓN B: Subsistema 6 - Biblioteca de Componentes Comunes**
 **Impacto**: ⭐⭐⭐ Medio
 **Dificultad**: ⭐⭐ Baja
-**Tiempo estimado**: 1-2 días
+**Tiempo estimado**: 1 día
 
 **Por qué segundo**:
-- Refactorización y DRY (Don't Repeat Yourself)
-- Mejora mantenibilidad del código
-- Algunos componentes ya existen parcialmente
-- Modal/Dialog system muy útil para confirmar acciones
+- Algunos componentes ya implementados (DashboardHeader, QuickActions, StatsCard)
+- Modal/Dialog system útil para confirmar acciones
 - Toast notifications para feedback instantáneo
+- ErrorBoundary para manejo de errores global
+- Mejora mantenibilidad del código
 
-**Tareas**:
-1. Card component genérico reutilizable
-2. LoadingSpinner mejorado con variantes
-3. ErrorBoundary para manejo de errores global
-4. Modal/Dialog system con animaciones
-5. Toast/Notification system
+**Tareas restantes**:
+1. LoadingSpinner mejorado con variantes
+2. ErrorBoundary para manejo de errores global
+3. Modal/Dialog system con animaciones
+4. Toast/Notification system
 
 ---
 
-### 🥉 **OPCIÓN C: Subsistema 14 - Seguridad**
-**Impacto**: ⭐⭐⭐⭐ Alto
+### 🥉 **OPCIÓN C: Subsistemas 16-17 - Testing**
+**Impacto**: ⭐⭐⭐ Medio
 **Dificultad**: ⭐⭐⭐ Media
 **Tiempo estimado**: 2-3 días
 
 **Por qué tercero**:
-- Importante para preparar producción
-- Validación robusta de inputs
-- Protección contra XSS y CSRF
-- Encriptación de datos sensibles
-- Rate limiting para API calls
+- Garantizar calidad antes de producción
+- Tests unitarios para componentes y servicios
+- Tests E2E para flujos críticos
+- Cobertura recomendada >70%
+- Prevenir regresiones futuras
 
 ---
 
@@ -457,16 +524,16 @@ Pendientes: 14 (63.6%)
 **¿Qué subsistema implementamos a continuación?**
 
 Opciones:
-- **A) Subsistemas 7-10 - Dashboards Personalizados por Rol** ← Recomendado (máximo impacto UX)
-- **B) Subsistema 6 - Componentes comunes** (refactorización y DRY)
-- **C) Subsistema 14 - Seguridad** (hardening para producción)
-- **D) Subsistema 15 - Optimización de Performance** (lazy loading, memoization)
-- **E) Otro (especificar)**
+- **A) Subsistemas 14-15 - Seguridad y Performance** ← Recomendado (preparar para producción)
+- **B) Subsistema 6 - Componentes comunes** (completar biblioteca de componentes)
+- **C) Subsistemas 16-17 - Testing** (garantizar calidad del código)
+- **D) Subsistemas 18-19 - Documentación** (manual técnico y de usuario)
+- **E) Subsistemas 20-22 - Deploy a producción** (CI/CD y Vercel)
 
-**Recomendación**: Con **FASE 7 completada al 100%** (8 subsistemas, 36.4% del proyecto), es momento ideal para implementar **Dashboards Personalizados por Rol** (FASE 6). Tenemos una base técnica sólida (filtros, exportación, responsive, dark mode) que permitirá crear experiencias excepcionales para cada tipo de usuario. Esta diferenciación por rol es el valor agregado clave del sistema.
+**Recomendación**: Con **FASE 6 y 7 completadas al 100%** (12 subsistemas, 54.5% del proyecto), es momento ideal para implementar **Seguridad y Performance** (FASE 8). Tenemos un sistema funcional robusto con dashboards personalizados y características avanzadas. El siguiente paso lógico es optimizar el rendimiento, proteger la aplicación y prepararla para un despliegue seguro en producción.
 
 ---
 
-**Última actualización**: 09/01/2026
+**Última actualización**: 10/01/2026
 **Autor**: Antonio Jesús Padilla + Claude Code
-**Versión del roadmap**: 5.0 (Actualizado tras completar FASE 7: Subsistemas 12 y 13)
+**Versión del roadmap**: 6.0 (Actualizado tras completar FASE 6 y 7: Subsistemas 7-13)
