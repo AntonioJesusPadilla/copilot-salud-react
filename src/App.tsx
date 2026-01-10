@@ -4,6 +4,7 @@ import useAuthStore from './store/authStore';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import LoadingFallback from './components/common/LoadingFallback';
+import ToastContainer from './components/common/ToastContainer';
 import './App.css';
 
 // 🚀 PERFORMANCE: Lazy loading de rutas para code splitting
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <ErrorBoundary>
+      <ToastContainer />
       <BrowserRouter>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
