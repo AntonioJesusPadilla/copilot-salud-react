@@ -6,14 +6,20 @@ import { UserRole } from '../../types';
 interface ProtectedRouteProps {
   children: ReactNode;
   allowedRoles?: UserRole[]; // Roles permitidos para acceder a esta ruta
+  requireAdmin?: boolean; // Requiere rol de administrador
 }
 
-function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+function ProtectedRoute({ children, allowedRoles, requireAdmin }: ProtectedRouteProps) {
   const { isAuthenticated, user } = useAuthStore();
 
   // Si no está autenticado, redirigir a login
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" replace />;
+  }
+
+  // Si requiere admin, verificar rol
+  if (requireAdmin && user.role !== 'admin') {
+    return <Navigate to="/dashboard" replace />;
   }
 
   // Si hay roles específicos permitidos, verificar que el usuario tenga uno de ellos

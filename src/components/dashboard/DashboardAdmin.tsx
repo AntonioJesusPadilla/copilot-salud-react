@@ -33,7 +33,6 @@ function DashboardAdmin() {
   const [displayedKPIs, setDisplayedKPIs] = useState(filteredKPIs);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [showComparator, setShowComparator] = useState(false);
-  const [showUserManagement, setShowUserManagement] = useState(false);
 
   const roleConfig = ROLE_CONFIGS.admin;
 
@@ -180,7 +179,7 @@ function DashboardAdmin() {
             exportOptions={exportOptions}
             customActions={
               <button
-                onClick={() => setShowUserManagement(!showUserManagement)}
+                onClick={() => navigate('/users')}
                 className="w-full text-left px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors text-red-700 dark:text-red-300 font-medium"
               >
                 👥 Gestionar Usuarios
@@ -189,48 +188,33 @@ function DashboardAdmin() {
           />
         </div>
 
-        {/* Panel de gestión de usuarios */}
-        {showUserManagement && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6 transition-colors">
-            <h3 className="text-xl font-bold mb-4 text-secondary dark:text-gray-100">👥 Gestión de Usuarios</h3>
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-700 rounded-lg p-4">
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>🚧 En desarrollo:</strong> Panel de gestión de usuarios con capacidades CRUD (Crear, Leer, Actualizar, Eliminar).
-                Por ahora, los usuarios se gestionan desde el código en authService.ts
+        {/* Acceso rápido a Gestión de Usuarios */}
+        <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-xl shadow-lg p-6 mb-6 transition-colors hover:shadow-xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold mb-2 text-white flex items-center gap-2">
+                👥 Gestión de Usuarios
+              </h3>
+              <p className="text-white/90 text-sm">
+                Administra usuarios del sistema con capacidades CRUD completas
               </p>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">Admin Sistema</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">admin@salud.es - Rol: Administrador</p>
-                  </div>
-                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">Activo</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">María García</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">maria@salud.es - Rol: Gestor</p>
-                  </div>
-                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">Activo</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">Juan López</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">juan@salud.es - Rol: Analista</p>
-                  </div>
-                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">Activo</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">Usuario Público</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">invitado@example.com - Rol: Invitado</p>
-                  </div>
-                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">Activo</span>
-                </div>
-              </div>
             </div>
+            <button
+              onClick={() => navigate('/users')}
+              className="px-6 py-3 bg-white text-red-600 rounded-lg hover:bg-gray-100 transition-colors font-semibold flex items-center gap-2"
+            >
+              Abrir Panel
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </button>
           </div>
-        )}
+        </div>
 
         {/* Sistema de alertas */}
         {criticalKPIs > 0 && (

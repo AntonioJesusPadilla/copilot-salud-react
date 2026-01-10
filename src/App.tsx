@@ -13,6 +13,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const MapPage = lazy(() => import('./pages/MapPage'));
 const ChatPage = lazy(() => import('./pages/ChatPage'));
+const UserManagement = lazy(() => import('./components/users/UserManagement'));
 
 function App() {
   const { checkAuth, isAuthenticated } = useAuthStore();
@@ -72,6 +73,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ChatPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <UserManagement />
                 </ProtectedRoute>
               }
             />
