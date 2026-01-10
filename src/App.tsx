@@ -1,13 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import useAuthStore from './store/authStore';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import SettingsPage from './pages/SettingsPage';
-import MapPage from './pages/MapPage';
-import ChatPage from './pages/ChatPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import ErrorBoundary from './components/common/ErrorBoundary';
+import LoadingFallback from './components/common/LoadingFallback';
 import './App.css';
+
+// 🚀 PERFORMANCE: Lazy loading de rutas para code splitting
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const SettingsPage = lazy(() => import('./pages/SettingsPage'));
+const MapPage = lazy(() => import('./pages/MapPage'));
+const ChatPage = lazy(() => import('./pages/ChatPage'));
 
 function App() {
   const { checkAuth, isAuthenticated } = useAuthStore();
@@ -18,65 +22,69 @@ function App() {
   }, [checkAuth]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Ruta raíz - redirige según autenticación */}
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-          }
-        />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            {/* Ruta raíz - redirige según autenticación */}
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+              }
+            />
 
-        {/* Ruta de login */}
-        <Route path="/login" element={<LoginPage />} />
+            {/* Ruta de login */}
+            <Route path="/login" element={<LoginPage />} />
 
-        {/* Rutas protegidas */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
+            {/* Rutas protegidas */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
 
-        <Route
-          path="/settings"
-          element={
-            <ProtectedRoute>
-              <SettingsPage />
-            </ProtectedRoute>
-          }
-        />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <SettingsPage />
+                </ProtectedRoute>
+              }
+            />
 
-        <Route
-          path="/maps"
-          element={
-            <ProtectedRoute>
-              <MapPage />
-            </ProtectedRoute>
-          }
-        />
+            <Route
+              path="/maps"
+              element={
+                <ProtectedRoute>
+                  <MapPage />
+                </ProtectedRoute>
+              }
+            />
 
-        <Route
-          path="/chat"
-          element={
-            <ProtectedRoute>
-              <ChatPage />
-            </ProtectedRoute>
-          }
-        />
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute>
+                  <ChatPage />
+                </ProtectedRoute>
+              }
+            />
 
-        {/* Ruta 404 - redirigir a dashboard o login */}
-        <Route
-          path="*"
-          element={
-            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+            {/* Ruta 404 - redirigir a dashboard o login */}
+            <Route
+              path="*"
+              element={
+                isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+              }
+            />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

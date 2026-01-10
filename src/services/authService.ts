@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { LoginCredentials, LoginResponse, ChangePasswordData, ChangePasswordResponse } from '../types/auth';
 import { User } from '../types';
+import { rateLimitService } from './security/rateLimitService';
+import { inputValidationService } from './security/inputValidationService';
 
 // Servicio de autenticación
 class AuthService {
@@ -29,6 +31,33 @@ class AuthService {
   // Login
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     try {
+      // 🔒 SEGURIDAD: Verificar rate limit por usuario
+      const rateLimitCheck = rateLimitService.checkLimit('login', credentials.username);
+      if (!rateLimitCheck.allowed) {
+        return {
+          success: false,
+          error: rateLimitCheck.message || 'Demasiados intentos de inicio de sesión',
+        };
+      }
+
+      // 🔒 SEGURIDAD: Validar username
+      const usernameValidation = inputValidationService.validateUsername(credentials.username);
+      if (!usernameValidation.isValid) {
+        return {
+          success: false,
+          error: usernameValidation.error || 'Nombre de usuario inválido',
+        };
+      }
+
+      // 🔒 SEGURIDAD: Validar password
+      const passwordValidation = inputValidationService.validatePassword(credentials.password);
+      if (!passwordValidation.isValid) {
+        return {
+          success: false,
+          error: passwordValidation.error || 'Contraseña inválida',
+        };
+      }
+
       const users = await this.loadUsers();
       const user = users[credentials.username];
 

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 interface StatsCardProps {
   title: string;
   icon: string;
@@ -9,7 +11,8 @@ interface StatsCardProps {
   }>;
 }
 
-function StatsCard({ title, icon, stats }: StatsCardProps) {
+// 🚀 PERFORMANCE: Memoized para evitar re-renders innecesarios
+const StatsCard = memo(function StatsCard({ title, icon, stats }: StatsCardProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors">
       <h3 className="font-bold text-lg mb-4 text-secondary dark:text-gray-100">
@@ -33,6 +36,6 @@ function StatsCard({ title, icon, stats }: StatsCardProps) {
       </div>
     </div>
   );
-}
+});
 
 export default StatsCard;

@@ -7,6 +7,9 @@
 import Groq from 'groq-sdk';
 import { ChatServiceResponse, ChatMessage, ProviderAttempt } from '../types/chat';
 import { getChatContext, generateSystemPrompt, logChatContext } from './contextService';
+import { sanitizationService } from './security/sanitizationService';
+import { inputValidationService } from './security/inputValidationService';
+import { rateLimitService } from './security/rateLimitService';
 
 // ============================================================================
 // CONFIGURACIÓN
@@ -172,6 +175,25 @@ const tryGroq = async (
 export const sendMessage = async (messages: ChatMessage[]): Promise<ChatServiceResponse> => {
   console.log('💬 [ChatService] Iniciando envío de mensaje...');
 
+  // 🔒 SEGURIDAD: Verificar rate limit
+  const rateLimitCheck = rateLimitService.checkLimit('chat');
+  if (!rateLimitCheck.allowed) {
+    throw new Error(rateLimitCheck.message || 'Demasiados mensajes. Por favor, espera un momento.');
+  }
+
+  // 🔒 SEGURIDAD: Validar y sanitizar mensajes
+  const lastMessage = messages[messages.length - 1];
+  if (lastMessage && lastMessage.role === 'user') {
+    // Validar mensaje
+    const validation = inputValidationService.validateChatMessage(lastMessage.content);
+    if (!validation.isValid) {
+      throw new Error(validation.error || 'Mensaje inválido');
+    }
+
+    // Sanitizar mensaje
+    lastMessage.content = sanitizationService.sanitizeMarkdownText(lastMessage.content);
+  }
+
   // Verificar que las API keys estén cargadas
   console.log('🔑 [ChatService] Verificando credenciales...');
   console.log('   Groq API Key:', GROQ_CONFIG.apiKey ? `${GROQ_CONFIG.apiKey.substring(0, 20)}...` : 'NO CONFIGURADA');
@@ -188,9 +210,12 @@ export const sendMessage = async (messages: ChatMessage[]): Promise<ChatServiceR
   const groqResult = await tryGroq(messages, systemPrompt);
 
   if (groqResult.success && groqResult.message) {
+    // 🔒 SEGURIDAD: Sanitizar respuesta de la AI antes de devolverla
+    const sanitizedMessage = sanitizationService.sanitizeChatResponse(groqResult.message);
+
     return {
       success: true,
-      message: groqResult.message,
+      message: sanitizedMessage,
       retries: groqResult.attempts.length,
     };
   }
