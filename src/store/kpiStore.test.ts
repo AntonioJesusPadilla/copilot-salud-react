@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import useKPIStore from './kpiStore';
 import { kpiService } from '../services/kpiService';
-import type { KPI } from '../types/kpi';
+import type { KPI, KPIFilters } from '../types/kpi';
 
 // Mock del kpiService
 vi.mock('../services/kpiService', () => ({
@@ -17,34 +17,40 @@ describe('KPIStore', () => {
     {
       id: 'kpi-1',
       name: 'Test KPI 1',
-      category: 'Asistencia Sanitaria',
-      value: 85.5,
+      category: 'asistencia_sanitaria' as const,
+      currentValue: 85.5,
+      previousValue: 83.5,
       unit: '%',
       description: 'Test description',
-      change: 2.3,
+      changePercentage: 2.3,
       trend: 'up' as const,
-      lastUpdate: new Date('2024-01-01'),
-      accessLevel: 'admin' as const,
+      lastUpdated: '2024-01-01',
+      accessLevel: 'completo' as const,
+      historicalData: [],
+      source: 'Test',
     },
     {
       id: 'kpi-2',
       name: 'Test KPI 2',
-      category: 'Urgencias',
-      value: 92.1,
+      category: 'urgencias' as const,
+      currentValue: 92.1,
+      previousValue: 93.2,
       unit: '%',
       description: 'Test description 2',
-      change: -1.2,
+      changePercentage: -1.2,
       trend: 'down' as const,
-      lastUpdate: new Date('2024-01-01'),
-      accessLevel: 'manager' as const,
+      lastUpdated: '2024-01-01',
+      accessLevel: 'intermedio' as const,
+      historicalData: [],
+      source: 'Test',
     },
   ];
 
   const mockStats = {
     total: 2,
     byCategory: {
-      'Asistencia Sanitaria': 1,
-      'Urgencias': 1,
+      'asistencia_sanitaria': 1,
+      'urgencias': 1,
     },
     trending: {
       up: 1,
@@ -131,7 +137,7 @@ describe('KPIStore', () => {
 
   describe('setFilters', () => {
     it('should set filters', () => {
-      const filters = { category: 'Asistencia Sanitaria' };
+      const filters: KPIFilters = { category: 'asistencia_sanitaria' };
 
       const state = useKPIStore.getState();
       state.setFilters(filters);
@@ -143,7 +149,7 @@ describe('KPIStore', () => {
 
   describe('applyFilters', () => {
     it('should apply filters successfully', async () => {
-      const filters = { category: 'Asistencia Sanitaria' };
+      const filters: KPIFilters = { category: 'asistencia_sanitaria' };
       const filteredKPIs = [mockKPIs[0]];
 
       useKPIStore.setState({ filters });

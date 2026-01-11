@@ -143,7 +143,6 @@ describe('Card', () => {
   it('should not render body when no children', () => {
     const { container } = render(<Card title="Title" />);
 
-    const body = container.querySelector('.px-6.py-4');
     // Solo debe existir el header, no el body
     const allPaddings = container.querySelectorAll('.px-6.py-4');
     expect(allPaddings.length).toBe(1); // Solo header
