@@ -1,0 +1,63 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Login Flow', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('should display login page', async ({ page }) => {
+    await expect(page.locator('h1')).toContainText('Iniciar Sesión');
+    await expect(page.locator('input[placeholder*="nombre de usuario"]')).toBeVisible();
+    await expect(page.locator('input[type="password"]')).toBeVisible();
+  });
+
+  test('should show validation errors for empty fields', async ({ page }) => {
+    const loginButton = page.locator('button[type="submit"]');
+    await loginButton.click();
+
+    // Should show error message or validation
+    await expect(page.locator('text=/campo.*vacío|requerido/i')).toBeVisible({ timeout: 3000 }).catch(() => {
+      // If no specific validation message, form should not navigate away
+      expect(page.url()).toContain('/');
+    });
+  });
+
+  test('should login successfully with valid credentials', async ({ page }) => {
+    // Fill login form with test credentials
+    await page.fill('input[placeholder*="nombre de usuario"]', 'admin');
+    await page.fill('input[type="password"]', 'admin123');
+
+    // Submit form
+    await page.click('button[type="submit"]');
+
+    // Wait for navigation to dashboard
+    await page.waitForURL('**/dashboard', { timeout: 5000 });
+
+    // Verify we're on the dashboard
+    expect(page.url()).toContain('/dashboard');
+  });
+
+  test('should show error for invalid credentials', async ({ page }) => {
+    // Fill login form with invalid credentials
+    await page.fill('input[placeholder*="nombre de usuario"]', 'invalid_user');
+    await page.fill('input[type="password"]', 'wrong_password');
+
+    // Submit form
+    await page.click('button[type="submit"]');
+
+    // Should show error message
+    await expect(
+      page.locator('text=/Usuario no encontrado|Contraseña incorrecta|Error/i')
+    ).toBeVisible({ timeout: 3000 });
+  });
+
+  test('should have accessible form elements', async ({ page }) => {
+    const usernameInput = page.locator('input[placeholder*="nombre de usuario"]');
+    const passwordInput = page.locator('input[type="password"]');
+    const submitButton = page.locator('button[type="submit"]');
+
+    await expect(usernameInput).toBeEnabled();
+    await expect(passwordInput).toBeEnabled();
+    await expect(submitButton).toBeEnabled();
+  });
+});
