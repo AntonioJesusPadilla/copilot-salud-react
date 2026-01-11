@@ -251,16 +251,6 @@ function DashboardInvitado() {
             <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-full text-sm">✗ Chat AI</span>
           </div>
         </div>
-
-        {/* Información del subsistema */}
-        <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-lg p-4 sm:p-6 transition-colors">
-          <h3 className="font-bold text-base sm:text-lg mb-2 text-green-900 dark:text-green-300">
-            ✅ Subsistema 10: Dashboard Invitado Implementado
-          </h3>
-          <p className="text-sm sm:text-base text-green-800 dark:text-green-200">
-            Vista simplificada para público general con información útil, teléfonos de emergencia y acceso al mapa de centros de salud.
-          </p>
-        </div>
       </main>
     </div>
   );

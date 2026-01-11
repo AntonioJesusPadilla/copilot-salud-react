@@ -320,16 +320,6 @@ function DashboardAnalista() {
 
           <KPIGrid kpis={displayedKPIs} isLoading={isLoading} />
         </div>
-
-        {/* Información del subsistema */}
-        <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-lg p-4 sm:p-6 transition-colors">
-          <h3 className="font-bold text-base sm:text-lg mb-2 text-green-900 dark:text-green-300">
-            ✅ Subsistema 9: Dashboard Analista Implementado
-          </h3>
-          <p className="text-sm sm:text-base text-green-800 dark:text-green-200">
-            Vista analítica avanzada con filtros por categoría, comparador de KPIs activado por defecto y análisis detallado de tendencias.
-          </p>
-        </div>
       </main>
     </div>
   );
