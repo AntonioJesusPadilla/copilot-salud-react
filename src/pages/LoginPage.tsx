@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import { ROLE_CONFIGS } from '../types';
+import ThemeToggle from '../components/common/ThemeToggle';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -35,21 +36,50 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-white to-accent/10 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-white to-accent/10 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center px-4 py-8 transition-colors relative">
+      {/* Theme Toggle - Posición fija en la esquina superior derecha */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+
       <div className="max-w-6xl w-full">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Panel izquierdo - Información */}
           <div className="text-center md:text-left">
-            <h1 className="text-5xl font-bold text-secondary mb-4">
+            {/* Logo */}
+            <div className="flex items-center justify-center md:justify-start mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-20 h-20">
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{ stopColor: '#FF6B6B', stopOpacity: 1 }} />
+                    <stop offset="100%" style={{ stopColor: '#4ECDC4', stopOpacity: 1 }} />
+                  </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="48" fill="url(#grad)" />
+                <rect x="42" y="20" width="16" height="60" fill="white" rx="2" />
+                <rect x="20" y="42" width="60" height="16" fill="white" rx="2" />
+                <path
+                  d="M 15 70 L 25 70 L 30 60 L 35 75 L 40 65 L 45 70 L 85 70"
+                  stroke="white"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity="0.8"
+                />
+              </svg>
+            </div>
+
+            <h1 className="text-5xl font-bold text-secondary dark:text-gray-100 mb-4">
               Copilot Salud Andalucía
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               Sistema de Análisis Sociosanitario de Málaga
             </p>
 
             {/* Credenciales de prueba */}
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-              <h3 className="font-bold text-lg text-secondary mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6 transition-colors border border-gray-200 dark:border-gray-700">
+              <h3 className="font-bold text-lg text-secondary dark:text-gray-100 mb-4">
                 🔑 Credenciales de Prueba
               </h3>
               <div className="space-y-3">
@@ -80,7 +110,7 @@ function LoginPage() {
                             {roleConfig.name}
                           </span>
                         </div>
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
                           {cred.user} / {cred.pass}
                         </span>
                       </div>
@@ -90,7 +120,7 @@ function LoginPage() {
               </div>
             </div>
 
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               <p>✅ 26 KPIs de salud de Andalucía</p>
               <p>✅ Mapas interactivos de centros sanitarios</p>
               <p>✅ Asistente AI Inteligente (Groq)</p>
@@ -99,9 +129,9 @@ function LoginPage() {
           </div>
 
           {/* Panel derecho - Formulario de login */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 transition-colors border border-gray-200 dark:border-gray-700">
             <div className="text-center mb-8">
-              <div className="inline-block p-4 bg-primary/10 rounded-full mb-4">
+              <div className="inline-block p-4 bg-primary/10 dark:bg-primary/20 rounded-full mb-4">
                 <svg
                   className="w-12 h-12 text-primary"
                   fill="none"
@@ -116,14 +146,14 @@ function LoginPage() {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-secondary">Iniciar Sesión</h2>
-              <p className="text-gray-600 mt-2">Ingresa tus credenciales</p>
+              <h2 className="text-3xl font-bold text-secondary dark:text-gray-100">Iniciar Sesión</h2>
+              <p className="text-gray-600 dark:text-gray-300 mt-2">Ingresa tus credenciales</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Campo de usuario */}
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Usuario
                 </label>
                 <input
@@ -131,7 +161,7 @@ function LoginPage() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                   placeholder="Ingresa tu usuario"
                   required
                   disabled={isLoading}
@@ -140,7 +170,7 @@ function LoginPage() {
 
               {/* Campo de contraseña */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Contraseña
                 </label>
                 <div className="relative">
@@ -149,7 +179,7 @@ function LoginPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                     placeholder="Ingresa tu contraseña"
                     required
                     disabled={isLoading}
@@ -157,7 +187,7 @@ function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                   >
                     {showPassword ? '👁️' : '👁️‍🗨️'}
                   </button>
@@ -166,7 +196,7 @@ function LoginPage() {
 
               {/* Mensaje de error */}
               {error && (
-                <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg">
                   <p className="text-sm font-medium">❌ {error}</p>
                 </div>
               )}
@@ -207,7 +237,7 @@ function LoginPage() {
               </button>
             </form>
 
-            <div className="mt-6 text-center text-sm text-gray-500">
+            <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
               <p>Versión 2.0 - Migración React + TypeScript</p>
             </div>
           </div>

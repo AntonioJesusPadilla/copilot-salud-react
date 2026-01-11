@@ -86,6 +86,7 @@ function MapPage() {
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors" style={{ borderColor: roleConfig.color }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
+            {/* Lado izquierdo: Volver + Título */}
             <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink min-w-0">
               <button
                 onClick={() => navigate('/dashboard')}
@@ -96,15 +97,29 @@ function MapPage() {
                 ← <span className="hidden sm:inline">Volver</span>
               </button>
               <div className="min-w-0">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary dark:text-gray-100 truncate">
+                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100 truncate">
                   🗺️ Mapa de Centros de Salud
                 </h1>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Málaga - {stats?.total || 0} centros
                 </p>
               </div>
             </div>
-            <ThemeToggle className="flex-shrink-0" />
+
+            {/* Lado derecho: Info usuario + Theme Toggle + Avatar */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="text-right hidden md:block">
+                <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">{user.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{roleConfig.name}</p>
+              </div>
+              <ThemeToggle />
+              <div
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-lg sm:text-xl"
+                style={{ backgroundColor: `${roleConfig.color}20` }}
+              >
+                {roleConfig.icon}
+              </div>
+            </div>
           </div>
         </div>
       </header>

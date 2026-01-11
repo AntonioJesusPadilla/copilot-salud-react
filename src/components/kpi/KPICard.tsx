@@ -14,10 +14,10 @@ function KPICard({ kpi, onClick, compact = false }: KPICardProps) {
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-all border-l-4 ${
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all border-l-4 border border-gray-200 dark:border-gray-700 ${
         onClick ? 'cursor-pointer hover:-translate-y-1' : ''
       } ${compact ? 'p-4' : 'p-6'}`}
-      style={{ borderColor: kpi.color || '#3B82F6' }}
+      style={{ borderLeftColor: kpi.color || '#3B82F6' }}
       onClick={() => onClick && onClick(kpi)}
     >
       {/* Header con icono y categoría */}
@@ -26,13 +26,13 @@ function KPICard({ kpi, onClick, compact = false }: KPICardProps) {
           {kpi.icon && <span className="text-2xl">{kpi.icon}</span>}
           <div>
             <h3
-              className={`font-bold text-gray-800 ${compact ? 'text-sm' : 'text-base'}`}
+              className={`font-bold text-gray-800 dark:text-gray-100 ${compact ? 'text-sm' : 'text-base'}`}
               title={kpi.name}
             >
               {kpi.name}
             </h3>
             {!compact && (
-              <p className="text-xs text-gray-500 mt-0.5">{kpi.category.replace('_', ' ')}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{kpi.category.replace('_', ' ')}</p>
             )}
           </div>
         </div>
@@ -48,7 +48,7 @@ function KPICard({ kpi, onClick, compact = false }: KPICardProps) {
             {formattedValue}
           </span>
           {kpi.unit && !kpi.format && (
-            <span className="text-sm text-gray-500">{kpi.unit}</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{kpi.unit}</span>
           )}
         </div>
 
@@ -61,20 +61,20 @@ function KPICard({ kpi, onClick, compact = false }: KPICardProps) {
             >
               {trendText}
             </span>
-            <span className="text-xs text-gray-500">vs mes anterior</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">vs mes anterior</span>
           </div>
         )}
       </div>
 
       {/* Descripción */}
       {!compact && (
-        <p className="text-xs text-gray-600 mb-3 line-clamp-2" title={kpi.description}>
+        <p className="text-xs text-gray-600 dark:text-gray-300 mb-3 line-clamp-2" title={kpi.description}>
           {kpi.description}
         </p>
       )}
 
       {/* Footer con metadatos */}
-      <div className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100">
+      <div className="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-700">
         <span title={kpi.source}>📊 {kpi.source.split('-')[0].trim()}</span>
         <span>
           {new Date(kpi.lastUpdated).toLocaleDateString('es-ES', {
@@ -86,7 +86,7 @@ function KPICard({ kpi, onClick, compact = false }: KPICardProps) {
 
       {/* Indicador de nivel de acceso (opcional, para debugging) */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="mt-2 text-xs text-gray-400">
+        <div className="mt-2 text-xs text-gray-400 dark:text-gray-500">
           Nivel: {kpi.accessLevel}
         </div>
       )}

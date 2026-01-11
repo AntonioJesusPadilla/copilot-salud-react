@@ -36,7 +36,7 @@ function ChatInput({ onSend, isLoading }: ChatInputProps) {
   const isDisabled = isLoading || input.trim().length === 0;
 
   return (
-    <div className="bg-white border-t border-gray-200 px-6 py-4">
+    <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-4 transition-colors">
       <form onSubmit={handleSubmit} className="flex items-end space-x-3">
         {/* Textarea */}
         <div className="flex-1">
@@ -47,7 +47,7 @@ function ChatInput({ onSend, isLoading }: ChatInputProps) {
             placeholder="Escribe tu pregunta sobre salud en Andalucía..."
             disabled={isLoading}
             rows={1}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed resize-none transition-all"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed resize-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
             style={{
               minHeight: '48px',
               maxHeight: '150px',
@@ -58,9 +58,9 @@ function ChatInput({ onSend, isLoading }: ChatInputProps) {
               target.style.height = `${Math.min(target.scrollHeight, 150)}px`;
             }}
           />
-          <p className="text-xs text-gray-500 mt-1 ml-1">
-            Presiona <kbd className="px-1 py-0.5 bg-gray-100 rounded">Enter</kbd> para enviar,{' '}
-            <kbd className="px-1 py-0.5 bg-gray-100 rounded">Shift + Enter</kbd> para nueva línea
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-1">
+            Presiona <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">Enter</kbd> para enviar,{' '}
+            <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">Shift + Enter</kbd> para nueva línea
           </p>
         </div>
 

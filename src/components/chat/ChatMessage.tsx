@@ -26,8 +26,8 @@ function ChatMessage({ message }: ChatMessageProps) {
         {!isUser && (
           <div className="flex items-center space-x-2 mb-1 px-1">
             <span className="text-xl">🏥</span>
-            <span className="text-sm font-medium text-gray-700">Copilot Salud</span>
-            <span className="text-xs text-gray-500">• ⚡ Groq</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Copilot Salud</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">• ⚡ Groq</span>
           </div>
         )}
 
@@ -35,10 +35,10 @@ function ChatMessage({ message }: ChatMessageProps) {
         <div
           className={`rounded-2xl px-4 py-3 shadow-sm ${
             isError
-              ? 'bg-red-50 border-2 border-red-200'
+              ? 'bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800'
               : isUser
                 ? 'bg-primary text-white'
-                : 'bg-white border border-gray-200'
+                : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
           }`}
         >
           {isUser ? (
@@ -52,43 +52,43 @@ function ChatMessage({ message }: ChatMessageProps) {
                 components={{
                   // Personalizar estilos de markdown
                   p: ({ children }) => (
-                    <p className={`mb-2 last:mb-0 ${isError ? 'text-red-800' : 'text-gray-800'}`}>
+                    <p className={`mb-2 last:mb-0 ${isError ? 'text-red-800 dark:text-red-300' : 'text-gray-800 dark:text-gray-200'}`}>
                       {children}
                     </p>
                   ),
                   ul: ({ children }) => (
-                    <ul className={`mb-2 ml-4 list-disc ${isError ? 'text-red-800' : 'text-gray-800'}`}>
+                    <ul className={`mb-2 ml-4 list-disc ${isError ? 'text-red-800 dark:text-red-300' : 'text-gray-800 dark:text-gray-200'}`}>
                       {children}
                     </ul>
                   ),
                   ol: ({ children }) => (
-                    <ol className={`mb-2 ml-4 list-decimal ${isError ? 'text-red-800' : 'text-gray-800'}`}>
+                    <ol className={`mb-2 ml-4 list-decimal ${isError ? 'text-red-800 dark:text-red-300' : 'text-gray-800 dark:text-gray-200'}`}>
                       {children}
                     </ol>
                   ),
                   li: ({ children }) => (
-                    <li className={`mb-1 ${isError ? 'text-red-800' : 'text-gray-800'}`}>
+                    <li className={`mb-1 ${isError ? 'text-red-800 dark:text-red-300' : 'text-gray-800 dark:text-gray-200'}`}>
                       {children}
                     </li>
                   ),
                   strong: ({ children }) => (
-                    <strong className={`font-bold ${isError ? 'text-red-900' : 'text-gray-900'}`}>
+                    <strong className={`font-bold ${isError ? 'text-red-900 dark:text-red-200' : 'text-gray-900 dark:text-gray-100'}`}>
                       {children}
                     </strong>
                   ),
                   em: ({ children }) => (
-                    <em className={`italic ${isError ? 'text-red-800' : 'text-gray-700'}`}>
+                    <em className={`italic ${isError ? 'text-red-800 dark:text-red-300' : 'text-gray-700 dark:text-gray-300'}`}>
                       {children}
                     </em>
                   ),
                   code: ({ children, className }) => {
                     const isInline = !className;
                     return isInline ? (
-                      <code className="bg-gray-100 text-red-600 px-1 py-0.5 rounded text-xs font-mono">
+                      <code className="bg-gray-100 dark:bg-gray-700 text-red-600 dark:text-red-400 px-1 py-0.5 rounded text-xs font-mono">
                         {children}
                       </code>
                     ) : (
-                      <code className="block bg-gray-100 text-gray-800 p-2 rounded text-xs font-mono overflow-x-auto">
+                      <code className="block bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded text-xs font-mono overflow-x-auto">
                         {children}
                       </code>
                     );
@@ -104,17 +104,17 @@ function ChatMessage({ message }: ChatMessageProps) {
                     </a>
                   ),
                   h1: ({ children }) => (
-                    <h1 className={`text-xl font-bold mb-2 ${isError ? 'text-red-900' : 'text-gray-900'}`}>
+                    <h1 className={`text-xl font-bold mb-2 ${isError ? 'text-red-900 dark:text-red-200' : 'text-gray-900 dark:text-gray-100'}`}>
                       {children}
                     </h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className={`text-lg font-bold mb-2 ${isError ? 'text-red-900' : 'text-gray-900'}`}>
+                    <h2 className={`text-lg font-bold mb-2 ${isError ? 'text-red-900 dark:text-red-200' : 'text-gray-900 dark:text-gray-100'}`}>
                       {children}
                     </h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className={`text-base font-bold mb-2 ${isError ? 'text-red-900' : 'text-gray-900'}`}>
+                    <h3 className={`text-base font-bold mb-2 ${isError ? 'text-red-900 dark:text-red-200' : 'text-gray-900 dark:text-gray-100'}`}>
                       {children}
                     </h3>
                   ),
@@ -128,7 +128,7 @@ function ChatMessage({ message }: ChatMessageProps) {
 
         {/* Footer con timestamp */}
         <div className={`flex items-center mt-1 px-1 ${isUser ? 'justify-end' : 'justify-start'}`}>
-          <span className="text-xs text-gray-500">{timestamp}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">{timestamp}</span>
         </div>
       </div>
     </div>

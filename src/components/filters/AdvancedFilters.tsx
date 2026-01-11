@@ -58,12 +58,12 @@ function AdvancedFilters({
   ];
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg ${className}`}>
+    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg transition-colors ${className}`}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-gray-800">⚙️ Filtros Avanzados</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">⚙️ Filtros Avanzados</h3>
             {activeFiltersCount > 0 && (
               <span className="px-2 py-1 bg-primary text-white text-xs font-bold rounded-full">
                 {activeFiltersCount}
@@ -72,7 +72,7 @@ function AdvancedFilters({
           </div>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
           >
             {isExpanded ? '▲' : '▼'}
           </button>
@@ -85,7 +85,7 @@ function AdvancedFilters({
           {/* Provincias */}
           {(mode === 'all' || mode === 'kpi') && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 🗺️ Provincias
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -98,7 +98,7 @@ function AdvancedFilters({
                       className={`px-3 py-2 text-sm font-medium rounded-lg border-2 transition-all ${
                         isSelected
                           ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                          : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500'
                       }`}
                     >
                       {provincia}
@@ -112,7 +112,7 @@ function AdvancedFilters({
           {/* Categorías de KPIs */}
           {(mode === 'all' || mode === 'kpi') && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 📊 Categorías
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -146,7 +146,7 @@ function AdvancedFilters({
           {/* Tendencias */}
           {(mode === 'all' || mode === 'kpi') && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 📈 Tendencias
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -179,12 +179,12 @@ function AdvancedFilters({
           {/* Rango de valores */}
           {(mode === 'all' || mode === 'kpi') && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 📊 Rango de Valores
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Mínimo</label>
+                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Mínimo</label>
                   <input
                     type="number"
                     value={filters.minValue || ''}
@@ -195,11 +195,11 @@ function AdvancedFilters({
                       })
                     }
                     placeholder="0"
-                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    className="w-full px-3 py-2 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Máximo</label>
+                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Máximo</label>
                   <input
                     type="number"
                     value={filters.maxValue || ''}
@@ -210,7 +210,7 @@ function AdvancedFilters({
                       })
                     }
                     placeholder="1000"
-                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    className="w-full px-3 py-2 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   />
                 </div>
               </div>
@@ -238,7 +238,7 @@ function AdvancedFilters({
 
           {/* Ordenamiento */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               🔄 Ordenar por
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -250,7 +250,7 @@ function AdvancedFilters({
                     sortBy: e.target.value as any,
                   })
                 }
-                className="px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="px-3 py-2 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
               >
                 <option value="relevance">Relevancia</option>
                 <option value="name">Nombre</option>
@@ -267,7 +267,7 @@ function AdvancedFilters({
                     sortOrder: e.target.value as 'asc' | 'desc',
                   })
                 }
-                className="px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="px-3 py-2 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
               >
                 <option value="desc">Descendente ↓</option>
                 <option value="asc">Ascendente ↑</option>
@@ -276,7 +276,7 @@ function AdvancedFilters({
           </div>
 
           {/* Botones de acción */}
-          <div className="flex gap-3 pt-4 border-t border-gray-200">
+          <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={onApply}
               className="flex-1 bg-gradient-to-r from-primary to-accent text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
@@ -285,7 +285,7 @@ function AdvancedFilters({
             </button>
             <button
               onClick={onClear}
-              className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all"
+              className="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
             >
               Limpiar
             </button>
@@ -295,7 +295,7 @@ function AdvancedFilters({
 
       {/* Resumen compacto cuando está colapsado */}
       {!isExpanded && activeFiltersCount > 0 && (
-        <div className="p-3 text-sm text-gray-600">
+        <div className="p-3 text-sm text-gray-600 dark:text-gray-400">
           <span className="font-medium">{activeFiltersCount} filtro(s) activo(s)</span>
         </div>
       )}
