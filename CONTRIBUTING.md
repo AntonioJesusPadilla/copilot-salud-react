@@ -589,9 +589,9 @@ Si tienes mockups o diseños, agrégalos aquí.
 
 Si tienes preguntas sobre cómo contribuir:
 
-- 💬 Abre una [Discussion](https://github.com/tu-usuario/copilot-salud-react/discussions)
-- 📧 Envía un email a: tu-email@example.com
-- 🐛 Revisa [Issues](https://github.com/tu-usuario/copilot-salud-react/issues)
+- 💬 Abre una [Discussion](https://github.com/AntonioJesusPadilla/copilot-salud-react/discussions)
+- 📧 Envía un email a: antoniojesuspadilla.dev@proton.me
+- 🐛 Revisa [Issues](https://github.com/AntonioJesusPadilla/copilot-salud-react/issues)
 
 ---
 
