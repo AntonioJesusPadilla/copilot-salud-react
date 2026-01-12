@@ -1,0 +1,7 @@
+# .mailmap - Git Author Identity Mapping
+# Este archivo consolida las identidades de Git para los contributors
+# Formato: Nombre Correcto <email-correcto> Nombre-en-commits <email-en-commits>
+
+# Mapear commits de Claude Code al autor principal
+Antonio Jesús Padilla <antoniojesuspadilla.dev@proton.me> claude <noreply@anthropic.com>
+Antonio Jesús Padilla <antoniojesuspadilla.dev@proton.me> Claude Sonnet 4.5 <noreply@anthropic.com>
