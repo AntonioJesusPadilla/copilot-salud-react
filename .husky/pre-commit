@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Pre-commit hook: Ejecuta lint-staged para validar archivos staged
+echo "🔍 Running pre-commit checks..."
+
+# 1. Lint-staged: Lint y format archivos staged
+npx lint-staged
+
+# 2. Type check: Validar tipos TypeScript
+echo "🔧 Type checking..."
+npm run type-check
+
+# 3. Tests: Ejecutar tests relacionados (opcional - comentar si es muy lento)
+# echo "🧪 Running tests..."
+# npm run test:run
+
+echo "✅ Pre-commit checks passed!"

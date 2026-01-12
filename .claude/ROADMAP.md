@@ -1,4 +1,5 @@
 # 🗺️ ROADMAP DE MIGRACIÓN: COPILOT SALUD ANDALUCÍA
+
 ## De Streamlit/Python a React/TypeScript
 
 **Fecha de inicio**: 04/01/2026
@@ -10,6 +11,7 @@
 ## 📋 ÍNDICE DE SUBSISTEMAS
 
 ### ✅ FASE 1: INFRAESTRUCTURA (COMPLETADA)
+
 - [x] **Subsistema 1**: Infraestructura Base
   - Configuración Vite + React 19 + TypeScript 5
   - Tailwind CSS v3 con colores corporativos
@@ -19,6 +21,7 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 2: AUTENTICACIÓN Y NAVEGACIÓN (COMPLETADA)
+
 - [x] **Subsistema 2**: Sistema de Autenticación
   - Zustand store para autenticación
   - Componente LoginPage con 4 roles (médico, enfermero, administrador, paciente)
@@ -41,6 +44,7 @@
   - **Estado**: ✅ Completado (combina routing, navegación y KPIs)
 
 ### ✅ FASE 3: MAPAS Y DATOS GEOGRÁFICOS (COMPLETADA)
+
 - [x] **Subsistema 4**: Mapas Interactivos
   - Integración de React-Leaflet
   - MapPage con 103 centros de salud georreferenciados
@@ -55,14 +59,15 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 4: CHAT AI (COMPLETADA)
+
 - [x] **Subsistema 5**: Chat AI con Groq
   - Integración de Groq SDK (reemplazo de Anthropic)
   - Sistema de LLM usando llama-3.3-70b-versatile
   - Fallback automático entre modelos (70b → 8b → mixtral)
   - Contexto enriquecido con datos reales del sistema:
-    * 15 KPIs principales con valores exactos
-    * 10 centros de salud con ubicaciones y servicios
-    * Estadísticas completas del sistema sanitario
+    - 15 KPIs principales con valores exactos
+    - 10 centros de salud con ubicaciones y servicios
+    - Estadísticas completas del sistema sanitario
   - System prompt optimizado para usar datos reales
   - ChatInterface con UI moderna
   - Soporte para Markdown en respuestas (react-markdown)
@@ -74,6 +79,7 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 5: COMPONENTES Y REFINAMIENTO (COMPLETADA)
+
 - [x] **Subsistema 6**: Biblioteca de Componentes Comunes
   - Card component genérico reutilizable con variantes (default, outlined, elevated)
   - LoadingSpinner mejorado con 4 variantes (spinner, dots, pulse, ring) y tamaños
@@ -81,15 +87,16 @@
   - Modal/Dialog system con portal (Modal, ConfirmDialog, AlertDialog)
   - Toast/Notification system con store Zustand y posiciones configurables
   - Filters/Selectors avanzados:
-    * MultiSelect con búsqueda y select-all
-    * ToggleSwitch mejorado con tamaños
-    * RadioGroup con direcciones horizontal/vertical
-    * Badge component con variantes y estilos
+    - MultiSelect con búsqueda y select-all
+    - ToggleSwitch mejorado con tamaños
+    - RadioGroup con direcciones horizontal/vertical
+    - Badge component con variantes y estilos
   - ToastContainer integrado globalmente en App.tsx
   - **Commit**: `feat: Subsistema 6 - Biblioteca de componentes comunes`
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 6: DASHBOARDS PERSONALIZADOS POR ROL (COMPLETADA)
+
 - [x] **Subsistema 7**: Dashboard Admin
   - Vista ejecutiva completa con todos los 26 KPIs
   - Sistema de gestión de usuarios con CRUD completo ✅ IMPLEMENTADO
@@ -129,30 +136,31 @@
   - **Estado**: ✅ Completado
 
 #### 🎯 Sistema de Gestión de Usuarios (Complemento al Subsistema 7)
+
 - [x] **Implementación CRUD completa**:
   - **userStore.ts**: Store Zustand con persistencia en localStorage
-    * CRUD operations: create, read, update, delete, toggleActive
-    * Búsqueda: searchUsers() por username, name, email
-    * Filtros: filterByRole(), filterByStatus()
-    * Validaciones: no eliminar/desactivar último admin activo
-    * Hash de contraseñas con bcrypt (10 rounds)
-    * Carga inicial desde /data/users.json
+    - CRUD operations: create, read, update, delete, toggleActive
+    - Búsqueda: searchUsers() por username, name, email
+    - Filtros: filterByRole(), filterByStatus()
+    - Validaciones: no eliminar/desactivar último admin activo
+    - Hash de contraseñas con bcrypt (10 rounds)
+    - Carga inicial desde /data/users.json
   - **UserTable.tsx**: Tabla con ordenamiento y paginación
-    * Ordenamiento por columnas (username, name, email, role, organization)
-    * Paginación: 10 usuarios por página
-    * Badges de colores para roles y estados
-    * Acciones: Editar, Activar/Desactivar, Eliminar
+    - Ordenamiento por columnas (username, name, email, role, organization)
+    - Paginación: 10 usuarios por página
+    - Badges de colores para roles y estados
+    - Acciones: Editar, Activar/Desactivar, Eliminar
   - **UserForm.tsx**: Modal para crear/editar usuarios
-    * Validación completa con inputValidationService
-    * Campos: username, password, name, email, role, organization
-    * Password opcional en modo edición
-    * Show/hide password toggle
+    - Validación completa con inputValidationService
+    - Campos: username, password, name, email, role, organization
+    - Password opcional en modo edición
+    - Show/hide password toggle
   - **UserManagement.tsx**: Panel principal de gestión
-    * Stats cards: Total, Activos, Inactivos, Administradores
-    * Búsqueda global en tiempo real
-    * Filtros por rol y estado
-    * Toast notifications para feedback
-    * ConfirmDialog antes de eliminar
+    - Stats cards: Total, Activos, Inactivos, Administradores
+    - Búsqueda global en tiempo real
+    - Filtros por rol y estado
+    - Toast notifications para feedback
+    - ConfirmDialog antes de eliminar
   - **Routing**: Nueva ruta /users protegida (requireAdmin)
   - **Integración en Dashboard Admin**: Card destacado y botón en QuickActions
   - **Chunk nuevo**: UserManagement (29.18 KB / 7.14 KB gzip)
@@ -160,6 +168,7 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 7: FUNCIONALIDADES AVANZADAS (COMPLETADA)
+
 - [x] **Subsistema 11**: Sistema de Exportación
   - Servicio de exportación completo (exportService.ts)
   - Exportación de dashboard completo a PDF (jspdf + html2canvas)
@@ -195,9 +204,9 @@
   - Tailwind config actualizado con darkMode: 'class'
   - Breakpoints personalizados (xs: 375px, sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px)
   - Dark mode aplicado a todas las páginas:
-    * DashboardPage: Header, stats cards, filters, KPI grid
-    * ChatPage: Header, chat interface, info banner
-    * MapPage: Header, stats, filters, legend, map container, selected center info
+    - DashboardPage: Header, stats cards, filters, KPI grid
+    - ChatPage: Header, chat interface, info banner
+    - MapPage: Header, stats, filters, legend, map container, selected center info
   - Diseño responsive mobile-first en todas las páginas
   - ARIA labels en componentes interactivos (buttons, toggles)
   - Transiciones suaves entre temas (transition-colors)
@@ -207,6 +216,7 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 8: SEGURIDAD Y PERFORMANCE (COMPLETADA)
+
 - [x] **Subsistema 14**: Seguridad
   - Servicio de validación de inputs (`inputValidationService.ts`)
   - Servicio de sanitización de contenido (`sanitizationService.ts`)
@@ -230,19 +240,20 @@
   - **Estado**: ✅ Completado
 
 ### ✅ FASE 9: TESTING (COMPLETADA)
+
 - [x] **Subsistema 16**: Testing Unitario
   - ✅ Configuración de Vitest con v8 coverage
   - ✅ Setup de testing con jsdom y mocks (vitest.config.ts, src/test/setup.ts)
   - ✅ Tests de servicios de seguridad:
-    * inputValidationService.test.ts (41 tests) - 76.28% coverage
-    * sanitizationService.test.ts (39 tests) - 84.84% coverage
+    - inputValidationService.test.ts (41 tests) - 76.28% coverage
+    - sanitizationService.test.ts (39 tests) - 84.84% coverage
   - ✅ Tests de stores Zustand:
-    * authStore.test.ts (12 tests) - 100% coverage
-    * kpiStore.test.ts (11 tests) - 100% coverage
+    - authStore.test.ts (12 tests) - 100% coverage
+    - kpiStore.test.ts (11 tests) - 100% coverage
   - ✅ Tests de componentes UI:
-    * Card.test.tsx (19 tests) - 100% coverage
-    * LoadingSpinner.test.tsx (21 tests) - 100% coverage
-    * StatsCard.test.tsx (7 tests) - 100% coverage
+    - Card.test.tsx (19 tests) - 100% coverage
+    - LoadingSpinner.test.tsx (21 tests) - 100% coverage
+    - StatsCard.test.tsx (7 tests) - 100% coverage
   - ✅ Coverage alcanzado: **85.82%** (superando objetivo de >70%)
   - ✅ 150 tests unitarios en total
   - **Commit**: `test: Subsistema 16 - Tests unitarios`
@@ -252,15 +263,16 @@
   - ✅ Configuración de Playwright con Chromium
   - ✅ Playwright config con webServer automático
   - ✅ Tests E2E de flujos críticos:
-    * login.spec.ts (6 tests) - Flujo completo de login
-    * dashboard.spec.ts (7 tests) - Dashboard y navegación
-    * navigation.spec.ts (4 tests) - Rutas protegidas y navegación
+    - login.spec.ts (6 tests) - Flujo completo de login
+    - dashboard.spec.ts (7 tests) - Dashboard y navegación
+    - navigation.spec.ts (4 tests) - Rutas protegidas y navegación
   - ✅ 17 tests E2E en total
   - ✅ Scripts npm para E2E (test:e2e, test:e2e:ui, test:e2e:debug)
   - **Commit**: `test: Subsistema 17 - Tests E2E`
   - **Estado**: ✅ Completado
 
 ### 🔄 FASE 10: MEJORAS DE UX Y PERSONALIZACIÓN (EN PROGRESO)
+
 - [x] **Mejora UX 1**: Modo Oscuro Completo
   - ✅ Dark mode en todas las páginas (Dashboard, Chat AI, Maps, Settings, Login)
   - ✅ ThemeToggle integrado en todas las páginas
@@ -282,70 +294,86 @@
 
 - [ ] **Mejora UX 3**: Expansión de Settings - Perfil y Notificaciones
   - Sistema de Perfil de Usuario completo:
-    * Edición de información personal
-    * Upload de avatar
-    * Preferencias de usuario (idioma, zona horaria, formato fecha)
-    * Estadísticas de cuenta
+    - Edición de información personal
+    - Upload de avatar
+    - Preferencias de usuario (idioma, zona horaria, formato fecha)
+    - Estadísticas de cuenta
   - Sistema de Notificaciones completo:
-    * Centro de notificaciones con filtros
-    * Preferencias de notificaciones
-    * Browser notifications API
-    * Badge en header con contador
-    * Tipos: sistema, KPIs, admin, usuarios
+    - Centro de notificaciones con filtros
+    - Preferencias de notificaciones
+    - Browser notifications API
+    - Badge en header con contador
+    - Tipos: sistema, KPIs, admin, usuarios
   - **Commit**: `feat: Expansión de Settings - Perfil y Notificaciones`
   - **Estado**: 📋 Planificado (Ver PLAN_SETTINGS_EXPANSION.md)
   - **Estimación**: 13-19 horas
 
 ### ✅ FASE 11: DOCUMENTACIÓN (COMPLETADA)
+
 - [x] **Subsistema 18**: Documentación Técnica
   - ✅ README.md completo con:
-    * Descripción del proyecto y características
-    * Stack tecnológico detallado
-    * Guía de instalación paso a paso
-    * Scripts disponibles con explicaciones
-    * Estructura completa del proyecto
-    * Roles de usuario y funcionalidades
-    * Módulos del sistema explicados
-    * Testing y deployment
-    * Credenciales de prueba
+    - Descripción del proyecto y características
+    - Stack tecnológico detallado
+    - Guía de instalación paso a paso
+    - Scripts disponibles con explicaciones
+    - Estructura completa del proyecto
+    - Roles de usuario y funcionalidades
+    - Módulos del sistema explicados
+    - Testing y deployment
+    - Credenciales de prueba
   - ✅ CONTRIBUTING.md con:
-    * Código de conducta
-    * Proceso de contribución
-    * Estándares de código (TypeScript, React, Tailwind)
-    * Convención de commits (Conventional Commits)
-    * Plantillas de PR, bugs y features
-    * Naming conventions completas
+    - Código de conducta
+    - Proceso de contribución
+    - Estándares de código (TypeScript, React, Tailwind)
+    - Convención de commits (Conventional Commits)
+    - Plantillas de PR, bugs y features
+    - Naming conventions completas
   - ✅ Badges de versión y coverage
   - **Commit**: `docs: Subsistema 18 - Documentación técnica completa`
   - **Estado**: ✅ Completado el 12/01/2026
 
 - [x] **Subsistema 19**: Guía de Usuario
   - ✅ USER_GUIDE.md completo con:
-    * Introducción al sistema
-    * Primeros pasos (login, navegación)
-    * Funcionalidades detalladas por rol (4 roles)
-    * Módulos explicados (Dashboard, Mapas, Chat AI, Config, Gestión Usuarios, Exportación)
-    * Guías paso a paso (6 guías prácticas)
-    * FAQ completo (25+ preguntas frecuentes)
-    * Solución de problemas (7 problemas comunes)
-    * Consejos y trucos (productividad, visualización, análisis, gestión)
-    * Información de contacto y soporte
+    - Introducción al sistema
+    - Primeros pasos (login, navegación)
+    - Funcionalidades detalladas por rol (4 roles)
+    - Módulos explicados (Dashboard, Mapas, Chat AI, Config, Gestión Usuarios, Exportación)
+    - Guías paso a paso (6 guías prácticas)
+    - FAQ completo (25+ preguntas frecuentes)
+    - Solución de problemas (7 problemas comunes)
+    - Consejos y trucos (productividad, visualización, análisis, gestión)
+    - Información de contacto y soporte
   - ✅ Guías visuales con emojis y formato claro
   - ✅ Ejemplos prácticos de uso
   - ✅ Credenciales de prueba documentadas
   - **Commit**: `docs: Subsistema 19 - Guía completa de usuario`
   - **Estado**: ✅ Completado el 12/01/2026
 
-### 🔄 FASE 12: DEPLOYMENT (PENDIENTE)
-- [ ] **Subsistema 20**: Configuración de Producción
-  - Variables de entorno de producción (.env.production)
-  - Build optimizado (Vite production mode)
-  - Configuración de CI/CD con GitHub Actions:
-    * Lint y type-check en PRs
-    * Tests automáticos
-    * Deploy automático a staging
-  - Pre-commit hooks (Husky + lint-staged)
-  - **Commit**: `build: Subsistema 20 - Config producción`
+### 🔄 FASE 12: DEPLOYMENT (EN PROGRESO)
+
+- [x] **Subsistema 20**: Configuración de Producción
+  - ✅ Variables de entorno de producción (.env.production) documentadas
+  - ✅ Build optimizado (Vite production mode)
+  - ✅ Configuración de CI/CD con GitHub Actions:
+    - Lint y type-check en PRs
+    - Tests automáticos (unitarios + E2E)
+    - Deploy automático a producción (main branch)
+    - Security audit con npm audit
+    - Build validation y artifacts
+  - ✅ Pre-commit hooks (Husky + lint-staged):
+    - ESLint fix automático
+    - Prettier format en archivos staged
+    - Type check antes de commit
+  - ✅ Scripts npm optimizados:
+    - build:prod, lint:fix, format:check, type-check, validate
+  - ✅ vercel.json optimizado:
+    - Caching headers para assets (1 año)
+    - Security headers completos (CSP, X-Frame-Options, etc.)
+    - SPA rewrites para routing
+    - Permissions-Policy configurado
+  - ✅ DEPLOYMENT.md: Guía completa de deployment
+  - **Commit**: `build: Subsistema 20 - Configuración de producción completa`
+  - **Estado**: ✅ Completado el 12/01/2026
 
 - [ ] **Subsistema 21**: Deploy a Producción
   - Deploy en Vercel (recomendado para React)
@@ -371,12 +399,13 @@
 ```
 Total de Subsistemas Base: 22
 Mejoras UX Adicionales: 3
-Completados: 20 (80%)
+Completados: 21 (84%)
 En progreso: 0 (0%)
-Pendientes: 5 (20%)
+Pendientes: 4 (16%)
 ```
 
 **Progreso por fases**:
+
 - ✅ Fase 1 - Infraestructura: 100% (1/1)
 - ✅ Fase 2 - Autenticación: 100% (2/2)
 - ✅ Fase 3 - Mapas: 100% (1/1)
@@ -388,7 +417,7 @@ Pendientes: 5 (20%)
 - ✅ Fase 9 - Testing: 100% (2/2) ⭐ COMPLETADA
 - 🔄 Fase 10 - Mejoras UX: 33% (1/3) 🎨 PLANIFICADA
 - ✅ Fase 11 - Documentación: 100% (2/2) ⭐ COMPLETADA
-- 🔄 Fase 12 - Deployment: 0% (0/3)
+- 🔄 Fase 12 - Deployment: 33% (1/3) 🚀 EN PROGRESO
 
 **Tiempo invertido hasta ahora**: ~5-6 días
 **Tiempo estimado restante**: 2-4 semanas
@@ -398,20 +427,21 @@ Pendientes: 5 (20%)
 
 ## 🎯 HITOS CLAVE
 
-| Hito | Subsistemas | Estado | Progreso |
-|------|-------------|--------|----------|
-| **✅ MVP Core** | 1-5 | ✅ Completado | 100% |
-| **✅ MVP Mejorado** | 6-10 | ✅ Completado | 100% (5/5) ⭐ |
-| **✅ Features Avanzadas** | 11-13 | ✅ Completado | 100% (3/3) ⭐ |
-| **✅ Producción Ready** | 14-15 | ✅ Completado | 100% (2/2) ⭐ |
-| **✅ Testing** | 16-17 | ✅ Completado | 100% (2/2) ⭐ |
-| **🔄 Docs y Deploy** | 18-22 | 🔄 Pendiente | 0% (0/5) |
+| Hito                      | Subsistemas | Estado         | Progreso      |
+| ------------------------- | ----------- | -------------- | ------------- |
+| **✅ MVP Core**           | 1-5         | ✅ Completado  | 100%          |
+| **✅ MVP Mejorado**       | 6-10        | ✅ Completado  | 100% (5/5) ⭐ |
+| **✅ Features Avanzadas** | 11-13       | ✅ Completado  | 100% (3/3) ⭐ |
+| **✅ Producción Ready**   | 14-15       | ✅ Completado  | 100% (2/2) ⭐ |
+| **✅ Testing**            | 16-17       | ✅ Completado  | 100% (2/2) ⭐ |
+| **🔄 Docs y Deploy**      | 18-22       | 🔄 En progreso | 60% (3/5) 🚀  |
 
 ---
 
 ## 📝 NOTAS IMPORTANTES
 
 ### Logros Destacados ✅
+
 - **Infraestructura moderna**: React 19 + TypeScript 5 + Vite + Favicon personalizado
 - **Sistema de roles completo**: 4 roles con permisos diferenciados
 - **Gestión de usuarios CRUD**: Panel completo con búsqueda, filtros, validaciones y persistencia
@@ -434,6 +464,7 @@ Pendientes: 5 (20%)
 - **0 dependencias de `any`**: TypeScript estricto en todo el proyecto
 
 ### Prioridades Actuales
+
 1. ✅ **Infraestructura sólida** - COMPLETADO
 2. ✅ **Funcionalidad core** - COMPLETADO (Auth, KPIs, Mapas, Chat)
 3. ✅ **Gestión de usuarios** - COMPLETADO ⭐ NUEVO
@@ -449,6 +480,7 @@ Pendientes: 5 (20%)
 13. 🔄 **Deploy** - Despliegue final en Vercel
 
 ### Riesgos Mitigados
+
 - ✅ **Chat AI**: Cambio de Anthropic a Groq exitoso
 - ✅ **Integración de mapas**: React-Leaflet funcionando correctamente
 - ✅ **26 KPIs**: Todos implementados y funcionando
@@ -461,6 +493,7 @@ Pendientes: 5 (20%)
 - ✅ **Vulnerabilidades**: npm audit ejecutado, react-router actualizado ⭐ NUEVO
 
 ### Decisiones Técnicas Implementadas
+
 - ✅ React 19 con Server Components deshabilitados
 - ✅ TypeScript 5 modo estricto (sin `any` en todo el proyecto)
 - ✅ Tailwind CSS v3 con colores corporativos personalizados
@@ -486,6 +519,7 @@ Pendientes: 5 (20%)
 - ✅ React.memo para optimización de componentes ⭐ NUEVO
 
 ### Cambios Respecto al Plan Original
+
 - **Aceleración**: Completamos subsistemas 1-5 en 3-4 días (originalmente 5-10 días)
 - **Reorganización**: Combinamos "Routing" y "KPIs" en el Subsistema 3
 - **Cambio de provider**: Groq en lugar de Anthropic Claude (Subsistema 5)
@@ -498,10 +532,12 @@ Pendientes: 5 (20%)
 ## 🎯 PRÓXIMOS PASOS RECOMENDADOS
 
 ### ✅ **COMPLETADO: Subsistemas 12 y 13 - Filtros Avanzados + Responsive Design** (FASE 7 COMPLETA)
+
 **Estado**: ✅ Completado el 09/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Muy Alto
 
 **Subsistema 12 - Lo que se implementó**:
+
 - ✅ Componente SearchBar con búsqueda global y relevancia
 - ✅ Servicio filterService con algoritmo de scoring
 - ✅ Filtros avanzados combinados (AdvancedFilters.tsx)
@@ -513,6 +549,7 @@ Pendientes: 5 (20%)
 - ✅ Tipos TypeScript completos (filters.ts)
 
 **Subsistema 13 - Lo que se implementó**:
+
 - ✅ Sistema de temas con dark mode (types/theme.ts)
 - ✅ Zustand store themeStore con persistencia en localStorage
 - ✅ Componente ThemeToggle con iconos SVG (sol/luna)
@@ -530,15 +567,18 @@ Pendientes: 5 (20%)
 ---
 
 ### ✅ **COMPLETADO: Subsistemas 7-10 - Dashboards Personalizados por Rol** (FASE 6 COMPLETA)
+
 **Estado**: ✅ Completado el 10/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Muy Alto
 
 **Arquitectura implementada**:
+
 - ✅ DashboardPage simplificado como router que renderiza el dashboard según rol
 - ✅ Componentes comunes reutilizables (DashboardHeader, QuickActions, StatsCard)
 - ✅ 4 dashboards completamente personalizados por rol
 
 **Subsistema 7 - Dashboard Admin**:
+
 - ✅ Vista ejecutiva completa con todos los 26 KPIs
 - ✅ Sistema de alertas para KPIs críticos (tendencia negativa)
 - ✅ Panel de gestión de usuarios (estructura básica implementada)
@@ -547,6 +587,7 @@ Pendientes: 5 (20%)
 - ✅ Acceso completo a exportación, chat AI y mapas
 
 **Subsistema 8 - Dashboard Gestor**:
+
 - ✅ Vista operativa enfocada en gestión diaria
 - ✅ KPIs prioritarios (asistencia sanitaria y urgencias)
 - ✅ Top 5 centros con más servicios
@@ -555,6 +596,7 @@ Pendientes: 5 (20%)
 - ✅ Estadísticas de centros activos con urgencias
 
 **Subsistema 9 - Dashboard Analista**:
+
 - ✅ Vista analítica avanzada con enfoque en datos
 - ✅ Análisis detallado de tendencias (positivas, negativas, estables)
 - ✅ Filtros por categoría con visualización mejorada
@@ -563,6 +605,7 @@ Pendientes: 5 (20%)
 - ✅ Cambio promedio calculado automáticamente
 
 **Subsistema 10 - Dashboard Invitado**:
+
 - ✅ Vista simplificada para público general
 - ✅ Solo KPIs de nivel básico (información pública)
 - ✅ Información útil: teléfonos de emergencia (061, 112, 016)
@@ -576,10 +619,12 @@ Pendientes: 5 (20%)
 ---
 
 ### ✅ **COMPLETADO: Subsistemas 14-15 - Seguridad y Performance** (FASE 8 COMPLETA)
+
 **Estado**: ✅ Completado el 10/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Crítico para Producción
 
 **Subsistema 14 - Seguridad (Lo que se implementó)**:
+
 - ✅ `inputValidationService.ts`: Validación completa de inputs
   - Validación de emails, contraseñas, usernames
   - Validación de mensajes de chat (máx 5000 caracteres)
@@ -608,6 +653,7 @@ Pendientes: 5 (20%)
 - ✅ SECURITY.md: Documentación completa de seguridad
 
 **Subsistema 15 - Performance (Lo que se implementó)**:
+
 - ✅ Lazy Loading con React.lazy + Suspense:
   - LoginPage, DashboardPage, SettingsPage, MapPage, ChatPage
   - Code splitting automático por ruta
@@ -635,10 +681,12 @@ Pendientes: 5 (20%)
 ---
 
 ### ✅ **COMPLETADO: Subsistemas 16-17 - Testing Completo** (FASE 9 COMPLETA)
+
 **Estado**: ✅ Completado el 11/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Crítico para Calidad
 
 **Subsistema 16 - Testing Unitario (Lo que se implementó)**:
+
 - ✅ Vitest configurado con v8 coverage provider
 - ✅ Setup completo de testing (vitest.config.ts, src/test/setup.ts, vitest.d.ts)
 - ✅ Mocks de window.matchMedia, IntersectionObserver, ResizeObserver
@@ -657,6 +705,7 @@ Pendientes: 5 (20%)
 - ✅ **Total: 150 tests unitarios**
 
 **Subsistema 17 - Testing E2E (Lo que se implementó)**:
+
 - ✅ Playwright instalado y configurado (playwright.config.ts)
 - ✅ Chromium headless browser instalado
 - ✅ WebServer automático configurado (inicia dev server)
@@ -673,10 +722,12 @@ Pendientes: 5 (20%)
 ---
 
 ### ✅ **COMPLETADO: Subsistemas 18-19 - Documentación Completa** (FASE 11 COMPLETA)
+
 **Estado**: ✅ Completado el 12/01/2026
 **Impacto**: ⭐⭐⭐⭐⭐ Crítico para Adopción
 
 **Subsistema 18 - Documentación Técnica (Lo que se implementó)**:
+
 - ✅ **README.md** (730+ líneas):
   - Descripción completa del proyecto
   - Badges de versión, TypeScript, Vite, Coverage
@@ -698,11 +749,11 @@ Pendientes: 5 (20%)
   - Configuración completa del entorno (6 pasos)
   - Proceso de desarrollo (5 pasos)
   - Estándares de código completos:
-    * TypeScript (DO/DON'T con ejemplos)
-    * React (componentes funcionales, hooks)
-    * Tailwind CSS (dark mode, transiciones)
-    * Naming conventions (PascalCase, camelCase, UPPER_SNAKE_CASE)
-    * Orden de imports (6 categorías)
+    - TypeScript (DO/DON'T con ejemplos)
+    - React (componentes funcionales, hooks)
+    - Tailwind CSS (dark mode, transiciones)
+    - Naming conventions (PascalCase, camelCase, UPPER_SNAKE_CASE)
+    - Orden de imports (6 categorías)
   - Conventional Commits (8 tipos con ejemplos)
   - Buenas prácticas de commits
   - Plantilla completa de Pull Request
@@ -710,41 +761,43 @@ Pendientes: 5 (20%)
   - Checklist de 12 puntos para PRs
 
 **Subsistema 19 - Guía de Usuario (Lo que se implementó)**:
+
 - ✅ **USER_GUIDE.md** (1100+ líneas):
   - Introducción al sistema (qué es, para quién es)
   - Primeros pasos (acceder, login, navegación inicial)
   - Funcionalidades detalladas por rol:
-    * 👨‍💼 Administrador (dashboard ejecutivo, gestión usuarios, acciones)
-    * 📋 Gestor (dashboard operativo, herramientas)
-    * 📈 Analista (dashboard analítico, comparativas)
-    * 👤 Invitado (vista pública, limitaciones)
+    - 👨‍💼 Administrador (dashboard ejecutivo, gestión usuarios, acciones)
+    - 📋 Gestor (dashboard operativo, herramientas)
+    - 📈 Analista (dashboard analítico, comparativas)
+    - 👤 Invitado (vista pública, limitaciones)
   - 6 módulos explicados en detalle:
-    * Dashboard de KPIs (26 KPIs, 5 categorías, filtros, comparaciones)
-    * Mapas Interactivos (103 centros, filtros, búsqueda, leyenda)
-    * Chat AI (asistente inteligente, ejemplos, tips)
-    * Configuración (cambio contraseña, tema)
-    * Exportación (4 tipos, formatos, límites)
-    * Gestión de Usuarios (CRUD, búsqueda, protecciones)
+    - Dashboard de KPIs (26 KPIs, 5 categorías, filtros, comparaciones)
+    - Mapas Interactivos (103 centros, filtros, búsqueda, leyenda)
+    - Chat AI (asistente inteligente, ejemplos, tips)
+    - Configuración (cambio contraseña, tema)
+    - Exportación (4 tipos, formatos, límites)
+    - Gestión de Usuarios (CRUD, búsqueda, protecciones)
   - 6 guías paso a paso prácticas:
-    * Analizar KPIs por categoría
-    * Buscar un centro de salud específico
-    * Exportar dashboard a PDF
-    * Comparar múltiples KPIs
-    * Usar Chat AI para análisis
-    * Filtrar centros por múltiples servicios
+    - Analizar KPIs por categoría
+    - Buscar un centro de salud específico
+    - Exportar dashboard a PDF
+    - Comparar múltiples KPIs
+    - Usar Chat AI para análisis
+    - Filtrar centros por múltiples servicios
   - FAQ completo (25+ preguntas):
-    * General (7 preguntas)
-    * Autenticación (3 preguntas)
-    * KPIs y Dashboard (3 preguntas)
-    * Mapas (3 preguntas)
-    * Chat AI (4 preguntas)
-    * Exportación (3 preguntas)
-    * Gestión de Usuarios (3 preguntas)
+    - General (7 preguntas)
+    - Autenticación (3 preguntas)
+    - KPIs y Dashboard (3 preguntas)
+    - Mapas (3 preguntas)
+    - Chat AI (4 preguntas)
+    - Exportación (3 preguntas)
+    - Gestión de Usuarios (3 preguntas)
   - Solución de problemas (7 problemas comunes con soluciones)
   - Consejos y trucos (productividad, visualización, análisis, gestión)
   - Información de contacto y recursos adicionales
 
 **Resultado**: **FASE 11 COMPLETADA AL 100%**. El proyecto cuenta ahora con documentación profesional y completa que facilita:
+
 - ✅ **Onboarding** de nuevos desarrolladores (README + CONTRIBUTING)
 - ✅ **Adopción** por usuarios finales (USER_GUIDE)
 - ✅ **Mantenimiento** del código (estándares documentados)
@@ -755,28 +808,167 @@ El sistema está ahora completamente documentado y listo para producción.
 
 ---
 
+### ✅ **COMPLETADO: Subsistema 20 - Configuración de Producción** (FASE 12 - 33%)
+
+**Estado**: ✅ Completado el 12/01/2026
+**Impacto**: ⭐⭐⭐⭐⭐ Crítico para Deployment
+
+**Lo que se implementó**:
+
+#### 1. Variables de Entorno de Producción
+
+- ✅ **.env.production** (50+ líneas):
+  - Documentación completa de todas las variables
+  - Instrucciones de configuración en Vercel Dashboard
+  - Variables obligatorias: VITE_GROQ_API_KEY, VITE_APP_NAME, VITE_BASE_URL
+  - Variables opcionales: Feature flags, analytics
+  - Sección de instrucciones paso a paso
+  - Warnings de seguridad para no incluir valores sensibles
+
+#### 2. Configuración Optimizada de Vercel
+
+- ✅ **vercel.json** optimizado:
+  - **Caching**: Headers de caché para assets (max-age=31536000, immutable)
+  - **Security Headers**:
+    - X-Content-Type-Options: nosniff
+    - X-Frame-Options: DENY
+    - X-XSS-Protection: 1; mode=block
+    - Referrer-Policy: strict-origin-when-cross-origin
+    - Permissions-Policy: camera=(), microphone=(), geolocation=()
+    - Content-Security-Policy: Política completa para scripts, styles, images, fonts, connect-src
+  - **SPA Rewrites**: Manejo correcto de rutas client-side
+  - **Redirects**: Normalización de URLs (index.html → /)
+  - **Framework**: Vite con build command y output directory
+
+#### 3. CI/CD Pipeline con GitHub Actions
+
+- ✅ **.github/workflows/ci.yml** (200+ líneas):
+  - **Job 1 - Lint & Type Check**:
+    - ESLint con --max-warnings 0
+    - TypeScript type check con tsc --noEmit
+  - **Job 2 - Unit Tests**:
+    - 150+ tests unitarios con Vitest
+    - Coverage report automático
+    - Upload a Codecov (opcional)
+  - **Job 3 - E2E Tests**:
+    - 17 tests E2E con Playwright
+    - Install browsers automático
+    - Upload de artifacts en caso de fallo
+  - **Job 4 - Build Validation**:
+    - Build de producción
+    - Check de build size
+    - Upload de artifacts
+  - **Job 5 - Security Audit**:
+    - npm audit automático
+    - Check de vulnerabilidades high/critical
+  - **Job 6 - Deploy to Vercel**:
+    - Deploy automático solo en push a main
+    - Integración con Vercel usando tokens
+    - Comentario automático con URL de deployment
+  - **Job 7 - CI Summary**:
+    - Resumen de todos los jobs
+    - Status check de cada paso
+
+#### 4. Pre-commit Hooks con Husky
+
+- ✅ **Husky + lint-staged** instalados:
+  - **.husky/pre-commit**:
+    - Ejecución de lint-staged para archivos en staging
+    - Type check completo (npm run type-check)
+    - Opcional: Tests relacionados (comentado por defecto)
+  - **lint-staged configuration** en package.json:
+    - TypeScript files: ESLint fix + Prettier write
+    - CSS/MD/JSON files: Prettier write
+    - Ejecución paralela para performance
+
+#### 5. Scripts NPM Optimizados
+
+- ✅ **package.json** con nuevos scripts:
+  - `build:prod`: Build de producción con NODE_ENV
+  - `lint:fix`: ESLint con --fix automático
+  - `format:check`: Verificar formato sin modificar
+  - `type-check`: TypeScript check sin emitir archivos
+  - `validate`: Pipeline completo (type-check + lint + test)
+  - Scripts existentes mantenidos
+
+#### 6. Documentación Completa de Deployment
+
+- ✅ **DEPLOYMENT.md** (400+ líneas):
+  - **Pre-requisitos**: Cuenta Vercel, API keys, repositorio Git
+  - **Configuración Inicial**:
+    - Conectar repositorio a Vercel (2 opciones)
+    - Obtener Project ID y Org ID
+  - **Variables de Entorno**:
+    - Tabla completa de variables requeridas
+    - Variables para GitHub Actions (4 secrets)
+    - Instrucciones paso a paso
+  - **Deploy Manual**:
+    - Desde Vercel Dashboard
+    - Desde CLI (vercel --prod)
+    - Desde Git (push to main)
+  - **Deploy Automático (CI/CD)**:
+    - Diagrama de flujo del pipeline
+    - Configuración de GitHub Actions
+    - Verificación de workflows
+  - **Verificación Post-Deploy**:
+    - Health check básico (4 pasos)
+    - Funcionalidad core (6 checks)
+    - Performance check (Lighthouse)
+    - Security headers verification
+  - **Monitoreo**:
+    - Vercel Analytics
+    - Vercel Logs
+    - Performance Monitoring (Speed Insights, GA, Sentry)
+  - **Rollback**:
+    - Desde Vercel Dashboard (promote deployment)
+    - Desde CLI (vercel promote)
+    - Desde Git (git revert)
+  - **Troubleshooting**:
+    - 7 problemas comunes con soluciones
+    - Build falla, Chat AI no responde, 404 en rutas, etc.
+  - **Checklist de Deploy**:
+    - Pre-deploy (8 items)
+    - Durante deploy (3 items)
+    - Post-deploy (12 items)
+  - **Enlaces Útiles**: Dashboard, Docs, CLI, Console
+
+#### 7. Dependencias Instaladas
+
+- ✅ **husky**: ^9.1.7 (Git hooks manager)
+- ✅ **lint-staged**: ^16.2.7 (Run linters on staged files)
+
+**Resultado**: **Subsistema 20 COMPLETADO AL 100%**. El proyecto cuenta ahora con:
+
+- ✅ **Pipeline CI/CD completo**: 7 jobs automatizados con GitHub Actions
+- ✅ **Pre-commit hooks**: Validación automática antes de commits
+- ✅ **Configuración optimizada**: Vercel config con caching y security
+- ✅ **Documentación de deployment**: Guía completa de 400+ líneas
+- ✅ **Scripts de producción**: Comandos optimizados para deploy
+- ✅ **Variables de entorno**: Configuración documentada para prod
+
+El sistema está ahora **100% listo para producción** con CI/CD automatizado y deployment optimizado.
+
+---
+
 ## 📋 PRÓXIMOS PASOS RECOMENDADOS
 
 **¿Qué subsistema implementamos a continuación?**
 
-Con **FASE 11 completada** (20 subsistemas, 80% del proyecto), las opciones son:
+Con **Subsistema 20 completado** (21 subsistemas, 84% del proyecto), las opciones son:
 
-- **A) Subsistemas 20-22 - Deploy a Producción** ← Recomendado (listo para producción)
-  - CI/CD con GitHub Actions
-  - Deploy en Vercel
-  - Monitoreo y alertas
-  - Smoke testing
-  - Plan de rollback
+- **A) Subsistemas 21-22 - Finalizar Deploy** ← Recomendado (ya en Vercel)
+  - Subsistema 21: Configurar dominio personalizado, monitoreo completo
+  - Subsistema 22: Smoke testing, ajustes post-deploy, plan de rollback
 
 - **B) Mejoras UX 2-3 - Features Adicionales** (mejoras de usuario)
   - Sistema de reordenación de KPIs (drag & drop)
   - Expansión de Settings (Perfil + Notificaciones)
   - Personalización avanzada
 
-**Recomendación**: Con todas las fases técnicas (1-9) y documentación (11) completadas, el sistema está **listo para producción**. El siguiente paso lógico es el **deployment (FASE 12)** para hacer la aplicación accesible a usuarios reales. Las mejoras UX pueden implementarse iterativamente post-deployment.
+**Recomendación**: Con **CI/CD configurado** y **deployment en Vercel activo**, el siguiente paso es completar el **Subsistema 21** (configuración final de producción) y **Subsistema 22** (validación y monitoreo). Esto completará la **FASE 12** al 100% y dejará el proyecto totalmente operacional en producción.
 
 ---
 
 **Última actualización**: 12/01/2026
 **Autor**: Antonio Jesús Padilla + Claude Code
-**Versión del roadmap**: 9.0 (Actualizado tras completar FASE 11: Subsistemas 18-19 - Documentación)
+**Versión del roadmap**: 10.0 (Actualizado tras completar Subsistema 20: Configuración de Producción)
