@@ -101,11 +101,11 @@ vercel project ls
 
 #### Variables Requeridas
 
-| Variable            | Valor                            | Environment         |
-| ------------------- | -------------------------------- | ------------------- |
-| `VITE_GROQ_API_KEY` | `tu_api_key_de_groq`             | Production, Preview |
-| `VITE_APP_NAME`     | `Copilot Salud Andalucía`        | Production, Preview |
-| `VITE_BASE_URL`     | `https://tu-proyecto.vercel.app` | Production          |
+| Variable            | Valor                                    | Environment         |
+| ------------------- | ---------------------------------------- | ------------------- |
+| `VITE_GROQ_API_KEY` | `tu_api_key_de_groq`                     | Production, Preview |
+| `VITE_APP_NAME`     | `Copilot Salud Andalucía`                | Production, Preview |
+| `VITE_BASE_URL`     | `https://copilot-salud-react.vercel.app` | Production          |
 
 #### Variables Opcionales
 
@@ -219,7 +219,7 @@ Después de cada deploy, verifica:
 
 ```bash
 # Check status
-curl -I https://tu-proyecto.vercel.app
+curl -I https://copilot-salud-react.vercel.app
 
 # Debe retornar: 200 OK
 ```
@@ -262,7 +262,7 @@ Verifica manualmente en la app:
 
 ```bash
 # Verificar headers de seguridad
-curl -I https://tu-proyecto.vercel.app | grep -E "(X-|Content-Security)"
+curl -I https://copilot-salud-react.vercel.app | grep -E "(X-|Content-Security)"
 ```
 
 Debe incluir:
@@ -421,7 +421,7 @@ git push -f origin main
 2. Agregar headers faltantes
 3. Verificar con:
    ```bash
-   curl -I https://tu-proyecto.vercel.app
+   curl -I https://copilot-salud-react.vercel.app
    ```
 4. Redeploy si es necesario
 

@@ -7,6 +7,8 @@
 [![Vite](https://img.shields.io/badge/Vite-5-purple.svg)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Coverage](https://img.shields.io/badge/Coverage-85.82%25-brightgreen.svg)](TESTING.md)
+[![Deployment](https://img.shields.io/badge/Deployment-Vercel-black.svg)](https://copilot-salud-react.vercel.app/)
+[![Production](https://img.shields.io/badge/Production-Live-success.svg)](https://copilot-salud-react.vercel.app/)
 
 ---
 
@@ -30,6 +32,21 @@
 
 ---
 
+## 🚀 Demo en Vivo
+
+**Aplicación en producción**: [https://copilot-salud-react.vercel.app/](https://copilot-salud-react.vercel.app/)
+
+### Credenciales de Prueba
+
+| Rol              | Usuario    | Contraseña    | Descripción                        |
+| ---------------- | ---------- | ------------- | ---------------------------------- |
+| 👨‍💼 Administrador | `admin`    | `admin123`    | Acceso completo + gestión usuarios |
+| 📋 Gestor        | `gestor`   | `gestor123`   | Vista operativa + exportación      |
+| 📈 Analista      | `analista` | `analista123` | Análisis avanzado + comparativas   |
+| 👤 Invitado      | `invitado` | `invitado123` | Vista pública limitada             |
+
+---
+
 ## 📖 Descripción
 
 **Copilot Salud Andalucía** es una aplicación web desarrollada con React 19 y TypeScript que proporciona una plataforma integral para:
@@ -46,6 +63,7 @@
 ### Migración desde Streamlit/Python
 
 Este proyecto es una **migración completa** de una aplicación Streamlit/Python a un stack moderno de React/TypeScript, mejorando significativamente:
+
 - ⚡ Performance (lazy loading, code splitting)
 - 🎨 UX/UI (responsive, dark mode, animaciones)
 - 🔒 Seguridad (validación, sanitización, rate limiting)
@@ -56,6 +74,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 ## ✨ Características Principales
 
 ### 🔐 Autenticación y Autorización
+
 - Sistema de login con 4 roles diferenciados
 - Rutas protegidas con React Router
 - Persistencia de sesión en localStorage
@@ -63,6 +82,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Cambio de contraseña desde configuración
 
 ### 📊 Dashboard Personalizado
+
 - **4 dashboards específicos por rol**:
   - 👨‍💼 **Admin**: Vista ejecutiva completa + gestión de usuarios
   - 📋 **Gestor**: Vista operativa enfocada en gestión diaria
@@ -73,6 +93,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Sistema de búsqueda con relevancia
 
 ### 🗺️ Mapas Interactivos
+
 - 103 centros de salud georreferenciados
 - React-Leaflet con OpenStreetMap
 - Filtros por tipo de centro y servicios
@@ -80,6 +101,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Búsqueda por nombre y ubicación
 
 ### 🤖 Chat AI
+
 - LLM Groq (llama-3.3-70b-versatile)
 - Contexto enriquecido con datos reales del sistema
 - Respuestas con formato Markdown
@@ -87,6 +109,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Historial persistente de conversaciones
 
 ### 📥 Exportación de Datos
+
 - Dashboard completo a PDF (jspdf + html2canvas)
 - KPIs a CSV/Excel (xlsx)
 - Centros de salud con múltiples hojas
@@ -94,6 +117,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Validación por rol
 
 ### 👥 Gestión de Usuarios (Admin)
+
 - CRUD completo de usuarios
 - Búsqueda y filtros por rol/estado
 - Activar/Desactivar usuarios
@@ -101,12 +125,14 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Validaciones y feedback con toasts
 
 ### 🌙 Tema y Personalización
+
 - Modo claro/oscuro con persistencia
 - ThemeToggle en todas las páginas
 - Transiciones suaves
 - Colores con contraste WCAG 2.1
 
 ### 🔒 Seguridad
+
 - Validación de inputs (inputValidationService)
 - Sanitización de contenido (sanitizationService)
 - Rate limiting (rateLimitService)
@@ -114,6 +140,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Auditoría de dependencias
 
 ### ⚡ Performance
+
 - Lazy loading de rutas
 - Code splitting por página
 - Memoization con React.memo
@@ -121,6 +148,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - Bundle size optimizado
 
 ### 🧪 Testing
+
 - 150+ tests unitarios (Vitest)
 - 17 tests E2E (Playwright)
 - 85.82% de coverage
@@ -131,16 +159,19 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 ## 🛠️ Stack Tecnológico
 
 ### Core
+
 - **React 19** - UI Library
 - **TypeScript 5** - Tipado estático (strict mode)
 - **Vite 5** - Build tool y dev server
 - **React Router v6** - Routing y navegación
 
 ### Estado y Data
+
 - **Zustand** - State management global
 - **zustand/middleware** - Persistencia en localStorage
 
 ### UI y Estilos
+
 - **Tailwind CSS v3** - Utility-first CSS
 - **Recharts** - Gráficos y visualizaciones
 - **React-Leaflet** - Mapas interactivos
@@ -148,17 +179,21 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - **date-fns** - Manejo de fechas
 
 ### AI y LLM
+
 - **Groq SDK** - LLM API (llama-3.3-70b-versatile)
 
 ### Exportación
+
 - **jspdf** - Generación de PDFs
 - **html2canvas** - Captura de pantalla a PDF
 - **xlsx** - Exportación Excel/CSV
 
 ### Seguridad
+
 - **bcryptjs** - Hash de contraseñas
 
 ### Testing
+
 - **Vitest** - Test runner (unit tests)
 - **@testing-library/react** - Testing de componentes
 - **Playwright** - E2E testing
@@ -166,6 +201,7 @@ Este proyecto es una **migración completa** de una aplicación Streamlit/Python
 - **@vitest/coverage-v8** - Code coverage
 
 ### Desarrollo
+
 - **ESLint** - Linter
 - **Prettier** - Code formatter
 - **TypeScript ESLint** - Linting para TypeScript
@@ -181,6 +217,7 @@ Antes de comenzar, asegúrate de tener instalado:
 - **Git** >= 2.30.0
 
 Verificar versiones:
+
 ```bash
 node --version
 npm --version
@@ -224,6 +261,7 @@ VITE_ENV=development
 ```
 
 **⚠️ Importante**:
+
 - El archivo `.env` está en `.gitignore` y NO debe subirse a Git
 - Obtén tu API key de Groq en: https://console.groq.com/keys
 
@@ -316,12 +354,12 @@ npm run build
 
 La aplicación viene con usuarios de prueba para cada rol:
 
-| Rol | Usuario | Contraseña |
-|-----|---------|------------|
-| 👨‍💼 Administrador | `admin` | `admin123` |
-| 📋 Gestor | `gestor` | `gestor123` |
-| 📈 Analista | `analista` | `analista123` |
-| 👤 Invitado | `invitado` | `invitado123` |
+| Rol              | Usuario    | Contraseña    |
+| ---------------- | ---------- | ------------- |
+| 👨‍💼 Administrador | `admin`    | `admin123`    |
+| 📋 Gestor        | `gestor`   | `gestor123`   |
+| 📈 Analista      | `analista` | `analista123` |
+| 👤 Invitado      | `invitado` | `invitado123` |
 
 ### Chat AI (Groq)
 
@@ -335,6 +373,7 @@ Para usar el Chat AI, necesitas una API key de Groq:
    ```
 
 **Modelos disponibles** (con fallback automático):
+
 - `llama-3.3-70b-versatile` (principal)
 - `llama-3.1-8b-instant` (fallback 1)
 - `mixtral-8x7b-32768` (fallback 2)
@@ -466,6 +505,7 @@ copilot-salud-react/
 ## 👥 Roles de Usuario
 
 ### 👨‍💼 Administrador
+
 - ✅ Acceso completo a todos los KPIs (26)
 - ✅ Gestión de usuarios (CRUD)
 - ✅ Vista ejecutiva del sistema
@@ -475,6 +515,7 @@ copilot-salud-react/
 - ✅ Mapas interactivos
 
 ### 📋 Gestor
+
 - ✅ KPIs prioritarios de gestión
 - ✅ Vista operativa
 - ✅ Top 5 centros con más servicios
@@ -484,6 +525,7 @@ copilot-salud-react/
 - ✅ Mapas interactivos
 
 ### 📈 Analista
+
 - ✅ KPIs con análisis de tendencias
 - ✅ Vista analítica avanzada
 - ✅ Comparador de KPIs
@@ -493,6 +535,7 @@ copilot-salud-react/
 - ✅ Mapas interactivos
 
 ### 👤 Invitado
+
 - ✅ KPIs de información pública (limitados)
 - ✅ Vista simplificada
 - ✅ Información de emergencias
@@ -505,6 +548,7 @@ copilot-salud-react/
 ## 🎯 Funcionalidades por Módulo
 
 ### Dashboard
+
 - 26 KPIs de salud con gráficos
 - Filtros por categoría, provincia, tendencia
 - Búsqueda global con relevancia
@@ -513,6 +557,7 @@ copilot-salud-react/
 - Exportación a PDF/CSV/Excel
 
 ### Mapas
+
 - 103 centros de salud georreferenciados
 - Filtros por tipo y servicios
 - Búsqueda por nombre y ciudad
@@ -521,6 +566,7 @@ copilot-salud-react/
 - Exportación de datos
 
 ### Chat AI
+
 - LLM con contexto del sistema sanitario
 - Respuestas en Markdown
 - Historial de conversaciones
@@ -528,12 +574,14 @@ copilot-salud-react/
 - Validación y sanitización
 
 ### Configuración
+
 - Cambio de contraseña
 - Preferencias de tema (claro/oscuro)
 - Información de cuenta
-- *Próximamente: Perfil y Notificaciones*
+- _Próximamente: Perfil y Notificaciones_
 
 ### Gestión de Usuarios (Admin)
+
 - Crear, editar, eliminar usuarios
 - Búsqueda y filtros
 - Activar/Desactivar usuarios
@@ -547,24 +595,28 @@ copilot-salud-react/
 El proyecto cuenta con una suite completa de testing:
 
 ### Tests Unitarios (Vitest)
+
 ```bash
 npm test          # Watch mode
 npm run test:ui   # UI interactiva
 ```
 
 **Coverage: 85.82%**
+
 - 150+ tests
 - Servicios de seguridad
 - Stores de Zustand
 - Componentes UI
 
 ### Tests E2E (Playwright)
+
 ```bash
 npm run test:e2e       # Headless
 npm run test:e2e:ui    # Con UI
 ```
 
 **17 tests E2E**
+
 - Flujo de login
 - Navegación entre páginas
 - Dashboard y KPIs
@@ -579,6 +631,7 @@ Ver [TESTING.md](TESTING.md) para más detalles.
 ### Agregar Nuevo KPI
 
 1. Agregar datos en `public/data/kpis.json`:
+
 ```json
 {
   "id": "kpi_27",
@@ -597,6 +650,7 @@ Ver [TESTING.md](TESTING.md) para más detalles.
 ### Agregar Nueva Ruta
 
 1. Crear componente en `src/pages/`:
+
 ```tsx
 // src/pages/NuevaPagina.tsx
 function NuevaPagina() {
@@ -606,6 +660,7 @@ export default NuevaPagina;
 ```
 
 2. Agregar ruta en `App.tsx`:
+
 ```tsx
 <Route
   path="/nueva-pagina"
@@ -676,11 +731,13 @@ El build se genera en la carpeta `dist/`.
 ### Desplegar en Vercel (Recomendado)
 
 1. Instalar Vercel CLI:
+
 ```bash
 npm i -g vercel
 ```
 
 2. Deploy:
+
 ```bash
 vercel
 ```
@@ -700,6 +757,7 @@ vercel
 ### Desplegar en otros servicios
 
 La aplicación es compatible con cualquier servicio que soporte sitios estáticos:
+
 - GitHub Pages
 - Cloudflare Pages
 - AWS S3 + CloudFront
@@ -763,6 +821,7 @@ Si encuentras algún problema o tienes sugerencias:
 Ver [.claude/ROADMAP.md](.claude/ROADMAP.md) para el roadmap completo del proyecto.
 
 ### Próximas Features
+
 - 🔔 Sistema de Notificaciones completo
 - 👤 Perfil de Usuario con avatar
 - 🔄 Sistema de reordenación de KPIs (drag & drop)
