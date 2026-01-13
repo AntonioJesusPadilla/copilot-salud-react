@@ -4,8 +4,8 @@ test.describe('Dashboard', () => {
   test.beforeEach(async ({ page }) => {
     // Login first
     await page.goto('/');
-    await page.fill('input[placeholder*="nombre de usuario"]', 'admin');
-    await page.fill('input[type="password"]', 'admin123');
+    await page.fill('input#username', 'admin');
+    await page.fill('input#password', 'admin123');
     await page.click('button[type="submit"]');
     await page.waitForURL('**/dashboard', { timeout: 5000 });
   });
@@ -51,7 +51,9 @@ test.describe('Dashboard', () => {
 
   test('should have logout functionality', async ({ page }) => {
     // Look for logout button (usually in header or menu)
-    const logoutButton = page.locator('button:has-text("Cerrar"), button:has-text("Logout"), text=/Cerrar sesión/i').first();
+    const logoutButton = page
+      .locator('button:has-text("Cerrar"), button:has-text("Logout"), text=/Cerrar sesión/i')
+      .first();
 
     if (await logoutButton.isVisible()) {
       await logoutButton.click();

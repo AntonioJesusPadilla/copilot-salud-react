@@ -4,8 +4,8 @@ test.describe('Navigation and Routing', () => {
   test.beforeEach(async ({ page }) => {
     // Login first
     await page.goto('/');
-    await page.fill('input[placeholder*="nombre de usuario"]', 'admin');
-    await page.fill('input[type="password"]', 'admin123');
+    await page.fill('input#username', 'admin');
+    await page.fill('input#password', 'admin123');
     await page.click('button[type="submit"]');
     await page.waitForURL('**/dashboard', { timeout: 5000 });
   });

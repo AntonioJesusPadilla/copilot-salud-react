@@ -6,9 +6,9 @@ test.describe('Login Flow', () => {
   });
 
   test('should display login page', async ({ page }) => {
-    await expect(page.locator('h1')).toContainText('Iniciar Sesión');
-    await expect(page.locator('input[placeholder*="nombre de usuario"]')).toBeVisible();
-    await expect(page.locator('input[type="password"]')).toBeVisible();
+    await expect(page.locator('h2')).toContainText('Iniciar Sesión');
+    await expect(page.locator('input#username')).toBeVisible();
+    await expect(page.locator('input#password')).toBeVisible();
   });
 
   test('should show validation errors for empty fields', async ({ page }) => {
@@ -16,16 +16,18 @@ test.describe('Login Flow', () => {
     await loginButton.click();
 
     // Should show error message or validation
-    await expect(page.locator('text=/campo.*vacío|requerido/i')).toBeVisible({ timeout: 3000 }).catch(() => {
-      // If no specific validation message, form should not navigate away
-      expect(page.url()).toContain('/');
-    });
+    await expect(page.locator('text=/campo.*vacío|requerido/i'))
+      .toBeVisible({ timeout: 3000 })
+      .catch(() => {
+        // If no specific validation message, form should not navigate away
+        expect(page.url()).toContain('/');
+      });
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
     // Fill login form with test credentials
-    await page.fill('input[placeholder*="nombre de usuario"]', 'admin');
-    await page.fill('input[type="password"]', 'admin123');
+    await page.fill('input#username', 'admin');
+    await page.fill('input#password', 'admin123');
 
     // Submit form
     await page.click('button[type="submit"]');
@@ -39,8 +41,8 @@ test.describe('Login Flow', () => {
 
   test('should show error for invalid credentials', async ({ page }) => {
     // Fill login form with invalid credentials
-    await page.fill('input[placeholder*="nombre de usuario"]', 'invalid_user');
-    await page.fill('input[type="password"]', 'wrong_password');
+    await page.fill('input#username', 'invalid_user');
+    await page.fill('input#password', 'wrong_password');
 
     // Submit form
     await page.click('button[type="submit"]');
@@ -52,8 +54,8 @@ test.describe('Login Flow', () => {
   });
 
   test('should have accessible form elements', async ({ page }) => {
-    const usernameInput = page.locator('input[placeholder*="nombre de usuario"]');
-    const passwordInput = page.locator('input[type="password"]');
+    const usernameInput = page.locator('input#username');
+    const passwordInput = page.locator('input#password');
     const submitButton = page.locator('button[type="submit"]');
 
     await expect(usernameInput).toBeEnabled();
