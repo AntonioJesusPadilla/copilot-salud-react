@@ -1,5 +1,10 @@
 import bcrypt from 'bcryptjs';
-import { LoginCredentials, LoginResponse, ChangePasswordData, ChangePasswordResponse } from '../types/auth';
+import {
+  LoginCredentials,
+  LoginResponse,
+  ChangePasswordData,
+  ChangePasswordResponse,
+} from '../types/auth';
 import { User } from '../types';
 import { rateLimitService } from './security/rateLimitService';
 import { inputValidationService } from './security/inputValidationService';
@@ -88,7 +93,7 @@ class AuthService {
       }
 
       // Login exitoso - no devolver la contraseña
-      const { password, ...userWithoutPassword } = user;
+      const { password: _password, ...userWithoutPassword } = user;
 
       return {
         success: true,
@@ -137,7 +142,9 @@ class AuthService {
       // NOTA: En una aplicación real, aquí se actualizaría la base de datos
       // Como estamos trabajando con un archivo JSON estático, esto es solo simulación
       console.log('Nueva contraseña hasheada:', newPasswordHash);
-      console.warn('ADVERTENCIA: En esta versión de prueba, los cambios de contraseña no persisten entre recargas.');
+      console.warn(
+        'ADVERTENCIA: En esta versión de prueba, los cambios de contraseña no persisten entre recargas.'
+      );
 
       return {
         success: true,

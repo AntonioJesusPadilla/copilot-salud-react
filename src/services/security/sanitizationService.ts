@@ -18,11 +18,11 @@ class SanitizationService {
 
     // Eliminar todos los scripts
     const scripts = doc.querySelectorAll('script');
-    scripts.forEach(script => script.remove());
+    scripts.forEach((script) => script.remove());
 
     // Eliminar iframes
     const iframes = doc.querySelectorAll('iframe');
-    iframes.forEach(iframe => iframe.remove());
+    iframes.forEach((iframe) => iframe.remove());
 
     // Eliminar event handlers (onclick, onerror, etc.)
     this.removeEventHandlers(doc.body);
@@ -47,7 +47,7 @@ class SanitizationService {
     }
 
     // Recursivamente limpiar hijos
-    Array.from(element.children).forEach(child => {
+    Array.from(element.children).forEach((child) => {
       this.removeEventHandlers(child as HTMLElement);
     });
   }
@@ -58,7 +58,7 @@ class SanitizationService {
   private sanitizeUrls(element: HTMLElement): void {
     // Limpiar enlaces
     const links = element.querySelectorAll('a');
-    links.forEach(link => {
+    links.forEach((link) => {
       const href = link.getAttribute('href');
       if (href && !this.isUrlSafe(href)) {
         link.removeAttribute('href');
@@ -71,7 +71,7 @@ class SanitizationService {
 
     // Limpiar imágenes
     const images = element.querySelectorAll('img');
-    images.forEach(img => {
+    images.forEach((img) => {
       const src = img.getAttribute('src');
       if (src && !this.isUrlSafe(src)) {
         img.removeAttribute('src');
@@ -143,7 +143,7 @@ class SanitizationService {
         if (value && typeof value === 'object' && !Array.isArray(value)) {
           sanitized[key] = this.sanitizeObject(value as Record<string, unknown>);
         } else if (Array.isArray(value)) {
-          sanitized[key] = value.map(item =>
+          sanitized[key] = value.map((item) =>
             item && typeof item === 'object' && !Array.isArray(item)
               ? this.sanitizeObject(item as Record<string, unknown>)
               : item
@@ -199,7 +199,7 @@ class SanitizationService {
 
     // Prevenir path traversal
     sanitized = sanitized.replace(/\.\./g, '');
-    sanitized = sanitized.replace(/[\/\\]/g, '_');
+    sanitized = sanitized.replace(/[/\\]/g, '_');
 
     // Limitar longitud
     if (sanitized.length > 200) {
@@ -244,7 +244,7 @@ class SanitizationService {
       /setInterval\(/i,
     ];
 
-    return dangerousPatterns.some(pattern => pattern.test(text));
+    return dangerousPatterns.some((pattern) => pattern.test(text));
   }
 
   /**

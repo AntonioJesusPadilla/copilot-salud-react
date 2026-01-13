@@ -34,12 +34,22 @@ function KPIChart({ kpi, chartType = 'area', height = 300, showLegend = false }:
   const color = kpi.color || '#3B82F6';
 
   // Tooltip personalizado
-  const CustomTooltip = ({ active, payload }: any) => {
+  interface TooltipPayload {
+    value: number;
+    name: string;
+    color: string;
+    payload: {
+      label?: string;
+      [key: string]: unknown;
+    };
+  }
+
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: TooltipPayload[] }) => {
     if (active && payload && payload.length) {
       const data = payload[0];
       return (
         <div className="bg-white border-2 border-gray-200 rounded-lg shadow-lg p-3">
-          <p className="text-sm font-semibold text-gray-700">{data.payload.label}</p>
+          <p className="text-sm font-semibold text-gray-700">{data.payload.label || ''}</p>
           <p className="text-lg font-bold" style={{ color }}>
             {data.value.toLocaleString('es-ES')} {kpi.unit}
           </p>
@@ -71,11 +81,7 @@ function KPIChart({ kpi, chartType = 'area', height = 300, showLegend = false }:
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis
-              dataKey="date"
-              tick={{ fontSize: 12, fill: '#6B7280' }}
-              stroke="#9CA3AF"
-            />
+            <XAxis dataKey="date" tick={{ fontSize: 12, fill: '#6B7280' }} stroke="#9CA3AF" />
             <YAxis
               tick={{ fontSize: 12, fill: '#6B7280' }}
               stroke="#9CA3AF"
@@ -95,11 +101,7 @@ function KPIChart({ kpi, chartType = 'area', height = 300, showLegend = false }:
         ) : (
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis
-              dataKey="date"
-              tick={{ fontSize: 12, fill: '#6B7280' }}
-              stroke="#9CA3AF"
-            />
+            <XAxis dataKey="date" tick={{ fontSize: 12, fill: '#6B7280' }} stroke="#9CA3AF" />
             <YAxis
               tick={{ fontSize: 12, fill: '#6B7280' }}
               stroke="#9CA3AF"

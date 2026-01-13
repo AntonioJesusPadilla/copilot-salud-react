@@ -26,7 +26,8 @@ function AdvancedFilters({
   // Contar filtros activos
   const countActiveFilters = () => {
     let count = 0;
-    if (filters.provinces && filters.provinces.length > 0 && !filters.provinces.includes('Todas')) count++;
+    if (filters.provinces && filters.provinces.length > 0 && !filters.provinces.includes('Todas'))
+      count++;
     if (filters.categories && filters.categories.length > 0) count++;
     if (filters.trends && filters.trends.length > 0) count++;
     if (filters.dateRange?.startDate && filters.dateRange?.endDate) count++;
@@ -58,12 +59,16 @@ function AdvancedFilters({
   ];
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg transition-colors ${className}`}>
+    <div
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg transition-colors ${className}`}
+    >
       {/* Header */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">⚙️ Filtros Avanzados</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
+              ⚙️ Filtros Avanzados
+            </h3>
             {activeFiltersCount > 0 && (
               <span className="px-2 py-1 bg-primary text-white text-xs font-bold rounded-full">
                 {activeFiltersCount}
@@ -121,9 +126,7 @@ function AdvancedFilters({
                   return (
                     <button
                       key={config.category}
-                      onClick={() =>
-                        toggleArrayFilter<KPICategory>('categories', config.category)
-                      }
+                      onClick={() => toggleArrayFilter<KPICategory>('categories', config.category)}
                       className={`px-3 py-2 text-sm font-medium rounded-lg border-2 transition-all text-left ${
                         isSelected
                           ? 'border-opacity-100 shadow-md'
@@ -157,9 +160,7 @@ function AdvancedFilters({
                       key={trend.value}
                       onClick={() => toggleArrayFilter<KPITrend>('trends', trend.value)}
                       className={`px-3 py-2 text-sm font-medium rounded-lg border-2 transition-all ${
-                        isSelected
-                          ? 'shadow-md'
-                          : 'border-gray-200 hover:border-gray-300'
+                        isSelected ? 'shadow-md' : 'border-gray-200 hover:border-gray-300'
                       }`}
                       style={{
                         borderColor: isSelected ? trend.color : undefined,
@@ -184,7 +185,9 @@ function AdvancedFilters({
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Mínimo</label>
+                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    Mínimo
+                  </label>
                   <input
                     type="number"
                     value={filters.minValue || ''}
@@ -199,7 +202,9 @@ function AdvancedFilters({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Máximo</label>
+                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                    Máximo
+                  </label>
                   <input
                     type="number"
                     value={filters.maxValue || ''}
@@ -247,7 +252,7 @@ function AdvancedFilters({
                 onChange={(e) =>
                   onFiltersChange({
                     ...filters,
-                    sortBy: e.target.value as any,
+                    sortBy: e.target.value as 'name' | 'value' | 'trend' | 'date' | 'relevance',
                   })
                 }
                 className="px-3 py-2 border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"

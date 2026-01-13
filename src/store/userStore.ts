@@ -30,7 +30,10 @@ interface UserStore {
   getUser: (username: string) => User | undefined;
   getAllUsers: () => UserWithoutPassword[];
   createUser: (data: CreateUserData) => Promise<{ success: boolean; error?: string }>;
-  updateUser: (username: string, data: UpdateUserData) => Promise<{ success: boolean; error?: string }>;
+  updateUser: (
+    username: string,
+    data: UpdateUserData
+  ) => Promise<{ success: boolean; error?: string }>;
   deleteUser: (username: string) => Promise<{ success: boolean; error?: string }>;
   toggleUserActive: (username: string) => Promise<{ success: boolean; error?: string }>;
 
@@ -77,7 +80,7 @@ const useUserStore = create<UserStore>()(
       getAllUsers: () => {
         const users = get().users;
         return Object.entries(users).map(([username, user]) => {
-          const { password, ...userWithoutPassword } = user;
+          const { password: _password, ...userWithoutPassword } = user;
           return { ...userWithoutPassword, username };
         });
       },
@@ -178,7 +181,7 @@ const useUserStore = create<UserStore>()(
           return { success: false, error: 'No se puede eliminar el único administrador activo' };
         }
 
-        const { [username]: removed, ...remainingUsers } = users;
+        const { [username]: _removed, ...remainingUsers } = users;
 
         set({ users: remainingUsers });
 
@@ -196,9 +199,7 @@ const useUserStore = create<UserStore>()(
 
         // No permitir desactivar el último admin activo
         const allUsers = Object.values(users);
-        const activeAdminCount = allUsers.filter(
-          (u) => u.role === 'admin' && u.active
-        ).length;
+        const activeAdminCount = allUsers.filter((u) => u.role === 'admin' && u.active).length;
 
         if (user.role === 'admin' && user.active && activeAdminCount <= 1) {
           return { success: false, error: 'No se puede desactivar el único administrador activo' };

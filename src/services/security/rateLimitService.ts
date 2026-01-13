@@ -58,7 +58,10 @@ class RateLimitService {
   /**
    * Verifica si una acción está permitida según el rate limit
    */
-  checkLimit(action: string, identifier?: string): { allowed: boolean; message?: string; resetTime?: number } {
+  checkLimit(
+    action: string,
+    identifier?: string
+  ): { allowed: boolean; message?: string; resetTime?: number } {
     const config = this.DEFAULT_CONFIGS[action];
 
     if (!config) {
@@ -180,7 +183,10 @@ class RateLimitService {
   /**
    * Obtiene información de rate limit para debugging
    */
-  getStatus(action: string, identifier?: string): {
+  getStatus(
+    action: string,
+    identifier?: string
+  ): {
     remaining: number;
     resetTime: number;
     limit: number;
@@ -210,24 +216,16 @@ class RateLimitService {
   /**
    * Wrapper para funciones async que aplica rate limiting automáticamente
    */
-  async withRateLimit<T>(
-    action: string,
-    fn: () => Promise<T>,
-    identifier?: string
-  ): Promise<T> {
+  async withRateLimit<T>(action: string, fn: () => Promise<T>, identifier?: string): Promise<T> {
     const check = this.checkLimit(action, identifier);
 
     if (!check.allowed) {
       throw new Error(check.message || 'Rate limit exceeded');
     }
 
-    try {
-      const result = await fn();
-      return result;
-    } catch (error) {
-      // Re-lanzar el error original
-      throw error;
-    }
+    // Ejecutar la función y retornar el resultado
+    const result = await fn();
+    return result;
   }
 }
 
@@ -236,7 +234,10 @@ export const rateLimitService = new RateLimitService();
 
 // Limpiar entradas expiradas cada 5 minutos
 if (typeof window !== 'undefined') {
-  setInterval(() => {
-    rateLimitService.cleanup();
-  }, 5 * 60 * 1000);
+  setInterval(
+    () => {
+      rateLimitService.cleanup();
+    },
+    5 * 60 * 1000
+  );
 }

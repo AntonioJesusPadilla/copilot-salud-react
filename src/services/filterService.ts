@@ -150,7 +150,9 @@ class FilterService {
 
     // Filtrar por rol si se proporciona
     if (userRole) {
-      kpis = await kpiService.getKPIsByRole(userRole as any);
+      kpis = await kpiService.getKPIsByRole(
+        userRole as 'admin' | 'gestor' | 'analista' | 'invitado'
+      );
     }
 
     // Filtrar por categorías
@@ -168,7 +170,7 @@ class FilterService {
       // Si incluye "Todas", mostrar todos
       if (!filters.provinces.includes('Todas')) {
         kpis = kpis.filter(
-          (kpi) => kpi.province && filters.provinces!.includes(kpi.province as any)
+          (kpi) => kpi.province && filters.provinces!.some((p) => p === kpi.province)
         );
       }
     }
@@ -215,16 +217,12 @@ class FilterService {
   }
 
   // Aplicar filtros avanzados a centros de salud
-  async applyAdvancedFiltersToCenter(
-    filters: AdvancedFilters
-  ): Promise<HealthCenter[]> {
+  async applyAdvancedFiltersToCenter(filters: AdvancedFilters): Promise<HealthCenter[]> {
     let centers = await mapService.getAllCenters();
 
     // Filtrar por tipos de centro
     if (filters.centerTypes && filters.centerTypes.length > 0) {
-      centers = centers.filter((center) =>
-        filters.centerTypes!.includes(center.type)
-      );
+      centers = centers.filter((center) => filters.centerTypes!.includes(center.type));
     }
 
     // Filtrar por urgencias
@@ -261,11 +259,7 @@ class FilterService {
   }
 
   // Ordenar KPIs
-  private sortKPIs(
-    kpis: KPI[],
-    sortBy: string,
-    sortOrder: 'asc' | 'desc'
-  ): KPI[] {
+  private sortKPIs(kpis: KPI[], sortBy: string, sortOrder: 'asc' | 'desc'): KPI[] {
     const sorted = [...kpis];
 
     sorted.sort((a, b) => {
@@ -279,13 +273,13 @@ class FilterService {
           comparison = a.currentValue - b.currentValue;
           break;
         case 'date':
-          comparison =
-            new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime();
+          comparison = new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime();
           break;
-        case 'trend':
+        case 'trend': {
           const trendOrder = { up: 3, stable: 2, down: 1 };
           comparison = trendOrder[a.trend] - trendOrder[b.trend];
           break;
+        }
         default:
           comparison = 0;
       }
@@ -321,8 +315,7 @@ class FilterService {
       // Calcular valor promedio del período
       const avgValue =
         periodData.length > 0
-          ? periodData.reduce((sum, point) => sum + point.value, 0) /
-            periodData.length
+          ? periodData.reduce((sum, point) => sum + point.value, 0) / periodData.length
           : kpi.currentValue;
 
       results.comparisons.push({
@@ -345,8 +338,7 @@ class FilterService {
         }
 
         if (comparison.showPercentageChange && previous !== 0) {
-          results.comparisons[i].changePercentage =
-            ((current - previous) / previous) * 100;
+          results.comparisons[i].changePercentage = ((current - previous) / previous) * 100;
         }
       }
     }

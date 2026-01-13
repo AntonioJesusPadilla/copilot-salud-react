@@ -55,7 +55,7 @@ function SettingsPage() {
       } else {
         setMessage({ type: 'error', text: result.error || 'Error al cambiar contraseña' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Error al cambiar contraseña' });
     } finally {
       setIsLoading(false);
@@ -65,7 +65,10 @@ function SettingsPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors" style={{ borderColor: roleConfig.color }}>
+      <header
+        className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors"
+        style={{ borderColor: roleConfig.color }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Lado izquierdo: Volver + Título */}
@@ -79,7 +82,9 @@ function SettingsPage() {
                 ← <span className="hidden sm:inline">Volver</span>
               </button>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100">⚙️ Configuración</h1>
+                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100">
+                  ⚙️ Configuración
+                </h1>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Ajustes de cuenta y preferencias
                 </p>
@@ -154,7 +159,9 @@ function SettingsPage() {
           {/* Main content area */}
           <div className="md:col-span-2">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors">
-              <h2 className="text-xl font-bold mb-6 text-secondary dark:text-gray-100">🔐 Cambiar Contraseña</h2>
+              <h2 className="text-xl font-bold mb-6 text-secondary dark:text-gray-100">
+                🔐 Cambiar Contraseña
+              </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -191,7 +198,9 @@ function SettingsPage() {
                     required
                     disabled={isLoading}
                   />
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Mínimo 6 caracteres</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Mínimo 6 caracteres
+                  </p>
                 </div>
 
                 <div>
@@ -235,9 +244,9 @@ function SettingsPage() {
 
               <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-lg transition-colors">
                 <p className="text-sm text-yellow-800 dark:text-yellow-300">
-                  ⚠️ <strong>Nota:</strong> En esta versión de prueba, los cambios de contraseña
-                  no persisten entre recargas de la aplicación. Esta funcionalidad será completada
-                  en futuros subsistemas con backend persistente.
+                  ⚠️ <strong>Nota:</strong> En esta versión de prueba, los cambios de contraseña no
+                  persisten entre recargas de la aplicación. Esta funcionalidad será completada en
+                  futuros subsistemas con backend persistente.
                 </p>
               </div>
             </div>
