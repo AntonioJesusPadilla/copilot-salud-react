@@ -9,7 +9,7 @@ on:
 
 # Permisos necesarios
 permissions:
-  contents: read
+  contents: write  # Necesario para crear comentarios en commits
   pull-requests: write
 
 jobs:
