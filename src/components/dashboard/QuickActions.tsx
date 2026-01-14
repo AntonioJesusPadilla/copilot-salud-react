@@ -13,7 +13,9 @@ function QuickActions({ roleConfig, exportOptions, customActions }: QuickActions
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors">
-      <h3 className="font-bold text-lg mb-4 text-secondary dark:text-gray-100">🚀 Acciones Rápidas</h3>
+      <h3 className="font-bold text-lg mb-4 text-secondary dark:text-gray-100">
+        🚀 Acciones Rápidas
+      </h3>
       <div className="space-y-2">
         <button
           onClick={() => navigate('/dashboard')}
@@ -40,6 +42,8 @@ function QuickActions({ roleConfig, exportOptions, customActions }: QuickActions
           </button>
         )}
 
+        {customActions}
+
         {roleConfig.permissions.canExport && exportOptions && exportOptions.length > 0 && (
           <div className="w-full">
             <ExportMenu
@@ -50,8 +54,6 @@ function QuickActions({ roleConfig, exportOptions, customActions }: QuickActions
             />
           </div>
         )}
-
-        {customActions}
       </div>
     </div>
   );

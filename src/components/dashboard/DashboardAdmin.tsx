@@ -19,32 +19,38 @@ import {
   exportKPIsToCSV,
   exportKPIsToExcel,
   exportFullReport,
-  validateExportPermission
+  validateExportPermission,
 } from '../../services/exportService';
 import { filterService } from '../../services/filterService';
 
 function DashboardAdmin() {
   const { user, logout } = useAuthStore();
   const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
-  const { centers } = useMapStore();
+  const { centers, loadCenters } = useMapStore();
   const { activeFilters, setActiveFilters, clearActiveFilters } = useFilterStore();
   const navigate = useNavigate();
 
   const [displayedKPIs, setDisplayedKPIs] = useState(filteredKPIs);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [showComparator, setShowComparator] = useState(false);
+  const [showOnlyCritical, setShowOnlyCritical] = useState(false);
 
   const roleConfig = ROLE_CONFIGS.admin;
 
   useEffect(() => {
     if (user) {
       loadKPIs(user.role);
+      loadCenters();
     }
-  }, [user, loadKPIs]);
+  }, [user, loadKPIs, loadCenters]);
 
   useEffect(() => {
-    setDisplayedKPIs(filteredKPIs);
-  }, [filteredKPIs]);
+    if (showOnlyCritical) {
+      setDisplayedKPIs(filteredKPIs.filter((kpi) => kpi.trend === 'down'));
+    } else {
+      setDisplayedKPIs(filteredKPIs);
+    }
+  }, [filteredKPIs, showOnlyCritical]);
 
   const handleApplyFilters = async () => {
     if (user) {
@@ -55,7 +61,14 @@ function DashboardAdmin() {
 
   const handleClearFilters = () => {
     clearActiveFilters();
+    setShowOnlyCritical(false);
     setDisplayedKPIs(filteredKPIs);
+  };
+
+  const handleShowCriticalKPIs = () => {
+    setShowOnlyCritical(true);
+    // Scroll suave hasta la sección de KPIs
+    document.getElementById('kpi-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleLogout = () => {
@@ -70,7 +83,7 @@ function DashboardAdmin() {
   if (!user) return null;
 
   // KPIs críticos (con tendencia negativa)
-  const criticalKPIs = displayedKPIs.filter(kpi => kpi.trend === 'down').length;
+  const criticalKPIs = displayedKPIs.filter((kpi) => kpi.trend === 'down').length;
 
   // Opciones de exportación
   const exportOptions: ExportOption[] = [
@@ -79,41 +92,61 @@ function DashboardAdmin() {
       label: 'Dashboard completo (PDF)',
       icon: '📄',
       onClick: async () => {
-        validateExportPermission(roleConfig.permissions.canExport);
-        await exportDashboardToPDF(user.name);
+        try {
+          validateExportPermission(roleConfig.permissions.canExport);
+          await exportDashboardToPDF(user.name);
+        } catch (error) {
+          console.error('Error al exportar PDF:', error);
+          alert('Error al exportar el dashboard a PDF. Por favor, inténtalo de nuevo.');
+        }
       },
-      disabled: !roleConfig.permissions.canExport
+      disabled: !roleConfig.permissions.canExport,
     },
     {
       id: 'kpis-excel',
       label: 'KPIs a Excel',
       icon: '📊',
       onClick: () => {
-        validateExportPermission(roleConfig.permissions.canExport);
-        exportKPIsToExcel(filteredKPIs);
+        try {
+          validateExportPermission(roleConfig.permissions.canExport);
+          exportKPIsToExcel(filteredKPIs);
+        } catch (error) {
+          console.error('Error al exportar Excel:', error);
+          alert('Error al exportar los KPIs a Excel. Por favor, inténtalo de nuevo.');
+        }
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'kpis-csv',
       label: 'KPIs a CSV',
       icon: '📋',
       onClick: () => {
-        validateExportPermission(roleConfig.permissions.canExport);
-        exportKPIsToCSV(filteredKPIs);
+        try {
+          validateExportPermission(roleConfig.permissions.canExport);
+          exportKPIsToCSV(filteredKPIs);
+        } catch (error) {
+          console.error('Error al exportar CSV:', error);
+          alert('Error al exportar los KPIs a CSV. Por favor, inténtalo de nuevo.');
+        }
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'full-report',
       label: 'Reporte completo (Excel)',
       icon: '📦',
       onClick: () => {
-        validateExportPermission(roleConfig.permissions.canExport);
-        exportFullReport(filteredKPIs, centers, user.name);
+        try {
+          validateExportPermission(roleConfig.permissions.canExport);
+          exportFullReport(filteredKPIs, centers, user.name);
+        } catch (error) {
+          console.error('Error al exportar reporte:', error);
+          alert('Error al exportar el reporte completo. Por favor, inténtalo de nuevo.');
+        }
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
-    }
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
+    },
   ];
 
   return (
@@ -125,11 +158,13 @@ function DashboardAdmin() {
         onSettings={handleSettings}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main id="dashboard-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Banner de bienvenida */}
         <div
           className="rounded-xl p-6 sm:p-8 mb-6 sm:mb-8 text-white"
-          style={{ background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)` }}
+          style={{
+            background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)`,
+          }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">
             {roleConfig.icon} Panel de Administración
@@ -147,8 +182,12 @@ function DashboardAdmin() {
             icon="📊"
             stats={[
               { label: 'Total de indicadores', value: stats?.total || 0, color: roleConfig.color },
-              { label: 'Tendencia positiva', value: `${stats?.trending.up || 0} ↑`, color: '#10B981' },
-              { label: 'Requieren atención', value: criticalKPIs, color: '#EF4444' }
+              {
+                label: 'Tendencia positiva',
+                value: `${stats?.trending.up || 0} ↑`,
+                color: '#10B981',
+              },
+              { label: 'Requieren atención', value: criticalKPIs, color: '#EF4444' },
             ]}
           />
 
@@ -158,8 +197,16 @@ function DashboardAdmin() {
             icon="🏥"
             stats={[
               { label: 'Total centros', value: centers.length, color: roleConfig.color },
-              { label: 'Hospitales', value: centers.filter(c => c.type === 'hospital').length, color: '#3B82F6' },
-              { label: 'Centros de salud', value: centers.filter(c => c.type === 'centro_salud').length, color: '#10B981' }
+              {
+                label: 'Hospitales',
+                value: centers.filter((c) => c.type === 'hospital').length,
+                color: '#3B82F6',
+              },
+              {
+                label: 'Centros de salud',
+                value: centers.filter((c) => c.type === 'centro_salud').length,
+                color: '#10B981',
+              },
             ]}
           />
 
@@ -168,8 +215,17 @@ function DashboardAdmin() {
             title="Sistema"
             icon="⚙️"
             stats={[
-              { label: 'Usuarios activos', value: '4', color: roleConfig.color, subtitle: 'Admin, Gestor, Analista, Invitado' },
-              { label: 'Última actualización', value: new Date().toLocaleDateString('es-ES'), color: '#6B7280' }
+              {
+                label: 'Usuarios activos',
+                value: '4',
+                color: roleConfig.color,
+                subtitle: 'Admin, Gestor, Analista, Invitado',
+              },
+              {
+                label: 'Última actualización',
+                value: new Date().toLocaleDateString('es-ES'),
+                color: '#6B7280',
+              },
             ]}
           />
 
@@ -188,53 +244,46 @@ function DashboardAdmin() {
           />
         </div>
 
-        {/* Acceso rápido a Gestión de Usuarios */}
-        <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-xl shadow-lg p-6 mb-6 transition-colors hover:shadow-xl">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-bold mb-2 text-white flex items-center gap-2">
-                👥 Gestión de Usuarios
-              </h3>
-              <p className="text-white/90 text-sm">
-                Administra usuarios del sistema con capacidades CRUD completas
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/users')}
-              className="px-6 py-3 bg-white text-red-600 rounded-lg hover:bg-gray-100 transition-colors font-semibold flex items-center gap-2"
-            >
-              Abrir Panel
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
         {/* Sistema de alertas */}
         {criticalKPIs > 0 && (
           <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-700 rounded-lg p-4 sm:p-6 mb-6 transition-colors">
-            <h3 className="font-bold text-base sm:text-lg mb-2 text-red-900 dark:text-red-300 flex items-center gap-2">
-              🚨 Alertas del Sistema
-            </h3>
-            <p className="text-sm sm:text-base text-red-800 dark:text-red-200">
-              Hay <strong>{criticalKPIs} indicadores</strong> con tendencia negativa que requieren atención inmediata.
-              Revisa los KPIs marcados en rojo para tomar medidas correctivas.
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-base sm:text-lg mb-2 text-red-900 dark:text-red-300 flex items-center gap-2">
+                  🚨 Alertas del Sistema
+                </h3>
+                <p className="text-sm sm:text-base text-red-800 dark:text-red-200">
+                  Hay <strong>{criticalKPIs} indicadores</strong> con tendencia negativa que
+                  requieren atención inmediata.
+                </p>
+              </div>
+              <button
+                onClick={handleShowCriticalKPIs}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap ${
+                  showOnlyCritical
+                    ? 'bg-red-600 text-white'
+                    : 'bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-700'
+                }`}
+              >
+                {showOnlyCritical ? '✓ Mostrando críticos' : 'Ver KPIs críticos →'}
+              </button>
+            </div>
+            {showOnlyCritical && (
+              <div className="mt-3 pt-3 border-t border-red-200 dark:border-red-700">
+                <button
+                  onClick={() => setShowOnlyCritical(false)}
+                  className="text-sm text-red-600 dark:text-red-400 hover:underline"
+                >
+                  ← Volver a mostrar todos los KPIs
+                </button>
+              </div>
+            )}
           </div>
         )}
 
         {/* Búsqueda Global */}
         <div className="mb-6">
-          <SearchBar
-            placeholder="Buscar KPIs, centros de salud, datos..."
-            defaultScope="kpis"
-          />
+          <SearchBar placeholder="Buscar KPIs, centros de salud, datos..." defaultScope="kpis" />
         </div>
 
         {/* Controles de filtros y comparación */}
@@ -280,16 +329,29 @@ function DashboardAdmin() {
         )}
 
         {/* Sección de KPIs */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 transition-colors">
+        <div
+          id="kpi-section"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 transition-colors"
+        >
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-secondary dark:text-gray-100">
-                📊 Todos los Indicadores de Salud
+                {showOnlyCritical ? '🚨 KPIs Críticos' : '📊 Todos los Indicadores de Salud'}
               </h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Vista ejecutiva completa de los {stats?.total || 0} KPIs del sistema
+                {showOnlyCritical
+                  ? `Mostrando ${displayedKPIs.length} indicadores con tendencia negativa`
+                  : `Vista ejecutiva completa de los ${stats?.total || 0} KPIs del sistema`}
               </p>
             </div>
+            {showOnlyCritical && (
+              <button
+                onClick={() => setShowOnlyCritical(false)}
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+              >
+                Ver todos los KPIs
+              </button>
+            )}
           </div>
 
           <KPIGrid kpis={displayedKPIs} isLoading={isLoading} />

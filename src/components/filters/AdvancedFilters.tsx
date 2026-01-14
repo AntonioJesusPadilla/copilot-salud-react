@@ -130,7 +130,7 @@ function AdvancedFilters({
                       className={`px-3 py-2 text-sm font-medium rounded-lg border-2 transition-all text-left ${
                         isSelected
                           ? 'border-opacity-100 shadow-md'
-                          : 'border-gray-200 hover:border-gray-300'
+                          : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500'
                       }`}
                       style={{
                         borderColor: isSelected ? config.color : undefined,
@@ -160,7 +160,9 @@ function AdvancedFilters({
                       key={trend.value}
                       onClick={() => toggleArrayFilter<KPITrend>('trends', trend.value)}
                       className={`px-3 py-2 text-sm font-medium rounded-lg border-2 transition-all ${
-                        isSelected ? 'shadow-md' : 'border-gray-200 hover:border-gray-300'
+                        isSelected
+                          ? 'shadow-md'
+                          : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500'
                       }`}
                       style={{
                         borderColor: isSelected ? trend.color : undefined,

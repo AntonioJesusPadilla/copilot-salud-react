@@ -78,7 +78,6 @@ git commit -m "feat: descripción clara del cambio
 - Detalle 2
 - Tests actualizados
 
-Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
 
 # Push a rama feature
 git push origin feature/nombre-descriptivo

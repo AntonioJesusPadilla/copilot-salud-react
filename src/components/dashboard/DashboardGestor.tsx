@@ -20,14 +20,14 @@ import {
   exportKPIsToCSV,
   exportKPIsToExcel,
   exportFullReport,
-  validateExportPermission
+  validateExportPermission,
 } from '../../services/exportService';
 import { filterService } from '../../services/filterService';
 
 function DashboardGestor() {
   const { user, logout } = useAuthStore();
   const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
-  const { centers } = useMapStore();
+  const { centers, loadCenters } = useMapStore();
   const { activeFilters, setActiveFilters, clearActiveFilters } = useFilterStore();
   const navigate = useNavigate();
 
@@ -40,8 +40,9 @@ function DashboardGestor() {
   useEffect(() => {
     if (user) {
       loadKPIs(user.role);
+      loadCenters();
     }
-  }, [user, loadKPIs]);
+  }, [user, loadKPIs, loadCenters]);
 
   useEffect(() => {
     setDisplayedKPIs(filteredKPIs);
@@ -72,14 +73,17 @@ function DashboardGestor() {
 
   // KPIs prioritarios para gestores (asistencia sanitaria y urgencias)
   const priorityKPIs = displayedKPIs.filter(
-    kpi => kpi.category === 'asistencia_sanitaria' || kpi.category === 'urgencias'
+    (kpi) => kpi.category === 'asistencia_sanitaria' || kpi.category === 'urgencias'
   );
 
   // Contar KPIs por categoría
-  const kpisByCategory = displayedKPIs.reduce((acc, kpi) => {
-    acc[kpi.category] = (acc[kpi.category] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const kpisByCategory = displayedKPIs.reduce(
+    (acc, kpi) => {
+      acc[kpi.category] = (acc[kpi.category] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   // Top 5 centros con más servicios
   const topCenters = centers
@@ -96,7 +100,7 @@ function DashboardGestor() {
         validateExportPermission(roleConfig.permissions.canExport);
         await exportDashboardToPDF(user.name);
       },
-      disabled: !roleConfig.permissions.canExport
+      disabled: !roleConfig.permissions.canExport,
     },
     {
       id: 'kpis-excel',
@@ -106,7 +110,7 @@ function DashboardGestor() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportKPIsToExcel(filteredKPIs);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'kpis-csv',
@@ -116,7 +120,7 @@ function DashboardGestor() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportKPIsToCSV(filteredKPIs);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'full-report',
@@ -126,8 +130,8 @@ function DashboardGestor() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportFullReport(filteredKPIs, centers, user.name);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
-    }
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
+    },
   ];
 
   return (
@@ -139,11 +143,13 @@ function DashboardGestor() {
         onSettings={handleSettings}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main id="dashboard-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Banner de bienvenida */}
         <div
           className="rounded-xl p-6 sm:p-8 mb-6 sm:mb-8 text-white"
-          style={{ background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)` }}
+          style={{
+            background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)`,
+          }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">
             {roleConfig.icon} Panel de Gestión Operativa
@@ -162,7 +168,11 @@ function DashboardGestor() {
             stats={[
               { label: 'KPIs disponibles', value: stats?.total || 0, color: roleConfig.color },
               { label: 'KPIs prioritarios', value: priorityKPIs.length, color: '#EF4444' },
-              { label: 'Tendencia positiva', value: `${stats?.trending.up || 0} ↑`, color: '#10B981' }
+              {
+                label: 'Tendencia positiva',
+                value: `${stats?.trending.up || 0} ↑`,
+                color: '#10B981',
+              },
             ]}
           />
 
@@ -174,18 +184,18 @@ function DashboardGestor() {
               {
                 label: 'Asist. Sanitaria',
                 value: kpisByCategory['asistencia_sanitaria'] || 0,
-                color: KPI_CATEGORY_CONFIGS.asistencia_sanitaria.color
+                color: KPI_CATEGORY_CONFIGS.asistencia_sanitaria.color,
               },
               {
                 label: 'Urgencias',
                 value: kpisByCategory['urgencias'] || 0,
-                color: KPI_CATEGORY_CONFIGS.urgencias.color
+                color: KPI_CATEGORY_CONFIGS.urgencias.color,
               },
               {
                 label: 'Recursos Humanos',
                 value: kpisByCategory['recursos_humanos'] || 0,
-                color: KPI_CATEGORY_CONFIGS.recursos_humanos.color
-              }
+                color: KPI_CATEGORY_CONFIGS.recursos_humanos.color,
+              },
             ]}
           />
 
@@ -195,16 +205,21 @@ function DashboardGestor() {
             icon="🏥"
             stats={[
               { label: 'Total centros', value: centers.length, color: roleConfig.color },
-              { label: 'Con urgencias', value: centers.filter(c => c.emergencyService).length, color: '#EF4444' },
-              { label: 'Centros de salud', value: centers.filter(c => c.type === 'centro_salud').length, color: '#10B981' }
+              {
+                label: 'Con urgencias',
+                value: centers.filter((c) => c.emergencyService).length,
+                color: '#EF4444',
+              },
+              {
+                label: 'Centros de salud',
+                value: centers.filter((c) => c.type === 'centro_salud').length,
+                color: '#10B981',
+              },
             ]}
           />
 
           {/* Acciones rápidas */}
-          <QuickActions
-            roleConfig={roleConfig}
-            exportOptions={exportOptions}
-          />
+          <QuickActions roleConfig={roleConfig} exportOptions={exportOptions} />
         </div>
 
         {/* Top 5 centros */}
@@ -242,10 +257,7 @@ function DashboardGestor() {
 
         {/* Búsqueda Global */}
         <div className="mb-6">
-          <SearchBar
-            placeholder="Buscar KPIs, centros de salud, datos..."
-            defaultScope="kpis"
-          />
+          <SearchBar placeholder="Buscar KPIs, centros de salud, datos..." defaultScope="kpis" />
         </div>
 
         {/* Controles de filtros y comparación */}

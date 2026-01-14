@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/userStore';
-import { UserWithoutPassword, UserRole } from '../../types';
+import useAuthStore from '../../store/authStore';
+import { UserWithoutPassword, UserRole, ROLE_CONFIGS } from '../../types';
 import UserTable from './UserTable';
 import UserForm, { UserFormData } from './UserForm';
 import ConfirmDialog from '../common/ConfirmDialog';
 import { toast } from '../../store/toastStore';
-import ThemeToggle from '../common/ThemeToggle';
+import DashboardHeader from '../dashboard/DashboardHeader';
 
 function UserManagement() {
   const navigate = useNavigate();
+  const { user: currentUser, logout } = useAuthStore();
   const {
     loadUsers,
     getAllUsers,
@@ -19,6 +21,17 @@ function UserManagement() {
     toggleUserActive,
     searchUsers,
   } = useUserStore();
+
+  const roleConfig = currentUser ? ROLE_CONFIGS[currentUser.role] : ROLE_CONFIGS.admin;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const handleSettings = () => {
+    navigate('/settings');
+  };
 
   // Estados
   const [users, setUsers] = useState<UserWithoutPassword[]>([]);
@@ -187,47 +200,52 @@ function UserManagement() {
     }
   };
 
+  if (!currentUser) return null;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b-2 border-gray-200 dark:border-gray-700 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                  />
-                </svg>
-              </button>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  👥 Gestión de Usuarios
-                </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Administrar usuarios del sistema
-                </p>
-              </div>
-            </div>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <DashboardHeader
+        user={currentUser}
+        roleConfig={roleConfig}
+        onLogout={handleLogout}
+        onSettings={handleSettings}
+      />
 
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Título de sección con botón de volver */}
+        <div className="flex items-center gap-4 mb-6">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            title="Volver al Dashboard"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+          </button>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              👥 Gestión de Usuarios
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Administrar usuarios del sistema
+            </p>
+          </div>
+        </div>
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div className="text-sm text-gray-600 dark:text-gray-400">Total Usuarios</div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{users.length}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {users.length}
+            </div>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div className="text-sm text-gray-600 dark:text-gray-400">Activos</div>
@@ -279,9 +297,7 @@ function UserManagement() {
             {/* Filtro por Estado */}
             <select
               value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')
-              }
+              onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')}
               className="px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
             >
               <option value="all">Todos los estados</option>

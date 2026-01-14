@@ -21,14 +21,14 @@ import {
   exportKPIsToCSV,
   exportKPIsToExcel,
   exportFullReport,
-  validateExportPermission
+  validateExportPermission,
 } from '../../services/exportService';
 import { filterService } from '../../services/filterService';
 
 function DashboardAnalista() {
   const { user, logout } = useAuthStore();
   const { filteredKPIs, stats, isLoading, loadKPIs } = useKPIStore();
-  const { centers } = useMapStore();
+  const { centers, loadCenters } = useMapStore();
   const { activeFilters, setActiveFilters, clearActiveFilters } = useFilterStore();
   const navigate = useNavigate();
 
@@ -42,8 +42,9 @@ function DashboardAnalista() {
   useEffect(() => {
     if (user) {
       loadKPIs(user.role);
+      loadCenters();
     }
-  }, [user, loadKPIs]);
+  }, [user, loadKPIs, loadCenters]);
 
   useEffect(() => {
     setDisplayedKPIs(filteredKPIs);
@@ -75,22 +76,25 @@ function DashboardAnalista() {
     if (category === 'todas') {
       setDisplayedKPIs(filteredKPIs);
     } else {
-      setDisplayedKPIs(filteredKPIs.filter(kpi => kpi.category === category));
+      setDisplayedKPIs(filteredKPIs.filter((kpi) => kpi.category === category));
     }
   };
 
   if (!user) return null;
 
   // Contar KPIs por categoría
-  const kpisByCategory = filteredKPIs.reduce((acc, kpi) => {
-    acc[kpi.category] = (acc[kpi.category] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const kpisByCategory = filteredKPIs.reduce(
+    (acc, kpi) => {
+      acc[kpi.category] = (acc[kpi.category] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   // Calcular tendencias
-  const positiveKPIs = filteredKPIs.filter(kpi => kpi.trend === 'up').length;
-  const negativeKPIs = filteredKPIs.filter(kpi => kpi.trend === 'down').length;
-  const stableKPIs = filteredKPIs.filter(kpi => kpi.trend === 'stable').length;
+  const positiveKPIs = filteredKPIs.filter((kpi) => kpi.trend === 'up').length;
+  const negativeKPIs = filteredKPIs.filter((kpi) => kpi.trend === 'down').length;
+  const stableKPIs = filteredKPIs.filter((kpi) => kpi.trend === 'stable').length;
 
   // Opciones de exportación
   const exportOptions: ExportOption[] = [
@@ -102,7 +106,7 @@ function DashboardAnalista() {
         validateExportPermission(roleConfig.permissions.canExport);
         await exportDashboardToPDF(user.name);
       },
-      disabled: !roleConfig.permissions.canExport
+      disabled: !roleConfig.permissions.canExport,
     },
     {
       id: 'kpis-excel',
@@ -112,7 +116,7 @@ function DashboardAnalista() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportKPIsToExcel(filteredKPIs);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'kpis-csv',
@@ -122,7 +126,7 @@ function DashboardAnalista() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportKPIsToCSV(filteredKPIs);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
     },
     {
       id: 'full-report',
@@ -132,8 +136,8 @@ function DashboardAnalista() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportFullReport(filteredKPIs, centers, user.name);
       },
-      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0
-    }
+      disabled: !roleConfig.permissions.canExport || filteredKPIs.length === 0,
+    },
   ];
 
   return (
@@ -145,11 +149,13 @@ function DashboardAnalista() {
         onSettings={handleSettings}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main id="dashboard-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Banner de bienvenida */}
         <div
           className="rounded-xl p-6 sm:p-8 mb-6 sm:mb-8 text-white"
-          style={{ background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)` }}
+          style={{
+            background: `linear-gradient(135deg, ${roleConfig.color}, ${roleConfig.color}DD)`,
+          }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">
             {roleConfig.icon} Panel de Análisis Avanzado
@@ -168,7 +174,7 @@ function DashboardAnalista() {
             stats={[
               { label: 'Tendencia positiva', value: positiveKPIs, color: '#10B981' },
               { label: 'Tendencia negativa', value: negativeKPIs, color: '#EF4444' },
-              { label: 'Estables', value: stableKPIs, color: '#6B7280' }
+              { label: 'Estables', value: stableKPIs, color: '#6B7280' },
             ]}
           />
 
@@ -180,14 +186,14 @@ function DashboardAnalista() {
               {
                 label: 'Categorías activas',
                 value: Object.keys(kpisByCategory).length,
-                color: roleConfig.color
+                color: roleConfig.color,
               },
               {
                 label: 'Mayor categoría',
                 value: Math.max(...Object.values(kpisByCategory), 0),
                 color: '#3B82F6',
-                subtitle: 'KPIs en la categoría más grande'
-              }
+                subtitle: 'KPIs en la categoría más grande',
+              },
             ]}
           />
 
@@ -200,17 +206,14 @@ function DashboardAnalista() {
               { label: 'Mostrados', value: displayedKPIs.length, color: '#3B82F6' },
               {
                 label: 'Cambio promedio',
-                value: `${((positiveKPIs - negativeKPIs) / (stats?.total || 1) * 100).toFixed(1)}%`,
-                color: positiveKPIs > negativeKPIs ? '#10B981' : '#EF4444'
-              }
+                value: `${(((positiveKPIs - negativeKPIs) / (stats?.total || 1)) * 100).toFixed(1)}%`,
+                color: positiveKPIs > negativeKPIs ? '#10B981' : '#EF4444',
+              },
             ]}
           />
 
           {/* Acciones rápidas */}
-          <QuickActions
-            roleConfig={roleConfig}
-            exportOptions={exportOptions}
-          />
+          <QuickActions roleConfig={roleConfig} exportOptions={exportOptions} />
         </div>
 
         {/* Filtros por categoría */}
@@ -313,7 +316,8 @@ function DashboardAnalista() {
               </h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Análisis detallado de {displayedKPIs.length} indicadores
-                {selectedCategory !== 'todas' && ` en ${KPI_CATEGORY_CONFIGS[selectedCategory].name}`}
+                {selectedCategory !== 'todas' &&
+                  ` en ${KPI_CATEGORY_CONFIGS[selectedCategory].name}`}
               </p>
             </div>
           </div>
