@@ -203,7 +203,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               commit_sha: context.sha,
-              body: '✅ Deployed to production: https://copilot-salud-andalucia.vercel.app'
+              body: '✅ Deployed to production: https://copilot-salud-react.vercel.app'
             })
 
   # ========================================
