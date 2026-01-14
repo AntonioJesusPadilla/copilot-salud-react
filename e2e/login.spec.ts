@@ -47,9 +47,9 @@ test.describe('Login Flow', () => {
     // Submit form
     await page.click('button[type="submit"]');
 
-    // Should show error message
+    // Should show error message (look for the error container with emoji)
     await expect(
-      page.locator('text=/Usuario no encontrado|Contraseña incorrecta|Error/i')
+      page.locator('.bg-red-50, .dark\\:bg-red-900\\/20').filter({ hasText: '❌' })
     ).toBeVisible({ timeout: 3000 });
   });
 
