@@ -12,7 +12,7 @@
 | Fase | Descripción                                     | Días | Estado        | Riesgo   |
 | ---- | ----------------------------------------------- | ---- | ------------- | -------- |
 | 1    | Preparación de datos (CSV + tipos + loader)     | 1    | ✅ Completado | 🟢 Bajo  |
-| 2    | Stores Zustand (financialStore, capacityStore)  | 1    | ⬜ Pendiente  | 🟢 Bajo  |
+| 2    | Stores Zustand (financialStore, capacityStore)  | 1    | ✅ Completado | 🟢 Bajo  |
 | 3    | Servicios de análisis básicos                   | 2    | ⬜ Pendiente  | 🟡 Medio |
 | 4    | Componentes financieros (KPI cards, gráficos)   | 2-3  | ⬜ Pendiente  | 🟢 Bajo  |
 | 5    | Página Financial Dashboard                      | 1    | ⬜ Pendiente  | 🟢 Bajo  |
@@ -433,11 +433,11 @@ npm run build
 
 ### Criterios de Aceptación
 
-- [ ] financialStore.ts creado y funcional
-- [ ] capacityStore.ts creado y funcional
-- [ ] analysisStore.ts creado y funcional
-- [ ] Todos los stores siguen el patrón de los existentes
-- [ ] `npm run build` pasa sin errores
+- [x] financialStore.ts creado y funcional
+- [x] capacityStore.ts creado y funcional
+- [x] analysisStore.ts creado y funcional
+- [x] Todos los stores siguen el patrón de los existentes
+- [x] `npm run build` pasa sin errores
 - [ ] Los datos se cargan correctamente desde los stores
 
 ### Commit de Fase 2
