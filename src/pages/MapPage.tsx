@@ -13,7 +13,7 @@ import {
   exportCentrosToCSV,
   exportCentrosToExcel,
   exportElementToPNG,
-  validateExportPermission
+  validateExportPermission,
 } from '../services/exportService';
 
 function MapPage() {
@@ -56,7 +56,7 @@ function MapPage() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportCentrosToExcel(filteredCenters);
       },
-      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0,
     },
     {
       id: 'centros-csv',
@@ -66,7 +66,7 @@ function MapPage() {
         validateExportPermission(roleConfig.permissions.canExport);
         exportCentrosToCSV(filteredCenters);
       },
-      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0
+      disabled: !roleConfig.permissions.canExport || filteredCenters.length === 0,
     },
     {
       id: 'map-png',
@@ -74,16 +74,22 @@ function MapPage() {
       icon: '🖼️',
       onClick: async () => {
         validateExportPermission(roleConfig.permissions.canExport);
-        await exportElementToPNG('map-container', `Mapa_Centros_Salud_${new Date().toISOString().split('T')[0]}`);
+        await exportElementToPNG(
+          'map-container',
+          `Mapa_Centros_Salud_${new Date().toISOString().split('T')[0]}`
+        );
       },
-      disabled: !roleConfig.permissions.canExport
-    }
+      disabled: !roleConfig.permissions.canExport,
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors" style={{ borderColor: roleConfig.color }}>
+      <header
+        className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors"
+        style={{ borderColor: roleConfig.color }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Lado izquierdo: Volver + Título */}
@@ -134,15 +140,21 @@ function MapPage() {
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Con Urgencias</p>
-            <p className="text-xl sm:text-2xl font-bold text-red-500 dark:text-red-400">{stats?.withEmergency || 0}</p>
+            <p className="text-xl sm:text-2xl font-bold text-red-500 dark:text-red-400">
+              {stats?.withEmergency || 0}
+            </p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Mostrados</p>
-            <p className="text-xl sm:text-2xl font-bold text-green-500 dark:text-green-400">{filteredCenters.length}</p>
+            <p className="text-xl sm:text-2xl font-bold text-green-500 dark:text-green-400">
+              {filteredCenters.length}
+            </p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 transition-colors">
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Zonas</p>
-            <p className="text-xl sm:text-2xl font-bold text-purple-500 dark:text-purple-400">{stats?.zones.length || 0}</p>
+            <p className="text-xl sm:text-2xl font-bold text-purple-500 dark:text-purple-400">
+              {stats?.zones.length || 0}
+            </p>
           </div>
         </div>
 
@@ -161,14 +173,18 @@ function MapPage() {
             <MapFilters
               filters={filters}
               stats={stats}
+              filteredCenters={filteredCenters}
               onFiltersChange={setFilters}
               onApplyFilters={applyFilters}
               onClearFilters={clearFilters}
+              onCenterSelect={selectCenter}
             />
 
             {/* Leyenda del mapa */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 mt-4 sm:mt-6 transition-colors">
-              <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">📍 Leyenda</h4>
+              <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
+                📍 Leyenda
+              </h4>
               <div className="space-y-2">
                 {Object.values(HEALTH_CENTER_TYPE_CONFIGS).map((config) => (
                   <div key={config.type} className="flex items-center space-x-2">
@@ -283,14 +299,18 @@ function MapPage() {
                     {selectedCenter.phone && (
                       <div>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Teléfono</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{selectedCenter.phone}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                          {selectedCenter.phone}
+                        </p>
                       </div>
                     )}
 
                     {selectedCenter.schedule && (
                       <div>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Horario</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{selectedCenter.schedule}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                          {selectedCenter.schedule}
+                        </p>
                       </div>
                     )}
                   </div>
