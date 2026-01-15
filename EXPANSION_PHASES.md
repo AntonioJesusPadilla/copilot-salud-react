@@ -13,7 +13,7 @@
 | ---- | ----------------------------------------------- | ---- | ------------- | -------- |
 | 1    | Preparación de datos (CSV + tipos + loader)     | 1    | ✅ Completado | 🟢 Bajo  |
 | 2    | Stores Zustand (financialStore, capacityStore)  | 1    | ✅ Completado | 🟢 Bajo  |
-| 3    | Servicios de análisis básicos                   | 2    | ⬜ Pendiente  | 🟡 Medio |
+| 3    | Servicios de análisis básicos                   | 2    | ✅ Completado | 🟡 Medio |
 | 4    | Componentes financieros (KPI cards, gráficos)   | 2-3  | ⬜ Pendiente  | 🟢 Bajo  |
 | 5    | Página Financial Dashboard                      | 1    | ⬜ Pendiente  | 🟢 Bajo  |
 | 6    | Componentes de capacidad hospitalaria (CRÍTICO) | 2-3  | ⬜ Pendiente  | 🟡 Medio |
@@ -576,12 +576,12 @@ npm test  # Si hay tests
 
 ### Criterios de Aceptación
 
-- [ ] financialAnalysisService.ts creado con todas las funciones
-- [ ] predictionService.ts creado con regresión lineal funcional
-- [ ] directivesGeneratorService.ts creado y generando directrices
-- [ ] Los cálculos financieros son correctos (ROI, márgenes, etc.)
-- [ ] Las predicciones tienen sentido con los datos de prueba
-- [ ] `npm run build` pasa sin errores
+- [x] financialAnalysisService.ts creado con todas las funciones
+- [x] predictionService.ts creado con regresión lineal funcional
+- [x] directivesGeneratorService.ts creado y generando directrices
+- [x] Los cálculos financieros son correctos (ROI, márgenes, etc.)
+- [x] Las predicciones tienen sentido con los datos de prueba
+- [x] `npm run build` pasa sin errores
 
 ### Commit de Fase 3
 
