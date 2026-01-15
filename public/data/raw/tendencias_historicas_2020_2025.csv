@@ -1,0 +1,31 @@
+año,hospital,departamento,presupuesto_total,pacientes_atendidos,coste_por_paciente,satisfaccion_media,eficiencia_operativa,margen_neto,ingresos_totales,personal_total
+2020,Hospital Regional Málaga,Oncología,10500000,2950,3559,3.9,0.88,5.2,11000000,78
+2021,Hospital Regional Málaga,Oncología,11200000,3100,3613,4.0,0.90,5.8,11800000,80
+2022,Hospital Regional Málaga,Oncología,11800000,3250,3631,4.1,0.92,6.5,12500000,82
+2023,Hospital Regional Málaga,Oncología,12200000,3350,3642,4.2,0.93,6.9,12900000,84
+2024,Hospital Regional Málaga,Oncología,12500000,3450,3623,4.2,0.94,7.2,13200000,85
+2025,Hospital Regional Málaga,Oncología,12800000,3550,3606,4.3,0.95,7.8,13600000,87
+2020,Hospital Regional Málaga,Urgencias,13200000,78000,169,3.6,0.95,4.1,13800000,135
+2021,Hospital Regional Málaga,Urgencias,14000000,80500,174,3.7,0.96,4.5,14600000,138
+2022,Hospital Regional Málaga,Urgencias,14600000,83000,176,3.8,0.96,4.8,15200000,140
+2023,Hospital Regional Málaga,Urgencias,15100000,85000,178,3.9,0.97,5.2,15700000,143
+2024,Hospital Regional Málaga,Urgencias,15600000,87000,179,3.9,0.97,5.5,16100000,145
+2025,Hospital Regional Málaga,Urgencias,16000000,89500,179,4.0,0.98,6.0,16500000,148
+2020,Hospital Costa del Sol,Quirófano,12200000,6800,1794,4.1,1.01,5.5,13000000,105
+2021,Hospital Costa del Sol,Quirófano,12900000,7100,1817,4.2,1.03,6.2,13800000,110
+2022,Hospital Costa del Sol,Quirófano,13500000,7400,1824,4.2,1.04,6.8,14400000,113
+2023,Hospital Costa del Sol,Quirófano,14000000,7650,1830,4.3,1.04,7.2,14900000,116
+2024,Hospital Costa del Sol,Quirófano,14500000,7800,1859,4.3,1.05,7.5,15300000,118
+2025,Hospital Costa del Sol,Quirófano,15000000,8050,1863,4.4,1.06,8.1,15800000,121
+2020,Hospital Clínico Universitario,UCI,10500000,2250,4667,3.9,1.04,8.2,11500000,115
+2021,Hospital Clínico Universitario,UCI,11200000,2350,4766,4.0,1.05,8.8,12200000,118
+2022,Hospital Clínico Universitario,UCI,11700000,2450,4776,4.1,1.06,9.2,12800000,121
+2023,Hospital Clínico Universitario,UCI,12100000,2550,4745,4.2,1.07,9.5,13200000,123
+2024,Hospital Clínico Universitario,UCI,12500000,2650,4717,4.2,1.08,9.8,13600000,125
+2025,Hospital Clínico Universitario,UCI,12900000,2750,4691,4.3,1.09,10.2,14100000,128
+2020,Hospital Virgen de la Victoria,Radiología,8500000,15500,548,4.2,1.02,5.8,9000000,65
+2021,Hospital Virgen de la Victoria,Radiología,9000000,16200,556,4.3,1.03,6.3,9500000,68
+2022,Hospital Virgen de la Victoria,Radiología,9400000,16800,560,4.4,1.04,6.7,10000000,70
+2023,Hospital Virgen de la Victoria,Radiología,9800000,17500,560,4.5,1.04,7.0,10400000,71
+2024,Hospital Virgen de la Victoria,Radiología,10200000,18200,560,4.5,1.05,7.3,10800000,72
+2025,Hospital Virgen de la Victoria,Radiología,10600000,18900,561,4.6,1.06,7.8,11200000,74

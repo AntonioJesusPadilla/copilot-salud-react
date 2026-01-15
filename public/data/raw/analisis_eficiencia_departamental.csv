@@ -1,0 +1,21 @@
+hospital,departamento,score_eficiencia,ranking_nacional,ratio_coste_beneficio,tiempo_medio_atencion_min,tasa_error_clinico,reingresos_30dias,cumplimiento_protocolos,certificaciones_calidad,innovacion_tecnologica,formacion_continua_horas,publicaciones_cientificas,colaboraciones_internacionales
+Hospital Regional Málaga,Oncología,8.5,12,1.25,45,0.8,4.2,96.5,ISO9001|JCI,Alta,180,24,5
+Hospital Regional Málaga,Radiología,9.2,8,1.35,22,0.3,1.1,98.2,ISO9001|ACR,Muy Alta,210,18,7
+Hospital Regional Málaga,Urgencias,8.8,15,1.18,18,1.2,2.8,94.8,ISO9001,Media,150,8,2
+Hospital Regional Málaga,UCI,9.5,5,1.42,0,0.5,3.5,99.1,ISO9001|JCI|SEMICYUC,Muy Alta,240,32,9
+Hospital Regional Málaga,Quirófano,9.0,10,1.28,85,0.6,2.1,97.5,ISO9001|JCI,Alta,195,22,6
+Hospital Costa del Sol,Oncología,8.2,18,1.21,48,0.9,4.8,95.2,ISO9001,Media,165,18,4
+Hospital Costa del Sol,Radiología,8.9,11,1.31,24,0.4,1.3,97.5,ISO9001|ACR,Alta,195,15,5
+Hospital Costa del Sol,Urgencias,8.5,20,1.15,20,1.4,3.2,93.5,ISO9001,Media,140,6,1
+Hospital Costa del Sol,UCI,9.2,7,1.38,0,0.6,3.8,98.5,ISO9001|SEMICYUC,Alta,225,28,7
+Hospital Costa del Sol,Quirófano,8.7,14,1.24,88,0.7,2.5,96.8,ISO9001,Alta,185,19,5
+Hospital Clínico Universitario,Oncología,9.3,6,1.38,42,0.6,3.5,98.2,ISO9001|JCI|ESMO,Muy Alta,220,38,11
+Hospital Clínico Universitario,Radiología,9.6,3,1.45,20,0.2,0.8,99.1,ISO9001|ACR|ESR,Muy Alta,245,28,12
+Hospital Clínico Universitario,Urgencias,9.0,9,1.22,16,1.0,2.5,95.8,ISO9001|JCI,Alta,165,12,4
+Hospital Clínico Universitario,UCI,9.8,2,1.52,0,0.3,2.8,99.5,ISO9001|JCI|SEMICYUC,Muy Alta,270,45,15
+Hospital Clínico Universitario,Quirófano,9.4,4,1.35,82,0.4,1.8,98.5,ISO9001|JCI,Muy Alta,215,28,8
+Hospital Virgen de la Victoria,Oncología,8.8,13,1.32,44,0.7,3.9,97.1,ISO9001|JCI,Alta,195,28,7
+Hospital Virgen de la Victoria,Radiología,9.1,9,1.34,21,0.3,1.0,98.0,ISO9001|ACR,Alta,205,20,6
+Hospital Virgen de la Victoria,Urgencias,8.7,17,1.19,19,1.1,2.9,94.5,ISO9001,Media,155,9,2
+Hospital Virgen de la Victoria,UCI,9.4,6,1.40,0,0.4,3.2,99.0,ISO9001|JCI|SEMICYUC,Muy Alta,235,35,10
+Hospital Virgen de la Victoria,Quirófano,8.9,12,1.26,86,0.5,2.2,97.2,ISO9001|JCI,Alta,190,24,7

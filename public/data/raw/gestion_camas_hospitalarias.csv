@@ -1,0 +1,32 @@
+hospital,departamento,camas_totales,camas_ocupadas,camas_disponibles,tasa_ocupacion,pacientes_ingresados,pacientes_alta_proxima_24h,pacientes_criticos,tiempo_medio_estancia_dias,ingresos_ultima_semana,altas_ultima_semana,estado_capacidad,umbral_critico,necesita_apertura_planta,planta_sugerida,fecha_hora_actualizacion
+Hospital Regional Málaga,UCI,24,22,2,91.7,22,3,8,6.5,28,25,crítico,85,sí,UCI Planta 4,2026-01-14T08:30:00
+Hospital Regional Málaga,Oncología,48,42,6,87.5,42,5,12,8.2,38,35,alerta,85,no,,2026-01-14T08:30:00
+Hospital Regional Málaga,Cardiología,36,28,8,77.8,28,4,6,5.8,32,30,normal,85,no,,2026-01-14T08:30:00
+Hospital Regional Málaga,Cirugía General,52,46,6,88.5,46,8,4,4.2,42,38,alerta,85,sí,Cirugía Planta 6,2026-01-14T08:30:00
+Hospital Regional Málaga,Pediatría,32,24,8,75.0,24,6,2,3.5,28,26,normal,85,no,,2026-01-14T08:30:00
+Hospital Regional Málaga,Traumatología,28,25,3,89.3,25,4,1,6.8,22,20,alerta,85,no,,2026-01-14T08:30:00
+Hospital Regional Málaga,Medicina Interna,44,38,6,86.4,38,7,5,7.2,35,33,alerta,85,no,,2026-01-14T08:30:00
+Hospital Regional Málaga,Neurología,20,16,4,80.0,16,3,4,8.5,15,14,normal,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,UCI,18,17,1,94.4,17,2,6,7.2,20,18,crítico,85,sí,UCI Planta 3,2026-01-14T08:30:00
+Hospital Costa del Sol,Oncología,32,27,5,84.4,27,4,8,8.8,25,23,normal,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,Cardiología,28,22,6,78.6,22,3,4,6.2,24,22,normal,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,Cirugía General,38,33,5,86.8,33,6,3,4.5,30,28,alerta,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,Pediatría,24,18,6,75.0,18,4,1,3.8,20,19,normal,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,Traumatología,22,19,3,86.4,19,3,1,7.2,18,17,alerta,85,no,,2026-01-14T08:30:00
+Hospital Costa del Sol,Medicina Interna,32,28,4,87.5,28,5,4,7.8,26,24,alerta,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,UCI,32,28,4,87.5,28,4,10,6.8,32,30,alerta,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Oncología,58,48,10,82.8,48,7,15,8.5,45,42,normal,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Cardiología,42,34,8,81.0,34,5,8,6.0,38,36,normal,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Cirugía General,64,56,8,87.5,56,10,5,4.8,52,48,alerta,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Pediatría,38,28,10,73.7,28,7,3,3.2,32,30,normal,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Traumatología,34,30,4,88.2,30,5,2,7.5,28,26,alerta,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Medicina Interna,52,45,7,86.5,45,8,6,7.5,42,40,alerta,85,no,,2026-01-14T08:30:00
+Hospital Clínico Universitario,Neurología,28,22,6,78.6,22,4,5,9.2,21,20,normal,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,UCI,28,25,3,89.3,25,3,9,7.0,28,26,alerta,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Oncología,52,44,8,84.6,44,6,13,8.6,42,40,normal,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Cardiología,38,30,8,78.9,30,4,7,6.5,34,32,normal,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Cirugía General,58,52,6,89.7,52,9,4,4.6,48,46,alerta,85,sí,Cirugía Planta 5,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Pediatría,36,27,9,75.0,27,6,2,3.6,30,28,normal,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Traumatología,30,26,4,86.7,26,4,1,7.8,24,23,alerta,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Medicina Interna,48,42,6,87.5,42,7,5,8.0,40,38,alerta,85,no,,2026-01-14T08:30:00
+Hospital Virgen de la Victoria,Neurología,24,19,5,79.2,19,3,4,9.5,18,17,normal,85,no,,2026-01-14T08:30:00
