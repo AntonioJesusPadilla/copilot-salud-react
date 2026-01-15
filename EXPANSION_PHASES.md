@@ -14,7 +14,7 @@
 | 1    | Preparación de datos (CSV + tipos + loader)     | 1    | ✅ Completado | 🟢 Bajo  |
 | 2    | Stores Zustand (financialStore, capacityStore)  | 1    | ✅ Completado | 🟢 Bajo  |
 | 3    | Servicios de análisis básicos                   | 2    | ✅ Completado | 🟡 Medio |
-| 4    | Componentes financieros (KPI cards, gráficos)   | 2-3  | ⬜ Pendiente  | 🟢 Bajo  |
+| 4    | Componentes financieros (KPI cards, gráficos)   | 2-3  | ✅ Completado | 🟢 Bajo  |
 | 5    | Página Financial Dashboard                      | 1    | ⬜ Pendiente  | 🟢 Bajo  |
 | 6    | Componentes de capacidad hospitalaria (CRÍTICO) | 2-3  | ⬜ Pendiente  | 🟡 Medio |
 | 7    | Página Capacity Management                      | 1    | ⬜ Pendiente  | 🟢 Bajo  |
@@ -702,13 +702,13 @@ npm run build
 
 ### Criterios de Aceptación
 
-- [ ] 6 componentes financieros creados y funcionales
-- [ ] 3 componentes de análisis creados y funcionales
-- [ ] Todos los gráficos renderizan correctamente con Recharts
-- [ ] Dark mode funciona en todos los componentes
-- [ ] Responsive en mobile/tablet/desktop
-- [ ] Colores consistentes (#1FB6C3 turquesa, #1E3A5F azul oscuro)
-- [ ] `npm run build` pasa sin errores
+- [x] 6 componentes financieros creados y funcionales
+- [x] 3 componentes de análisis creados y funcionales
+- [x] Todos los gráficos renderizan correctamente con Recharts
+- [x] Dark mode funciona en todos los componentes
+- [x] Responsive en mobile/tablet/desktop
+- [x] Colores consistentes (#1FB6C3 turquesa, #1E3A5F azul oscuro)
+- [x] `npm run build` pasa sin errores
 
 ### Commit de Fase 4
 
