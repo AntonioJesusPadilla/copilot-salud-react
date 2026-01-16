@@ -5,10 +5,12 @@ import {
   AnomalyType,
   AnomalySeverity,
   ComparisonInsight,
+  AnalysisResult,
   ANALYSIS_CONFIG,
   getTrendDirection,
   getAnomalySeverity,
 } from '../types/analysis';
+import { directivesGeneratorService } from './directivesGeneratorService';
 
 // ============================================================================
 // ANÁLISIS DE TENDENCIAS
@@ -530,6 +532,75 @@ export function generateExecutiveSummary(
   };
 }
 
+// ============================================================================
+// ANÁLISIS COMPLETO
+// ============================================================================
+
+/**
+ * Ejecuta un análisis completo de los datos financieros
+ */
+export function runFullAnalysis(kpis: FinancialKPI[], budgets: DepartmentBudget[]): AnalysisResult {
+  const timestamp = new Date().toISOString();
+  const now = new Date();
+  const sixMonthsAgo = new Date(now);
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+  // Analizar tendencias por métrica
+  const trendsByMetric = analyzeKPITrends(kpis);
+
+  // Crear estructura de tendencias esperada
+  const defaultTrend = {
+    direction: 'stable' as const,
+    changePercent: 0,
+    slope: 0,
+    confidence: 0,
+    startValue: 0,
+    endValue: 0,
+    dataPoints: 0,
+  };
+
+  const trends = {
+    financial: trendsByMetric['sistema_margen'] || defaultTrend,
+    efficiency: trendsByMetric['sistema_roi'] || defaultTrend,
+    capacity: defaultTrend,
+    satisfaction: defaultTrend,
+  };
+
+  // Detectar anomalías
+  const anomalies = detectBudgetAnomalies(budgets);
+
+  // Generar comparaciones
+  const comparisonsList = generateComparisons(budgets, kpis);
+
+  // Generar directivas usando el servicio
+  const directives = [
+    ...directivesGeneratorService.generateDirectivesFromAnomalies(anomalies),
+    ...directivesGeneratorService.generateDirectivesFromComparisons(comparisonsList),
+    ...directivesGeneratorService.generateDirectivesFromBudgets(budgets),
+  ];
+
+  // Generar resumen
+  const summary = generateExecutiveSummary(budgets, kpis, trendsByMetric, anomalies);
+
+  return {
+    timestamp,
+    period: {
+      start: sixMonthsAgo.toISOString().split('T')[0],
+      end: now.toISOString().split('T')[0],
+    },
+    summary,
+    trends,
+    anomalies,
+    directives,
+    comparisons: {
+      vsLastMonth: comparisonsList.filter((c) => c.id.includes('roi')),
+      vsLastYear: [],
+      vsBenchmark: comparisonsList.filter((c) => c.id.includes('efficiency')),
+    },
+    criticalKPIs: [],
+  };
+}
+
 // Exportar servicio como objeto
 export const financialAnalysisService = {
   calculateTrend,
@@ -541,4 +612,5 @@ export const financialAnalysisService = {
   calculateEfficiencyRatio,
   evaluateKPIStatus,
   generateExecutiveSummary,
+  runFullAnalysis,
 };
