@@ -30,6 +30,7 @@ export interface RoleConfig {
     canManageUsers: boolean;
     canAccessChat: boolean;
     canViewMaps: boolean;
+    canViewCapacity: boolean;
   };
 }
 
@@ -45,6 +46,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canManageUsers: true,
       canAccessChat: true,
       canViewMaps: true,
+      canViewCapacity: true,
     },
   },
   gestor: {
@@ -58,6 +60,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canManageUsers: false,
       canAccessChat: true,
       canViewMaps: true,
+      canViewCapacity: true,
     },
   },
   analista: {
@@ -71,6 +74,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canManageUsers: false,
       canAccessChat: true,
       canViewMaps: false,
+      canViewCapacity: false,
     },
   },
   invitado: {
@@ -84,6 +88,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canManageUsers: false,
       canAccessChat: false,
       canViewMaps: true,
+      canViewCapacity: false,
     },
   },
 };
@@ -134,6 +139,13 @@ export type ProvinciaAndalucia =
   | 'Sevilla';
 
 export const PROVINCIAS_ANDALUCIA: ProvinciaAndalucia[] = [
-  'Todas', 'Almería', 'Cádiz', 'Córdoba', 'Granada',
-  'Huelva', 'Jaén', 'Málaga', 'Sevilla'
+  'Todas',
+  'Almería',
+  'Cádiz',
+  'Córdoba',
+  'Granada',
+  'Huelva',
+  'Jaén',
+  'Málaga',
+  'Sevilla',
 ];

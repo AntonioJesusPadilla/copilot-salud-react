@@ -14,6 +14,7 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const MapPage = lazy(() => import('./pages/MapPage'));
 const ChatPage = lazy(() => import('./pages/ChatPage'));
 const UserManagement = lazy(() => import('./components/users/UserManagement'));
+const CapacityManagementPage = lazy(() => import('./pages/CapacityManagementPage'));
 
 function App() {
   const { checkAuth, isAuthenticated } = useAuthStore();
@@ -33,7 +34,11 @@ function App() {
             <Route
               path="/"
               element={
-                isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+                isAuthenticated ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
               }
             />
 
@@ -86,11 +91,24 @@ function App() {
               }
             />
 
+            <Route
+              path="/capacity"
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'gestor']}>
+                  <CapacityManagementPage />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Ruta 404 - redirigir a dashboard o login */}
             <Route
               path="*"
               element={
-                isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+                isAuthenticated ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
               }
             />
           </Routes>

@@ -50,6 +50,21 @@ export interface ChatContext {
       hasEmergency: boolean;
     }>;
   };
+  capacity?: {
+    totalBeds: number;
+    occupiedBeds: number;
+    availableBeds: number;
+    averageOccupancy: number;
+    activeAlerts: number;
+    criticalAlerts: number;
+    hospitals: Array<{
+      name: string;
+      plant: string;
+      occupancy: number;
+      alertLevel: string;
+      availableBeds: number;
+    }>;
+  };
 }
 
 // Service types
