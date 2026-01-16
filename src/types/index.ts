@@ -31,6 +31,8 @@ export interface RoleConfig {
     canAccessChat: boolean;
     canViewMaps: boolean;
     canViewCapacity: boolean;
+    canViewFinancial: boolean;
+    canViewReports: boolean;
   };
 }
 
@@ -47,6 +49,8 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canAccessChat: true,
       canViewMaps: true,
       canViewCapacity: true,
+      canViewFinancial: true,
+      canViewReports: true,
     },
   },
   gestor: {
@@ -61,6 +65,8 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canAccessChat: true,
       canViewMaps: true,
       canViewCapacity: true,
+      canViewFinancial: true,
+      canViewReports: true,
     },
   },
   analista: {
@@ -75,6 +81,8 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canAccessChat: true,
       canViewMaps: false,
       canViewCapacity: false,
+      canViewFinancial: true,
+      canViewReports: true,
     },
   },
   invitado: {
@@ -89,6 +97,8 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       canAccessChat: false,
       canViewMaps: true,
       canViewCapacity: false,
+      canViewFinancial: false,
+      canViewReports: false,
     },
   },
 };

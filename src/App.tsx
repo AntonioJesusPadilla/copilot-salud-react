@@ -15,6 +15,8 @@ const MapPage = lazy(() => import('./pages/MapPage'));
 const ChatPage = lazy(() => import('./pages/ChatPage'));
 const UserManagement = lazy(() => import('./components/users/UserManagement'));
 const CapacityManagementPage = lazy(() => import('./pages/CapacityManagementPage'));
+const FinancialDashboardPage = lazy(() => import('./pages/FinancialDashboardPage'));
+const AnalysisReportsPage = lazy(() => import('./pages/AnalysisReportsPage'));
 
 function App() {
   const { checkAuth, isAuthenticated } = useAuthStore();
@@ -96,6 +98,24 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={['admin', 'gestor']}>
                   <CapacityManagementPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/financial"
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'gestor', 'analista']}>
+                  <FinancialDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'gestor', 'analista']}>
+                  <AnalysisReportsPage />
                 </ProtectedRoute>
               }
             />
