@@ -173,7 +173,7 @@ function RecommendationCard({
 
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded-lg border-l-4 shadow-sm hover:shadow-md transition-all p-4"
+      className="bg-white dark:bg-gray-800 rounded-lg border-l-4 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all p-4"
       style={{ borderLeftColor: urgencyConfig.color }}
     >
       {/* Header */}
