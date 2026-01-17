@@ -56,7 +56,9 @@ function getOccupancyColor(occupancy: number | null): string {
 
 function getTextColor(occupancy: number | null): string {
   if (occupancy === null) return '#9CA3AF';
-  if (occupancy >= 85) return '#FFFFFF';
+  // Solo usar blanco para fondos muy oscuros (naranja oscuro y rojos)
+  if (occupancy >= 93) return '#FFFFFF'; // orange-400 y rojos
+  // Para amarillos y naranjas claros, usar texto oscuro
   return '#1F2937';
 }
 
@@ -273,7 +275,7 @@ function HospitalComparisonBars({ data }: HospitalComparisonBarsProps) {
                 >
                   <span
                     className="text-xs font-bold"
-                    style={{ color: hospital.occupancy >= 85 ? '#FFFFFF' : '#1F2937' }}
+                    style={{ color: hospital.occupancy >= 93 ? '#FFFFFF' : '#1F2937' }}
                   >
                     {hospital.occupancy.toFixed(1)}%
                   </span>

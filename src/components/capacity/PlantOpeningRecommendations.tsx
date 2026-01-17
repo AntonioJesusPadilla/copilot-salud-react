@@ -298,12 +298,41 @@ function PlantOpeningRecommendations({
 }: PlantOpeningRecommendationsProps) {
   // Filtrar y ordenar por necesidad de apertura
   const recommendationsData = useMemo(() => {
+    // Determinar recomendación basada en ocupación si no hay una explícita
+    const getEffectiveRecommendation = (r: BedCapacityRecord): RecomendacionApertura => {
+      // Si hay recomendación explícita que coincide con las conocidas, usarla
+      if (r.recomendacionApertura === 'Emergencia: todas las plantas')
+        return 'Emergencia: todas las plantas';
+      if (r.recomendacionApertura === 'Abrir planta adicional') return 'Abrir planta adicional';
+      if (r.recomendacionApertura === 'Preparar apertura') return 'Preparar apertura';
+      if (r.recomendacionApertura === 'No necesario') return 'No necesario';
+
+      // Si la recomendación contiene "Abrir", es una apertura
+      if (r.recomendacionApertura?.toLowerCase().includes('abrir')) return 'Abrir planta adicional';
+      if (r.recomendacionApertura?.toLowerCase().includes('apertura')) return 'Preparar apertura';
+
+      // Determinar por ocupación
+      const ocupacion =
+        r.camasTotales > 0 ? (r.camasOcupadas / r.camasTotales) * 100 : r.porcentajeOcupacion;
+      if (ocupacion >= 95) return 'Emergencia: todas las plantas';
+      if (ocupacion >= 90) return 'Abrir planta adicional';
+      if (ocupacion >= 85) return 'Preparar apertura';
+      return 'No necesario';
+    };
+
     return data
-      .filter((r) => r.recomendacionApertura && r.recomendacionApertura !== 'No necesario')
-      .map((r) => ({
-        record: r,
-        recommendation: generateRecommendationFromRecord(r),
-      }))
+      .map((r) => {
+        const effectiveRec = getEffectiveRecommendation(r);
+        return {
+          record: { ...r, recomendacionApertura: effectiveRec },
+          recommendation: generateRecommendationFromRecord({
+            ...r,
+            recomendacionApertura: effectiveRec,
+          }),
+          effectiveRecommendation: effectiveRec,
+        };
+      })
+      .filter((item) => item.effectiveRecommendation !== 'No necesario')
       .sort((a, b) => {
         const priorityA = RECOMMENDATION_CONFIGS[a.recommendation.recomendacion].priority;
         const priorityB = RECOMMENDATION_CONFIGS[b.recommendation.recomendacion].priority;
@@ -313,15 +342,20 @@ function PlantOpeningRecommendations({
       .slice(0, maxItems);
   }, [data, maxItems]);
 
-  // Contadores
+  // Contadores basados en los datos procesados
   const counts = useMemo(
     () => ({
-      emergencia: data.filter((r) => r.recomendacionApertura === 'Emergencia: todas las plantas')
-        .length,
-      abrir: data.filter((r) => r.recomendacionApertura === 'Abrir planta adicional').length,
-      preparar: data.filter((r) => r.recomendacionApertura === 'Preparar apertura').length,
+      emergencia: recommendationsData.filter(
+        (item) => item.effectiveRecommendation === 'Emergencia: todas las plantas'
+      ).length,
+      abrir: recommendationsData.filter(
+        (item) => item.effectiveRecommendation === 'Abrir planta adicional'
+      ).length,
+      preparar: recommendationsData.filter(
+        (item) => item.effectiveRecommendation === 'Preparar apertura'
+      ).length,
     }),
-    [data]
+    [recommendationsData]
   );
 
   return (

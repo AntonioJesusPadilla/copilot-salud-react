@@ -10,7 +10,7 @@ import {
   CapacityHeatmap,
 } from '../components/capacity';
 import ThemeToggle from '../components/common/ThemeToggle';
-import { BedCapacityRecord, CapacityAlert } from '../types/capacity';
+import { BedCapacityRecord, CapacityAlert, ALERT_LEVEL_CONFIGS } from '../types/capacity';
 import { ROLE_CONFIGS } from '../types';
 
 // ============================================================================
@@ -140,6 +140,224 @@ function TabNavigation({ activeTab, onTabChange, alertCount }: TabNavigationProp
 }
 
 // ============================================================================
+// COMPONENTE MODAL DE DETALLE DE ALERTA
+// ============================================================================
+
+interface AlertDetailModalProps {
+  alert: CapacityAlert | null;
+  onClose: () => void;
+}
+
+function AlertDetailModal({ alert, onClose }: AlertDetailModalProps) {
+  if (!alert) return null;
+
+  const config = ALERT_LEVEL_CONFIGS[alert.nivel];
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div
+          className="p-4 border-b border-gray-200 dark:border-gray-700"
+          style={{ backgroundColor: `${config.color}15` }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="text-3xl">{config.icon}</span>
+              <div>
+                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">
+                  Detalle de Alerta
+                </h2>
+                <span className="text-sm font-medium" style={{ color: config.color }}>
+                  {config.label}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
+            >
+              <span className="text-xl">×</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Contenido */}
+        <div className="p-4 space-y-4">
+          {/* Ubicación */}
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Ubicación</h3>
+            <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">{alert.planta}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{alert.hospital}</p>
+          </div>
+
+          {/* Mensaje */}
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+              Descripción
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300">{alert.mensaje}</p>
+          </div>
+
+          {/* Métricas */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-center">
+              <p className="text-2xl font-bold" style={{ color: config.color }}>
+                {alert.ocupacionActual.toFixed(1)}%
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Ocupación Actual</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-center">
+              <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
+                {alert.umbralSuperado}%
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Umbral Superado</p>
+            </div>
+          </div>
+
+          {/* Acción recomendada */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">
+              Acción Recomendada
+            </h3>
+            <p className="text-blue-800 dark:text-blue-200 font-medium">
+              {alert.accionRecomendada}
+            </p>
+          </div>
+
+          {/* Timestamp */}
+          <div className="text-xs text-gray-400 dark:text-gray-500 text-center pt-2 border-t border-gray-200 dark:border-gray-700">
+            Generada: {new Date(alert.timestamp).toLocaleString('es-ES')}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// COMPONENTE MODAL DE DETALLE DE CAPACIDAD
+// ============================================================================
+
+interface CapacityDetailModalProps {
+  record: BedCapacityRecord | null;
+  onClose: () => void;
+}
+
+function CapacityDetailModal({ record, onClose }: CapacityDetailModalProps) {
+  if (!record) return null;
+
+  const ocupacion =
+    record.camasTotales > 0 ? (record.camasOcupadas / record.camasTotales) * 100 : 0;
+
+  const getOccupancyColor = () => {
+    if (ocupacion >= 90) return '#EF4444';
+    if (ocupacion >= 85) return '#F59E0B';
+    return '#22C55E';
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-500 to-blue-600">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-white">{record.planta}</h2>
+              <p className="text-blue-100 text-sm">{record.hospital}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-white/20 rounded-full transition-colors text-white"
+            >
+              <span className="text-xl">×</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Contenido */}
+        <div className="p-4 space-y-4">
+          {/* Ocupación */}
+          <div className="text-center">
+            <p className="text-4xl font-bold" style={{ color: getOccupancyColor() }}>
+              {ocupacion.toFixed(1)}%
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Ocupación</p>
+          </div>
+
+          {/* Métricas de camas */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-center">
+              <p className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                {record.camasTotales}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Total</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-center">
+              <p className="text-xl font-bold text-orange-600">{record.camasOcupadas}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Ocupadas</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-center">
+              <p className="text-xl font-bold text-green-600">{record.camasDisponibles}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Disponibles</p>
+            </div>
+          </div>
+
+          {/* Otras métricas */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-3 text-center">
+              <p className="text-xl font-bold text-orange-600">{record.pacientesEsperando}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Pacientes en espera</p>
+            </div>
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 text-center">
+              <p className="text-xl font-bold text-blue-600">{record.altosTramite}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Altas en trámite</p>
+            </div>
+          </div>
+
+          {/* Recomendación */}
+          {record.recomendacionApertura && record.recomendacionApertura !== 'No necesario' && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4">
+              <h3 className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">
+                Recomendación
+              </h3>
+              <p className="text-amber-800 dark:text-amber-200 font-medium">
+                {record.recomendacionApertura}
+              </p>
+            </div>
+          )}
+
+          {/* Última actualización */}
+          <div className="text-xs text-gray-400 dark:text-gray-500 text-center pt-2 border-t border-gray-200 dark:border-gray-700">
+            Actualizado: {new Date(record.fechaActualizacion).toLocaleString('es-ES')}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
 // COMPONENTE DE ÚLTIMA ACTUALIZACIÓN
 // ============================================================================
 
@@ -209,6 +427,8 @@ function CapacityManagementPage() {
   const [activeTab, setActiveTab] = useState<TabId>('general');
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedAlert, setSelectedAlert] = useState<CapacityAlert | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<BedCapacityRecord | null>(null);
 
   // Store de autenticación
   const { user } = useAuthStore();
@@ -273,14 +493,16 @@ function CapacityManagementPage() {
     // TODO: Implementar lógica de resolución de alerta
   };
 
-  const handleViewAlertDetail = (alert: unknown) => {
-    console.log('Ver detalle de alerta:', alert);
-    // TODO: Abrir modal o navegar a detalle
+  const handleViewAlertDetail = (alert: CapacityAlert) => {
+    setSelectedAlert(alert);
   };
 
-  const handleCellClick = (record: unknown) => {
-    console.log('Click en celda:', record);
-    // TODO: Abrir modal de detalle
+  const handleCellClick = (record: BedCapacityRecord) => {
+    setSelectedRecord(record);
+  };
+
+  const handleViewRecordDetail = (record: BedCapacityRecord) => {
+    setSelectedRecord(record);
   };
 
   // Renderizar contenido de la tab activa
@@ -328,6 +550,7 @@ function CapacityManagementPage() {
             data={bedCapacity}
             title="Recomendaciones de Apertura de Planta"
             maxItems={8}
+            onViewDetail={handleViewRecordDetail}
           />
         );
 
@@ -436,6 +659,10 @@ function CapacityManagementPage() {
         {/* Contenido de la tab activa */}
         {renderTabContent()}
       </main>
+
+      {/* Modales */}
+      <AlertDetailModal alert={selectedAlert} onClose={() => setSelectedAlert(null)} />
+      <CapacityDetailModal record={selectedRecord} onClose={() => setSelectedRecord(null)} />
     </div>
   );
 }

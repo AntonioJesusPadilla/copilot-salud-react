@@ -105,7 +105,7 @@ function AlertItem({ alert, onResolve, onViewDetail }: AlertItemProps) {
 
   return (
     <div
-      className="border-l-4 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow p-4"
+      className="border-l-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow p-4"
       style={{ borderLeftColor: config.color }}
     >
       {/* Header */}
