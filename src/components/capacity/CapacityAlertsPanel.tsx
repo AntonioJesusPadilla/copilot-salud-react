@@ -139,8 +139,8 @@ function AlertItem({ alert, onResolve, onViewDetail }: AlertItemProps) {
       {/* Mensaje */}
       <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{alert.mensaje}</p>
 
-      {/* Métricas */}
-      <div className="flex items-center space-x-4 mb-3">
+      {/* Métricas - Responsive: columna en móvil pequeño, fila en resto */}
+      <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-4 mb-3">
         <div className="flex items-center space-x-1">
           <span className="text-sm text-gray-500 dark:text-gray-400">Ocupación:</span>
           <span className="text-sm font-bold" style={{ color: config.color }}>
@@ -163,8 +163,8 @@ function AlertItem({ alert, onResolve, onViewDetail }: AlertItemProps) {
         </p>
       </div>
 
-      {/* Botones de acción */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+      {/* Botones de acción - Responsive */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
         <div className="flex space-x-2">
           {onResolve && !alert.resuelta && (
             <button
@@ -183,7 +183,7 @@ function AlertItem({ alert, onResolve, onViewDetail }: AlertItemProps) {
         {onViewDetail && (
           <button
             onClick={onViewDetail}
-            className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-xs text-blue-600 dark:text-blue-400 hover:underline text-left sm:text-right"
           >
             Ver detalles
           </button>

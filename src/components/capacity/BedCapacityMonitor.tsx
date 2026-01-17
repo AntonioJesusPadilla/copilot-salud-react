@@ -134,22 +134,24 @@ function CapacityCard({ record, compact = false, onClick }: CapacityCardProps) {
       {/* Barra de ocupación con porcentaje calculado */}
       <OccupancyBar percentage={ocupacionCalculada} alertLevel={record.alertaCapacidad} />
 
-      {/* Métricas - Ahora incluye Total */}
-      <div className={`grid gap-2 mt-3 ${compact ? 'grid-cols-2' : 'grid-cols-5'}`}>
+      {/* Métricas - Responsive: 2 cols en móvil, 3 en tablet, 5 en desktop */}
+      <div
+        className={`grid gap-2 mt-3 ${compact ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'}`}
+      >
         <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
-          <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100">
             {record.camasTotales}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">Total</p>
         </div>
         <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
-          <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100">
             {record.camasOcupadas}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">Ocupadas</p>
         </div>
         <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
-          <p className="text-lg font-bold text-green-600 dark:text-green-400">
+          <p className="text-base sm:text-lg font-bold text-green-600 dark:text-green-400">
             {record.camasDisponibles}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">Disponibles</p>
@@ -157,13 +159,13 @@ function CapacityCard({ record, compact = false, onClick }: CapacityCardProps) {
         {!compact && (
           <>
             <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
-              <p className="text-lg font-bold text-orange-600 dark:text-orange-400">
+              <p className="text-base sm:text-lg font-bold text-orange-600 dark:text-orange-400">
                 {record.pacientesEsperando}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">En espera</p>
             </div>
             <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
-              <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+              <p className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400">
                 {record.altosTramite}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">Altas</p>

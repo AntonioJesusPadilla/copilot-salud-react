@@ -216,8 +216,8 @@ function RecommendationCard({
         <p className="text-sm text-gray-600 dark:text-gray-400">{recommendation.justificacion}</p>
       </div>
 
-      {/* Métricas actuales */}
-      <div className="grid grid-cols-4 gap-2 mb-3">
+      {/* Métricas actuales - Responsive: 2 cols en móvil, 4 en tablet+ */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
         <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
           <p className="text-sm font-bold text-gray-800 dark:text-gray-100">
             {record.porcentajeOcupacion.toFixed(0)}%
@@ -261,12 +261,12 @@ function RecommendationCard({
         </div>
       </div>
 
-      {/* Botones de acción */}
+      {/* Botones de acción - Responsive */}
       {recommendation.recomendacion !== 'No necesario' && (
-        <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={onActivate}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all"
+            className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all"
           >
             <span>🚀</span>
             <span>Activar Protocolo</span>

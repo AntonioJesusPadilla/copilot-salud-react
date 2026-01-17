@@ -252,8 +252,12 @@ function HospitalComparisonBars({ data }: HospitalComparisonBarsProps) {
           const barWidth = (hospital.occupancy / maxOccupancy) * 100;
 
           return (
-            <div key={hospital.hospital} className="flex items-center space-x-3">
-              <div className="w-40 flex-shrink-0">
+            <div
+              key={hospital.hospital}
+              className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
+            >
+              {/* Nombre hospital - full width en móvil, fijo en desktop */}
+              <div className="sm:w-32 md:w-40 flex-shrink-0">
                 <div className="flex items-center space-x-2">
                   <span
                     className="w-2 h-2 rounded-full flex-shrink-0"
@@ -264,27 +268,30 @@ function HospitalComparisonBars({ data }: HospitalComparisonBarsProps) {
                   </span>
                 </div>
               </div>
-              <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden relative">
-                <div
-                  className="h-full rounded-full transition-all duration-500 flex items-center justify-end pr-2"
-                  style={{
-                    width: `${barWidth}%`,
-                    backgroundColor: barColor,
-                    minWidth: '40px',
-                  }}
-                >
-                  <span
-                    className="text-xs font-bold"
-                    style={{ color: hospital.occupancy >= 93 ? '#FFFFFF' : '#1F2937' }}
+              {/* Barra + info de camas */}
+              <div className="flex items-center gap-2 flex-1">
+                <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden relative">
+                  <div
+                    className="h-full rounded-full transition-all duration-500 flex items-center justify-end pr-2"
+                    style={{
+                      width: `${barWidth}%`,
+                      backgroundColor: barColor,
+                      minWidth: '50px',
+                    }}
                   >
-                    {hospital.occupancy.toFixed(1)}%
+                    <span
+                      className="text-xs font-bold"
+                      style={{ color: hospital.occupancy >= 93 ? '#FFFFFF' : '#1F2937' }}
+                    >
+                      {hospital.occupancy.toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+                <div className="w-20 sm:w-24 flex-shrink-0 text-right">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {hospital.camasOcupadas}/{hospital.totalCamas}
                   </span>
                 </div>
-              </div>
-              <div className="w-24 flex-shrink-0 text-right">
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {hospital.camasOcupadas}/{hospital.totalCamas} camas
-                </span>
               </div>
             </div>
           );
