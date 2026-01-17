@@ -60,6 +60,21 @@ function getTextColor(occupancy: number | null): string {
   return '#1F2937';
 }
 
+/**
+ * Calcula el porcentaje de ocupación real
+ * Si porcentajeOcupacion es 0 pero hay camas, calcula manualmente
+ */
+function calculateOccupancy(record: BedCapacityRecord): number {
+  if (record.porcentajeOcupacion > 0) {
+    return record.porcentajeOcupacion;
+  }
+  // Si el porcentaje viene como 0, calcularlo manualmente
+  if (record.camasTotales > 0) {
+    return (record.camasOcupadas / record.camasTotales) * 100;
+  }
+  return 0;
+}
+
 // ============================================================================
 // COMPONENTE DE CELDA
 // ============================================================================
@@ -186,6 +201,98 @@ function Legend() {
 }
 
 // ============================================================================
+// COMPONENTE DE BARRAS COMPARATIVAS POR HOSPITAL
+// ============================================================================
+
+interface HospitalComparisonBarsProps {
+  data: BedCapacityRecord[];
+}
+
+function HospitalComparisonBars({ data }: HospitalComparisonBarsProps) {
+  const hospitalStats = useMemo(() => {
+    const statsMap = new Map<
+      string,
+      { totalCamas: number; camasOcupadas: number; plantas: number }
+    >();
+
+    data.forEach((record) => {
+      const current = statsMap.get(record.hospital) || {
+        totalCamas: 0,
+        camasOcupadas: 0,
+        plantas: 0,
+      };
+      statsMap.set(record.hospital, {
+        totalCamas: current.totalCamas + record.camasTotales,
+        camasOcupadas: current.camasOcupadas + record.camasOcupadas,
+        plantas: current.plantas + 1,
+      });
+    });
+
+    return Array.from(statsMap.entries())
+      .map(([hospital, stats]) => ({
+        hospital,
+        ...stats,
+        occupancy: stats.totalCamas > 0 ? (stats.camasOcupadas / stats.totalCamas) * 100 : 0,
+      }))
+      .sort((a, b) => b.occupancy - a.occupancy);
+  }, [data]);
+
+  const maxOccupancy = Math.max(...hospitalStats.map((h) => h.occupancy), 100);
+
+  return (
+    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+        Comparativa de Ocupación por Hospital
+      </h4>
+      <div className="space-y-3">
+        {hospitalStats.map((hospital) => {
+          const barColor = getOccupancyColor(hospital.occupancy);
+          const barWidth = (hospital.occupancy / maxOccupancy) * 100;
+
+          return (
+            <div key={hospital.hospital} className="flex items-center space-x-3">
+              <div className="w-40 flex-shrink-0">
+                <div className="flex items-center space-x-2">
+                  <span
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: getHospitalColor(hospital.hospital) }}
+                  />
+                  <span className="text-xs text-gray-600 dark:text-gray-400 truncate">
+                    {hospital.hospital}
+                  </span>
+                </div>
+              </div>
+              <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden relative">
+                <div
+                  className="h-full rounded-full transition-all duration-500 flex items-center justify-end pr-2"
+                  style={{
+                    width: `${barWidth}%`,
+                    backgroundColor: barColor,
+                    minWidth: '40px',
+                  }}
+                >
+                  <span
+                    className="text-xs font-bold"
+                    style={{ color: hospital.occupancy >= 85 ? '#FFFFFF' : '#1F2937' }}
+                  >
+                    {hospital.occupancy.toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+              <div className="w-24 flex-shrink-0 text-right">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {hospital.camasOcupadas}/{hospital.totalCamas} camas
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
 // COMPONENTE DE ESTADÍSTICAS RÁPIDAS
 // ============================================================================
 
@@ -195,13 +302,16 @@ interface QuickStatsProps {
 
 function QuickStats({ data }: QuickStatsProps) {
   const stats = useMemo(() => {
-    const critical = data.filter((r) => r.porcentajeOcupacion >= 90).length;
-    const warning = data.filter(
-      (r) => r.porcentajeOcupacion >= 85 && r.porcentajeOcupacion < 90
-    ).length;
-    const normal = data.filter((r) => r.porcentajeOcupacion < 85).length;
+    // Calcular ocupación real para cada registro
+    const occupancies = data.map((r) => calculateOccupancy(r));
+
+    const critical = occupancies.filter((occ) => occ >= 90).length;
+    const warning = occupancies.filter((occ) => occ >= 85 && occ < 90).length;
+    const normal = occupancies.filter((occ) => occ < 85).length;
     const avgOccupancy =
-      data.length > 0 ? data.reduce((sum, r) => sum + r.porcentajeOcupacion, 0) / data.length : 0;
+      occupancies.length > 0
+        ? occupancies.reduce((sum, occ) => sum + occ, 0) / occupancies.length
+        : 0;
 
     return { critical, warning, normal, avgOccupancy };
   }, [data]);
@@ -273,12 +383,13 @@ function CapacityHeatmap({
     const matrix: HeatmapCell[][] = hospitalsList.map((hospital) =>
       plantsList.map((planta) => {
         const record = data.find((r) => r.hospital === hospital && r.planta === planta);
+        const occupancy = record ? calculateOccupancy(record) : null;
         return {
           hospital,
           planta,
           record: record || null,
-          occupancy: record?.porcentajeOcupacion ?? null,
-          alertLevel: record ? getAlertLevel(record.porcentajeOcupacion) : null,
+          occupancy,
+          alertLevel: occupancy !== null ? getAlertLevel(occupancy) : null,
         };
       })
     );
@@ -316,7 +427,7 @@ function CapacityHeatmap({
         <table className="w-full">
           <thead>
             <tr>
-              <th className="p-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 min-w-[120px]">
+              <th className="p-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 min-w-[180px]">
                 Hospital
               </th>
               {plants.map((plant) => (
@@ -334,13 +445,13 @@ function CapacityHeatmap({
           <tbody>
             {hospitals.map((hospital, rowIndex) => (
               <tr key={hospital}>
-                <td className="p-2">
+                <td className="p-2 min-w-[180px]">
                   <div className="flex items-center space-x-2">
                     <span
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: getHospitalColor(hospital) }}
                     />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-[100px]">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
                       {hospital}
                     </span>
                   </div>
@@ -366,6 +477,9 @@ function CapacityHeatmap({
 
       {/* Leyenda */}
       {showLegend && <Legend />}
+
+      {/* Barras comparativas por hospital */}
+      <HospitalComparisonBars data={data} />
 
       {/* Nota */}
       <p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-3">

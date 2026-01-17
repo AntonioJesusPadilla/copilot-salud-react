@@ -84,12 +84,18 @@ interface CapacityCardProps {
 function CapacityCard({ record, compact = false, onClick }: CapacityCardProps) {
   const alertConfig = ALERT_LEVEL_CONFIGS[record.alertaCapacidad];
 
+  // Calcular porcentaje de ocupación real en caso de que venga incorrecto
+  const ocupacionCalculada =
+    record.camasTotales > 0
+      ? (record.camasOcupadas / record.camasTotales) * 100
+      : record.porcentajeOcupacion;
+
   return (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-lg border-l-4 shadow-sm hover:shadow-md transition-all ${
+      className={`bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all ${
         compact ? 'p-3' : 'p-4'
       } ${onClick ? 'cursor-pointer' : ''}`}
-      style={{ borderLeftColor: alertConfig.color }}
+      style={{ borderLeftWidth: '4px', borderLeftColor: alertConfig.color }}
       onClick={onClick}
     >
       {/* Header */}
@@ -125,18 +131,24 @@ function CapacityCard({ record, compact = false, onClick }: CapacityCardProps) {
         </span>
       </div>
 
-      {/* Barra de ocupación */}
-      <OccupancyBar percentage={record.porcentajeOcupacion} alertLevel={record.alertaCapacidad} />
+      {/* Barra de ocupación con porcentaje calculado */}
+      <OccupancyBar percentage={ocupacionCalculada} alertLevel={record.alertaCapacidad} />
 
-      {/* Métricas */}
-      <div className={`grid gap-2 mt-3 ${compact ? 'grid-cols-2' : 'grid-cols-4'}`}>
-        <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
+      {/* Métricas - Ahora incluye Total */}
+      <div className={`grid gap-2 mt-3 ${compact ? 'grid-cols-2' : 'grid-cols-5'}`}>
+        <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
+          <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
+            {record.camasTotales}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Total</p>
+        </div>
+        <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
           <p className="text-lg font-bold text-gray-800 dark:text-gray-100">
             {record.camasOcupadas}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">Ocupadas</p>
         </div>
-        <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
+        <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
           <p className="text-lg font-bold text-green-600 dark:text-green-400">
             {record.camasDisponibles}
           </p>
@@ -144,17 +156,17 @@ function CapacityCard({ record, compact = false, onClick }: CapacityCardProps) {
         </div>
         {!compact && (
           <>
-            <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
+            <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
               <p className="text-lg font-bold text-orange-600 dark:text-orange-400">
                 {record.pacientesEsperando}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">En espera</p>
             </div>
-            <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
+            <div className="text-center p-2 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-100 dark:border-gray-600">
               <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
                 {record.altosTramite}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Altas 24h</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Altas</p>
             </div>
           </>
         )}

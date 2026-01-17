@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useCapacityStore from '../store/capacityStore';
+import useAuthStore from '../store/authStore';
 import {
   BedCapacityMonitor,
   CapacityAlertsPanel,
@@ -7,7 +9,9 @@ import {
   PlantOpeningRecommendations,
   CapacityHeatmap,
 } from '../components/capacity';
+import ThemeToggle from '../components/common/ThemeToggle';
 import { BedCapacityRecord, CapacityAlert } from '../types/capacity';
+import { ROLE_CONFIGS } from '../types';
 
 // ============================================================================
 // TIPOS
@@ -201,12 +205,18 @@ function LastUpdate({ lastUpdate, onRefresh, isRefreshing }: LastUpdateProps) {
 // ============================================================================
 
 function CapacityManagementPage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>('general');
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // Store de autenticación
+  const { user } = useAuthStore();
+  const roleConfig = user ? ROLE_CONFIGS[user.role] : ROLE_CONFIGS.invitado;
+
   // Store de capacidad
-  const { bedCapacity, alerts, isLoading, loadCapacityData, refreshCapacity } = useCapacityStore();
+  const { bedCapacity, alerts, isLoading, error, loadCapacityData, refreshCapacity } =
+    useCapacityStore();
 
   // Cargar datos iniciales
   useEffect(() => {
@@ -247,9 +257,14 @@ function CapacityManagementPage() {
   // Manejar actualización manual
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    await refreshCapacity();
-    setLastUpdate(new Date());
-    setIsRefreshing(false);
+    try {
+      await refreshCapacity();
+      setLastUpdate(new Date());
+    } catch (err) {
+      console.error('Error al actualizar datos de capacidad:', err);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   // Handlers para componentes
@@ -332,27 +347,75 @@ function CapacityManagementPage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-            Gestión de Capacidad Hospitalaria
-          </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Monitorización en tiempo real de ocupación de camas y alertas del sistema
-          </p>
-        </div>
+  if (!user) {
+    return null;
+  }
 
-        {/* Controles superiores */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-          <div className="mb-4 md:mb-0">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {bedCapacity.length} unidades monitorizadas • {globalMetrics.alertasActivas} alertas
-              activas
-            </p>
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      {/* Header - Estilo consistente con Chat y Mapas */}
+      <header
+        className="bg-white dark:bg-gray-800 shadow-sm border-b-4 transition-colors"
+        style={{ borderColor: roleConfig.color }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between gap-4">
+            {/* Lado izquierdo: Volver + Título */}
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink min-w-0">
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
+                title="Volver al Dashboard"
+                aria-label="Volver al Dashboard"
+              >
+                ← <span className="hidden sm:inline">Volver</span>
+              </button>
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100 truncate">
+                  🏥 Gestión de Capacidad
+                </h1>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {bedCapacity.length} unidades • {globalMetrics.alertasActivas} alertas
+                </p>
+              </div>
+            </div>
+
+            {/* Lado derecho: Info usuario + Theme Toggle + Avatar */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="text-right hidden md:block">
+                <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">{user.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{roleConfig.name}</p>
+              </div>
+              <ThemeToggle />
+              <div
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-lg sm:text-xl"
+                style={{ backgroundColor: `${roleConfig.color}20` }}
+              >
+                {roleConfig.icon}
+              </div>
+            </div>
           </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Mostrar error si existe */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg">
+            <p className="text-red-700 dark:text-red-400 font-medium">Error al cargar datos</p>
+            <p className="text-red-600 dark:text-red-300 text-sm">{error}</p>
+            <button
+              onClick={handleRefresh}
+              className="mt-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+            >
+              Reintentar
+            </button>
+          </div>
+        )}
+
+        {/* Controles superiores con botón de actualización */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-end mb-6">
           <LastUpdate
             lastUpdate={lastUpdate}
             onRefresh={handleRefresh}
@@ -372,7 +435,7 @@ function CapacityManagementPage() {
 
         {/* Contenido de la tab activa */}
         {renderTabContent()}
-      </div>
+      </main>
     </div>
   );
 }

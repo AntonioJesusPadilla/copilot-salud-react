@@ -85,18 +85,22 @@ interface RawEfficiencyAnalysis {
 
 interface RawBedCapacity {
   hospital: string;
-  planta: string;
+  departamento: string; // Nombre de la planta/departamento
   camas_totales: string;
   camas_ocupadas: string;
   camas_disponibles: string;
-  porcentaje_ocupacion: string;
-  pacientes_esperando: string;
-  tiempo_espera_medio_horas: string;
-  altos_tramite: string;
-  ingresos_programados: string;
-  alerta_capacidad: string;
-  recomendacion_apertura: string;
-  fecha_actualizacion: string;
+  tasa_ocupacion: string; // Porcentaje de ocupación
+  pacientes_ingresados: string;
+  pacientes_alta_proxima_24h: string;
+  pacientes_criticos: string;
+  tiempo_medio_estancia_dias: string;
+  ingresos_ultima_semana: string;
+  altas_ultima_semana: string;
+  estado_capacidad: string; // 'crítico', 'alerta', 'normal'
+  umbral_critico: string;
+  necesita_apertura_planta: string;
+  planta_sugerida: string;
+  fecha_hora_actualizacion: string;
 }
 
 // ============================================================================
@@ -266,21 +270,54 @@ class FinancialDataService {
   }
 
   private transformCapacity(raw: RawBedCapacity[]): BedCapacityRecord[] {
-    return raw.map((r) => ({
-      hospital: r.hospital,
-      planta: r.planta,
-      camasTotales: parseInt(r.camas_totales) || 0,
-      camasOcupadas: parseInt(r.camas_ocupadas) || 0,
-      camasDisponibles: parseInt(r.camas_disponibles) || 0,
-      porcentajeOcupacion: parseFloat(r.porcentaje_ocupacion) || 0,
-      pacientesEsperando: parseInt(r.pacientes_esperando) || 0,
-      tiempoEsperaMedioHoras: parseFloat(r.tiempo_espera_medio_horas) || 0,
-      altosTramite: parseInt(r.altos_tramite) || 0,
-      ingresosProgramados: parseInt(r.ingresos_programados) || 0,
-      alertaCapacidad: r.alerta_capacidad.toLowerCase() as AlertLevel,
-      recomendacionApertura: r.recomendacion_apertura,
-      fechaActualizacion: r.fecha_actualizacion,
-    }));
+    return raw.map((r) => {
+      // Mapear estado_capacidad a alertaCapacidad
+      let alertLevel: AlertLevel = 'verde';
+      const estado = r.estado_capacidad?.toLowerCase() || '';
+      if (estado === 'crítico' || estado === 'critico') {
+        alertLevel = 'rojo';
+      } else if (estado === 'alerta') {
+        alertLevel = 'amarillo';
+      }
+
+      // Calcular porcentaje de ocupación si no viene directamente
+      const camasTotales = parseInt(r.camas_totales) || 0;
+      const camasOcupadas = parseInt(r.camas_ocupadas) || 0;
+      const tasaOcupacion = parseFloat(r.tasa_ocupacion) || 0;
+      const porcentajeOcupacion =
+        tasaOcupacion > 0
+          ? tasaOcupacion
+          : camasTotales > 0
+            ? (camasOcupadas / camasTotales) * 100
+            : 0;
+
+      // Generar recomendación basada en necesita_apertura_planta
+      let recomendacion = 'No necesario';
+      if (
+        r.necesita_apertura_planta?.toLowerCase() === 'sí' ||
+        r.necesita_apertura_planta?.toLowerCase() === 'si'
+      ) {
+        recomendacion = r.planta_sugerida
+          ? `Abrir ${r.planta_sugerida}`
+          : 'Apertura de planta recomendada';
+      }
+
+      return {
+        hospital: r.hospital || '',
+        planta: r.departamento || '', // departamento -> planta
+        camasTotales,
+        camasOcupadas,
+        camasDisponibles: parseInt(r.camas_disponibles) || 0,
+        porcentajeOcupacion,
+        pacientesEsperando: parseInt(r.pacientes_criticos) || 0, // Usar pacientes_criticos como proxy
+        tiempoEsperaMedioHoras: parseFloat(r.tiempo_medio_estancia_dias) * 24 || 0, // Convertir días a horas
+        altosTramite: parseInt(r.pacientes_alta_proxima_24h) || 0, // pacientes_alta_proxima_24h -> altosTramite
+        ingresosProgramados: parseInt(r.ingresos_ultima_semana) || 0,
+        alertaCapacidad: alertLevel,
+        recomendacionApertura: recomendacion,
+        fechaActualizacion: r.fecha_hora_actualizacion || new Date().toISOString(),
+      };
+    });
   }
 
   // ============================================================================

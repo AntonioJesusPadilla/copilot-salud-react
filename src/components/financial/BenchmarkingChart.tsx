@@ -63,6 +63,28 @@ const METRIC_LABELS: Record<string, string> = {
   tasaRetencion: 'Retención',
 };
 
+// Colores distintivos para cada métrica en gráficos con múltiples métricas
+const METRIC_COLORS: Record<string, string> = {
+  eficienciaCoste: '#3B82F6', // Azul
+  satisfaccionPaciente: '#10B981', // Verde
+  presupuestoAnualEuros: '#8B5CF6', // Púrpura
+  costePersonal: '#F59E0B', // Ámbar
+  costePorPaciente: '#EF4444', // Rojo
+  margenOperativo: '#06B6D4', // Cyan
+  tasaOcupacion: '#EC4899', // Rosa
+  ingresosTotales: '#22C55E', // Verde claro
+  gastosTotales: '#F97316', // Naranja
+  margenNeto: '#14B8A6', // Teal
+  roi: '#6366F1', // Índigo
+  ebitda: '#A855F7', // Violeta
+  ratioLiquidez: '#0EA5E9', // Sky
+  tasaRetencion: '#84CC16', // Lima
+};
+
+function getMetricColor(metric: string, index: number): string {
+  return METRIC_COLORS[metric] || `hsl(${index * 45}, 70%, 50%)`;
+}
+
 function getMetricLabel(metric: string): string {
   return METRIC_LABELS[metric] || metric;
 }
@@ -281,7 +303,11 @@ function BenchmarkingChart({
           </BarChart>
         );
 
-      default: // 'bar'
+      default: {
+        // 'bar'
+        // Si hay múltiples métricas, usar colores por métrica para distinguirlas
+        const useMetricColors = metrics.length > 1;
+
         return (
           <BarChart data={processedData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -298,11 +324,17 @@ function BenchmarkingChart({
                 </span>
               )}
             />
-            {metrics.map((metric) => (
-              <Bar key={metric} dataKey={metric} name={getMetricLabel(metric)}>
-                {processedData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
+            {metrics.map((metric, metricIndex) => (
+              <Bar
+                key={metric}
+                dataKey={metric}
+                name={getMetricLabel(metric)}
+                fill={useMetricColors ? getMetricColor(metric, metricIndex) : undefined}
+              >
+                {!useMetricColors &&
+                  processedData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
               </Bar>
             ))}
             {showBenchmark &&
@@ -321,6 +353,7 @@ function BenchmarkingChart({
               )}
           </BarChart>
         );
+      }
     }
   };
 
