@@ -1,5 +1,9 @@
 /**
  * Context Service - Inyecta datos reales del sistema en el chat
+ *
+ * Este servicio genera el contexto que se inyecta en el prompt del sistema
+ * para que el chat AI tenga acceso a datos reales del sistema sanitario.
+ * Los datos se filtran según los permisos del rol del usuario.
  */
 
 import useAuthStore from '../store/authStore';
@@ -7,9 +11,27 @@ import useKPIStore from '../store/kpiStore';
 import useMapStore from '../store/mapStore';
 import useCapacityStore from '../store/capacityStore';
 import { ChatContext } from '../types/chat';
+import { ROLE_CONFIGS, UserRole } from '../types';
+
+/**
+ * Verifica si un rol tiene acceso a los datos de capacidad hospitalaria
+ */
+const canAccessCapacity = (role: UserRole): boolean => {
+  const config = ROLE_CONFIGS[role];
+  return config?.permissions?.canViewCapacity ?? false;
+};
+
+/**
+ * Verifica si un rol tiene acceso a los datos financieros
+ */
+const canAccessFinancial = (role: UserRole): boolean => {
+  const config = ROLE_CONFIGS[role];
+  return config?.permissions?.canViewFinancial ?? false;
+};
 
 /**
  * Obtiene el contexto actual del sistema para inyectar en el chat
+ * Los datos se filtran según los permisos del rol del usuario
  */
 export const getChatContext = (): ChatContext => {
   // Obtener datos de los stores
@@ -17,6 +39,15 @@ export const getChatContext = (): ChatContext => {
   const kpiState = useKPIStore.getState();
   const mapState = useMapStore.getState();
   const capacityState = useCapacityStore.getState();
+
+  const userRole = (authState.user?.role || 'invitado') as UserRole;
+  const hasCapacityAccess = canAccessCapacity(userRole);
+  const hasFinancialAccess = canAccessFinancial(userRole);
+
+  console.log(`🔐 [ContextService] Permisos del rol ${userRole}:`, {
+    canViewCapacity: hasCapacityAccess,
+    canViewFinancial: hasFinancialAccess,
+  });
 
   // Seleccionar los KPIs más relevantes (primeros 15)
   const topKPIs = (kpiState.kpis || []).slice(0, 15).map((kpi) => ({
@@ -34,49 +65,75 @@ export const getChatContext = (): ChatContext => {
     hasEmergency: center.emergencyService || false,
   }));
 
-  // Calcular métricas de capacidad hospitalaria
-  const bedCapacity = capacityState.bedCapacity || [];
-  const alerts = capacityState.alerts || [];
+  // Calcular métricas de capacidad hospitalaria SOLO si el rol tiene permisos
+  let capacityContext: ChatContext['capacity'] = undefined;
 
-  const totalBeds = bedCapacity.reduce((sum, r) => sum + r.camasTotales, 0);
-  const occupiedBeds = bedCapacity.reduce((sum, r) => sum + r.camasOcupadas, 0);
-  const availableBeds = bedCapacity.reduce((sum, r) => sum + r.camasDisponibles, 0);
-  const averageOccupancy = totalBeds > 0 ? (occupiedBeds / totalBeds) * 100 : 0;
-  const activeAlerts = alerts.filter((a) => !a.resuelta).length;
-  const criticalAlerts = alerts.filter((a) => a.nivel === 'rojo' && !a.resuelta).length;
+  if (hasCapacityAccess) {
+    const bedCapacity = capacityState.bedCapacity || [];
+    const alerts = capacityState.alerts || [];
 
-  // Agrupar por hospital y seleccionar los más críticos
-  const hospitalMap = new Map<
-    string,
-    { occupancy: number; alertLevel: string; availableBeds: number; plant: string }
-  >();
-  bedCapacity.forEach((record) => {
-    const existing = hospitalMap.get(record.hospital);
-    if (!existing || record.porcentajeOcupacion > existing.occupancy) {
-      hospitalMap.set(record.hospital, {
-        occupancy: record.porcentajeOcupacion,
-        alertLevel: record.alertaCapacidad,
-        availableBeds: record.camasDisponibles,
-        plant: record.planta,
-      });
+    const totalBeds = bedCapacity.reduce((sum, r) => sum + r.camasTotales, 0);
+    const occupiedBeds = bedCapacity.reduce((sum, r) => sum + r.camasOcupadas, 0);
+    const availableBeds = bedCapacity.reduce((sum, r) => sum + r.camasDisponibles, 0);
+    const averageOccupancy = totalBeds > 0 ? (occupiedBeds / totalBeds) * 100 : 0;
+    const activeAlerts = alerts.filter((a) => !a.resuelta).length;
+    const criticalAlerts = alerts.filter((a) => a.nivel === 'rojo' && !a.resuelta).length;
+
+    // Agrupar por hospital y seleccionar los más críticos
+    const hospitalMap = new Map<
+      string,
+      { occupancy: number; alertLevel: string; availableBeds: number; plant: string }
+    >();
+    bedCapacity.forEach((record) => {
+      const existing = hospitalMap.get(record.hospital);
+      if (!existing || record.porcentajeOcupacion > existing.occupancy) {
+        hospitalMap.set(record.hospital, {
+          occupancy: record.porcentajeOcupacion,
+          alertLevel: record.alertaCapacidad,
+          availableBeds: record.camasDisponibles,
+          plant: record.planta,
+        });
+      }
+    });
+
+    const topHospitals = Array.from(hospitalMap.entries())
+      .sort((a, b) => b[1].occupancy - a[1].occupancy)
+      .slice(0, 8)
+      .map(([name, data]) => ({
+        name,
+        plant: data.plant,
+        occupancy: data.occupancy,
+        alertLevel: data.alertLevel,
+        availableBeds: data.availableBeds,
+      }));
+
+    // Solo incluir si hay datos cargados
+    if (totalBeds > 0) {
+      capacityContext = {
+        totalBeds,
+        occupiedBeds,
+        availableBeds,
+        averageOccupancy,
+        activeAlerts,
+        criticalAlerts,
+        hospitals: topHospitals,
+      };
+      console.log(
+        `🛏️ [ContextService] Datos de capacidad incluidos: ${totalBeds} camas, ${activeAlerts} alertas activas`
+      );
+    } else {
+      console.log(
+        '⚠️ [ContextService] El rol tiene permisos de capacidad pero no hay datos cargados'
+      );
     }
-  });
-
-  const topHospitals = Array.from(hospitalMap.entries())
-    .sort((a, b) => b[1].occupancy - a[1].occupancy)
-    .slice(0, 8)
-    .map(([name, data]) => ({
-      name,
-      plant: data.plant,
-      occupancy: data.occupancy,
-      alertLevel: data.alertLevel,
-      availableBeds: data.availableBeds,
-    }));
+  } else {
+    console.log('🚫 [ContextService] El rol no tiene acceso a datos de capacidad hospitalaria');
+  }
 
   const context: ChatContext = {
     user: {
       name: authState.user?.name || 'Usuario',
-      role: authState.user?.role || 'invitado',
+      role: userRole,
     },
     kpis: {
       total: kpiState.stats?.total || 0,
@@ -90,18 +147,12 @@ export const getChatContext = (): ChatContext => {
       byType: mapState.stats?.byType || {},
       topCenters,
     },
-    capacity:
-      totalBeds > 0
-        ? {
-            totalBeds,
-            occupiedBeds,
-            availableBeds,
-            averageOccupancy,
-            activeAlerts,
-            criticalAlerts,
-            hospitals: topHospitals,
-          }
-        : undefined,
+    capacity: capacityContext,
+    // Información adicional sobre permisos para el prompt
+    permissions: {
+      canViewCapacity: hasCapacityAccess,
+      canViewFinancial: hasFinancialAccess,
+    },
   };
 
   return context;
@@ -167,11 +218,24 @@ ${
 `
     : '';
 
+  // Determinar permisos del rol
+  const hasCapacityPermission = context.permissions?.canViewCapacity ?? false;
+  const hasFinancialPermission = context.permissions?.canViewFinancial ?? false;
+
+  // Generar sección de permisos del rol
+  const rolePermissionsText = `
+PERMISOS DE TU ROL (${context.user.role.toUpperCase()}):
+  - Acceso a KPIs y centros de salud: ✅ SÍ
+  - Acceso a capacidad hospitalaria: ${hasCapacityPermission ? '✅ SÍ' : '❌ NO'}
+  - Acceso a datos financieros: ${hasFinancialPermission ? '✅ SÍ' : '❌ NO'}
+`;
+
   return `Eres el Copilot Salud Andalucía, asistente oficial del sistema sanitario de Andalucía, España.
 
 INFORMACIÓN DEL USUARIO:
 - Nombre: ${context.user.name}
 - Rol: ${context.user.role}
+${rolePermissionsText}
 
 ═══════════════════════════════════════════════════════════════
 📊 KPIS DE SALUD DISPONIBLES (${context.kpis.total} totales)
@@ -194,7 +258,7 @@ CENTROS PRINCIPALES:
 ${centersText}
 ${capacitySection}
 ═══════════════════════════════════════════════════════════════
-✅ CAPACIDADES QUE TIENES
+✅ CAPACIDADES QUE TIENES SEGÚN EL ROL "${context.user.role.toUpperCase()}"
 ═══════════════════════════════════════════════════════════════
 1. Consultar KPIs específicos con sus valores exactos
 2. Informar sobre centros de salud, hospitales y clínicas
@@ -202,7 +266,8 @@ ${capacitySection}
 4. Analizar tendencias sanitarias de la provincia
 5. Responder preguntas sobre ubicaciones y zonas cubiertas
 6. Orientar a usuarios según su rol en el sistema
-7. ${context.capacity ? 'Informar sobre capacidad hospitalaria, ocupación de camas y alertas' : 'Capacidad hospitalaria: datos no disponibles para tu rol'}
+7. ${hasCapacityPermission && context.capacity ? '✅ Informar sobre capacidad hospitalaria, ocupación de camas y alertas (TIENES ACCESO Y DATOS DISPONIBLES)' : hasCapacityPermission ? '⚠️ Capacidad hospitalaria: tienes permisos pero los datos aún no se han cargado' : '❌ Capacidad hospitalaria: tu rol no tiene acceso a estos datos'}
+8. ${hasFinancialPermission ? '✅ Consultas sobre datos financieros del sistema sanitario' : '❌ Datos financieros: tu rol no tiene acceso a estos datos'}
 
 ═══════════════════════════════════════════════════════════════
 📋 INSTRUCCIONES CRÍTICAS

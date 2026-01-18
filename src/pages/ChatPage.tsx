@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import useKPIStore from '../store/kpiStore';
 import useMapStore from '../store/mapStore';
+import useCapacityStore from '../store/capacityStore';
 import { ROLE_CONFIGS } from '../types';
 import ChatInterface from '../components/chat/ChatInterface';
 import ThemeToggle from '../components/common/ThemeToggle';
@@ -17,6 +18,7 @@ function ChatPage() {
   const navigate = useNavigate();
   const { loadKPIs } = useKPIStore();
   const { loadCenters } = useMapStore();
+  const { loadCapacityData } = useCapacityStore();
 
   // Cargar datos necesarios para el contexto del chat
   useEffect(() => {
@@ -24,18 +26,27 @@ function ChatPage() {
     const validation = validateAPIKeys();
     if (!validation.valid) {
       console.warn('⚠️ [ChatPage] API keys no configuradas:', validation.missing);
-      console.warn(
-        '💡 Configura las API keys en el archivo .env para usar el chat AI'
-      );
+      console.warn('💡 Configura las API keys en el archivo .env para usar el chat AI');
     }
 
     // Cargar datos del sistema para el contexto del chat
     if (user) {
+      const roleConfig = ROLE_CONFIGS[user.role];
       console.log('📊 [ChatPage] Cargando datos del sistema para contexto...');
+      console.log(
+        `   Rol: ${user.role}, Permisos: canViewCapacity=${roleConfig.permissions.canViewCapacity}, canViewFinancial=${roleConfig.permissions.canViewFinancial}`
+      );
+
       loadKPIs(user.role);
       loadCenters();
+
+      // Cargar datos de capacidad hospitalaria si el rol tiene permisos
+      if (roleConfig.permissions.canViewCapacity) {
+        console.log('🛏️ [ChatPage] Cargando datos de capacidad hospitalaria...');
+        loadCapacityData();
+      }
     }
-  }, [user, loadKPIs, loadCenters]);
+  }, [user, loadKPIs, loadCenters, loadCapacityData]);
 
   if (!user) {
     return null;
@@ -46,7 +57,10 @@ function ChatPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors">
       {/* Top Bar */}
-      <header className="bg-white dark:bg-gray-800 border-b-4 shadow-sm transition-colors" style={{ borderColor: roleConfig.color }}>
+      <header
+        className="bg-white dark:bg-gray-800 border-b-4 shadow-sm transition-colors"
+        style={{ borderColor: roleConfig.color }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center space-x-2 sm:space-x-4">
@@ -59,7 +73,9 @@ function ChatPage() {
                 ← <span className="hidden sm:inline">Volver</span>
               </button>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100">Chat AI</h1>
+                <h1 className="text-lg sm:text-xl font-bold text-secondary dark:text-gray-100">
+                  Chat AI
+                </h1>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Asistente inteligente de salud
                 </p>

@@ -65,6 +65,11 @@ export interface ChatContext {
       availableBeds: number;
     }>;
   };
+  // Permisos del rol para informar al prompt sobre qué puede responder
+  permissions?: {
+    canViewCapacity: boolean;
+    canViewFinancial: boolean;
+  };
 }
 
 // Service types
