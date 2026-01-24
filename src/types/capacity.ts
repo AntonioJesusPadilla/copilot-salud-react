@@ -143,6 +143,7 @@ export interface CapacityAlert {
   resuelta: boolean;
   resolvidaPor?: string;
   fechaResolucion?: string;
+  notasResolucion?: string;
 }
 
 // ============================================================================

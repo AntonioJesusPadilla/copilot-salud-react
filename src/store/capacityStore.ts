@@ -50,19 +50,50 @@ interface CapacityStore {
   getCapacityByHospital: (hospital: string) => BedCapacityRecord[];
   getCapacityByPlant: (plant: string) => BedCapacityRecord[];
   getActiveAlerts: () => CapacityAlert[];
+  getResolvedAlerts: () => CapacityAlert[];
   getCriticalDepartments: () => BedCapacityRecord[];
   getDepartmentsNeedingPlantOpening: () => BedCapacityRecord[];
+
+  // Acciones - Gestión de alertas
+  resolveAlert: (alertId: string, resolvedBy: string, notes?: string) => void;
 
   // Acciones - Utilidades
   clearError: () => void;
 }
 
+// Clave para localStorage
+const RESOLVED_ALERTS_KEY = 'capacityResolvedAlerts';
+
+// Función para cargar alertas resueltas desde localStorage
+function loadResolvedAlertsFromStorage(): CapacityAlert[] {
+  try {
+    const stored = localStorage.getItem(RESOLVED_ALERTS_KEY);
+    if (stored) {
+      return JSON.parse(stored) as CapacityAlert[];
+    }
+  } catch (e) {
+    console.warn('Error al cargar alertas resueltas desde localStorage:', e);
+  }
+  return [];
+}
+
 // Función auxiliar para generar alertas desde los datos de capacidad
 function generateAlertsFromCapacity(capacity: BedCapacityRecord[]): CapacityAlert[] {
   const alerts: CapacityAlert[] = [];
+  const resolvedAlerts = loadResolvedAlertsFromStorage();
+
+  // Crear un Set de IDs de alertas resueltas para búsqueda rápida
+  // Usamos hospital+planta como identificador único
+  const resolvedKeys = new Set(resolvedAlerts.map((a) => `${a.hospital}-${a.planta}`));
 
   capacity.forEach((record) => {
     if (record.alertaCapacidad !== 'verde') {
+      const alertKey = `${record.hospital}-${record.planta}`;
+      const isResolved = resolvedKeys.has(alertKey);
+      const resolvedAlert = isResolved
+        ? resolvedAlerts.find((a) => `${a.hospital}-${a.planta}` === alertKey)
+        : null;
+
       const alert: CapacityAlert = {
         id: `alert-${record.hospital}-${record.planta}-${Date.now()}`,
         hospital: record.hospital,
@@ -76,14 +107,20 @@ function generateAlertsFromCapacity(capacity: BedCapacityRecord[]): CapacityAler
         umbralSuperado: record.alertaCapacidad === 'rojo' ? 90 : 85,
         timestamp: record.fechaActualizacion,
         accionRecomendada: record.recomendacionApertura,
-        resuelta: false,
+        resuelta: isResolved,
+        resolvidaPor: resolvedAlert?.resolvidaPor,
+        fechaResolucion: resolvedAlert?.fechaResolucion,
+        notasResolucion: resolvedAlert?.notasResolucion,
       };
       alerts.push(alert);
     }
   });
 
-  // Ordenar por nivel (rojo primero, luego amarillo)
+  // Ordenar por nivel (rojo primero, luego amarillo) y no resueltas primero
   return alerts.sort((a, b) => {
+    // Primero las no resueltas
+    if (a.resuelta !== b.resuelta) return a.resuelta ? 1 : -1;
+    // Luego por nivel
     if (a.nivel === 'rojo' && b.nivel !== 'rojo') return -1;
     if (a.nivel !== 'rojo' && b.nivel === 'rojo') return 1;
     return b.ocupacionActual - a.ocupacionActual;
@@ -293,6 +330,12 @@ const useCapacityStore = create<CapacityStore>((set, get) => ({
     return alerts.filter((a) => !a.resuelta);
   },
 
+  // Obtener alertas resueltas
+  getResolvedAlerts: () => {
+    const { alerts } = get();
+    return alerts.filter((a) => a.resuelta);
+  },
+
   // Obtener departamentos críticos
   getCriticalDepartments: () => {
     const { bedCapacity } = get();
@@ -305,6 +348,36 @@ const useCapacityStore = create<CapacityStore>((set, get) => ({
     return bedCapacity.filter(
       (c) => c.recomendacionApertura !== 'No necesario' && c.recomendacionApertura !== ''
     );
+  },
+
+  // Resolver una alerta
+  resolveAlert: (alertId: string, resolvedBy: string, notes?: string) => {
+    const { alerts } = get();
+    const updatedAlerts = alerts.map((alert) => {
+      if (alert.id === alertId) {
+        return {
+          ...alert,
+          resuelta: true,
+          resolvidaPor: resolvedBy,
+          fechaResolucion: new Date().toISOString(),
+          notasResolucion: notes || undefined,
+        };
+      }
+      return alert;
+    });
+
+    // Guardar en localStorage para persistencia
+    const resolvedAlerts = updatedAlerts.filter((a) => a.resuelta);
+    try {
+      localStorage.setItem('capacityResolvedAlerts', JSON.stringify(resolvedAlerts));
+    } catch (e) {
+      console.warn('No se pudo guardar en localStorage:', e);
+    }
+
+    set({
+      alerts: updatedAlerts,
+      activeAlerts: updatedAlerts.filter((a) => !a.resuelta),
+    });
   },
 
   // Limpiar error

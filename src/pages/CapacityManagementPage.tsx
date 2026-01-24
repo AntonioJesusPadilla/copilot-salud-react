@@ -435,7 +435,7 @@ function CapacityManagementPage() {
   const roleConfig = user ? ROLE_CONFIGS[user.role] : ROLE_CONFIGS.invitado;
 
   // Store de capacidad
-  const { bedCapacity, alerts, isLoading, error, loadCapacityData, refreshCapacity } =
+  const { bedCapacity, alerts, isLoading, error, loadCapacityData, refreshCapacity, resolveAlert } =
     useCapacityStore();
 
   // Cargar datos iniciales
@@ -488,9 +488,10 @@ function CapacityManagementPage() {
   };
 
   // Handlers para componentes
-  const handleResolveAlert = (alertId: string) => {
-    console.log('Resolver alerta:', alertId);
-    // TODO: Implementar lógica de resolución de alerta
+  const handleResolveAlert = (alertId: string, notes?: string) => {
+    const userName = user?.name || 'Usuario';
+    resolveAlert(alertId, userName, notes);
+    console.log('Alerta resuelta:', alertId, 'por:', userName, 'notas:', notes);
   };
 
   const handleViewAlertDetail = (alert: CapacityAlert) => {
